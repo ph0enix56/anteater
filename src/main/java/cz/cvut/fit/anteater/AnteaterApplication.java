@@ -1,9 +1,6 @@
 package cz.cvut.fit.anteater;
 
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -35,24 +32,24 @@ public class AnteaterApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Race human = new Race(
-			"Human",
-			List.of(Size.MEDIUM),
-			30,
-			"In the reckonings of most worlds, humans are the youngest of the common races, late to arrive on the world scene and short-lived in comparison to dwarves, elves, and dragons. Perhaps it is because of their shorter lives that they strive to achieve as much as they can in the years they are given. Or maybe they feel they have something to prove to the elder races, and that's why they build their mighty empires on the foundation of conquest and trade. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
-			List.of(new AbilityBonus(Ability.STRENGTH, 1),
-					new AbilityBonus(Ability.DEXTERITY, 1),
-					new AbilityBonus(Ability.CONSTITUTION, 1),
-					new AbilityBonus(Ability.INTELLIGENCE, 1),
-					new AbilityBonus(Ability.WISDOM, 1),
-					new AbilityBonus(Ability.CHARISMA, 1)),
-			0,
-			List.of(Language.COMMON),
-			1);
-		if (raceRepo.findByName(null).isEmpty()) raceRepo.save(human);
+		//Race human = new Race(
+		//	"Human",
+		//	List.of(Size.MEDIUM),
+		//	30,
+		//	"In the reckonings of most worlds, humans are the youngest of the common races, late to arrive on the world scene and short-lived in comparison to dwarves, elves, and dragons. Perhaps it is because of their shorter lives that they strive to achieve as much as they can in the years they are given. Or maybe they feel they have something to prove to the elder races, and that's why they build their mighty empires on the foundation of conquest and trade. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
+		//	List.of(new AbilityBonus(Ability.STRENGTH, 1),
+		//			new AbilityBonus(Ability.DEXTERITY, 1),
+		//			new AbilityBonus(Ability.CONSTITUTION, 1),
+		//			new AbilityBonus(Ability.INTELLIGENCE, 1),
+		//			new AbilityBonus(Ability.WISDOM, 1),
+		//			new AbilityBonus(Ability.CHARISMA, 1)),
+		//	0,
+		//	List.of(Language.COMMON),
+		//	1);
+		//if (raceRepo.findByName("Human").isEmpty()) raceRepo.save(human);
 
 		System.out.println(raceRepo.findByName("Human"));
-		System.out.println(raceRepo.findAll().stream().filter(r -> r.getSpeed() == 25).count());
+		System.out.println(raceRepo.findAll().stream().filter(r -> r.getSpeed() == 30).count());
 
 		//System.out.println(spellRepo.findByName("Detect Magic"));
 
