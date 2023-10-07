@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+// TODO: needs proper mapping and annotations
 public class Spell {
 	@Id
 	public String id;
