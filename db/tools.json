@@ -1,0 +1,202 @@
+[
+	{
+		"_id": "alchemists-supplies",
+		"name": "Alchemist's Supplies",
+		"type": "artisan"
+	},
+	{
+		"_id": "brewers-supplies",
+		"name": "Brewer's Supplies",
+		"type": "artisan"
+	},
+	{
+		"_id": "calligraphers-supplies",
+		"name": "Calligrapher's Supplies",
+		"type": "artisan"
+	},
+	{
+		"_id": "carpenters-tools",
+		"name": "Carpenter's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "cartographers-tools",
+		"name": "Cartographer's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "cobblers-tools",
+		"name": "Cobbler's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "cooks-utensils",
+		"name": "Cook's Utensils",
+		"type": "artisan"
+	},
+	{
+		"_id": "glassblowers-tools",
+		"name": "Glassblower's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "jewelers-tools",
+		"name": "Jeweler's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "leatherworkers-tools",
+		"name": "Leatherworker's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "masons-tools",
+		"name": "Mason's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "painters-supplies",
+		"name": "Painter's Supplies",
+		"type": "artisan"
+	},
+	{
+		"_id": "potters-tools",
+		"name": "Potter's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "smiths-tools",
+		"name": "Smith's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "tinkers-tools",
+		"name": "Tinker's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "weavers-tools",
+		"name": "Weaver's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "woodcarvers-tools",
+		"name": "Woodcarver's Tools",
+		"type": "artisan"
+	},
+	{
+		"_id": "bagpipes",
+		"name": "Bagpipes",
+		"type": "instrument"
+	},
+	{
+		"_id": "drum",
+		"name": "Drum",
+		"type": "instrument"
+	},
+	{
+		"_id": "dulcimer",
+		"name": "Dulcimer",
+		"type": "instrument"
+	},
+	{
+		"_id": "flute",
+		"name": "Flute",
+		"type": "instrument"
+	},
+	{
+		"_id": "lute",
+		"name": "Lute",
+		"type": "instrument"
+	},
+	{
+		"_id": "lyre",
+		"name": "Lyre",
+		"type": "instrument"
+	},
+	{
+		"_id": "horn",
+		"name": "Horn",
+		"type": "instrument"
+	},
+	{
+		"_id": "pan-flute",
+		"name": "Pan Flute",
+		"type": "instrument"
+	},
+	{
+		"_id": "shawm",
+		"name": "Shawm",
+		"type": "instrument"
+	},
+	{
+		"_id": "viol",
+		"name": "Viol",
+		"type": "instrument"
+	},
+	{
+		"_id": "dice-set",
+		"name": "Dice Set",
+		"type": "gaming"
+	},
+	{
+		"_id": "dragonchess-set",
+		"name": "Dragonchess Set",
+		"type": "gaming"
+	},
+	{
+		"_id": "playing-card-set",
+		"name": "Playing Card Set",
+		"type": "gaming"
+	},
+	{
+		"_id": "three-dragon-ante-set",
+		"name": "Three-Dragon Ante Set",
+		"type": "gaming"
+	},
+	{
+		"_id": "disguise-kit",
+		"name": "Disguise Kit",
+		"type": "tool"
+	},
+	{
+		"_id": "forgery-kit",
+		"name": "Forgery Kit",
+		"type": "tool"
+	},
+	{
+		"_id": "herbalism-kit",
+		"name": "Herbalism Kit",
+		"type": "tool"
+	},
+	{
+		"_id": "navigator-tools",
+		"name": "Navigator's Tools",
+		"type": "tool"
+	},
+	{
+		"_id": "poisoners-kit",
+		"name": "Poisoner's Kit",
+		"type": "tool"
+	},
+	{
+		"_id": "thieves-tools",
+		"name": "Thieves' Tools",
+		"type": "tool"
+	},
+	{
+		"_id": "vehicles-air",
+		"name": "Vehicles (Air)",
+		"type": "vehicle"
+	},
+	{
+		"_id": "vehicles-land",
+		"name": "Vehicles (Land)",
+		"type": "vehicle"
+	},
+	{
+		"_id": "vehicles-water",
+		"name": "Vehicles (Water)",
+		"type": "vehicle"
+	}
+]

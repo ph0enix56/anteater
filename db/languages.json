@@ -1,0 +1,82 @@
+[
+	{
+		"_id": "common",
+		"name": "Common",
+		"exotic": false
+	},
+	{
+		"_id": "dwarvish",
+		"name": "Dwarvish",
+		"exotic": false
+	},
+	{
+		"_id": "elvish",
+		"name": "Elvish",
+		"exotic": false
+	},
+	{
+		"_id": "giant",
+		"name": "Giant",
+		"exotic": false
+	},
+	{
+		"_id": "gnomish",
+		"name": "Gnomish",
+		"exotic": false
+	},
+	{
+		"_id": "goblin",
+		"name": "Goblin",
+		"exotic": false
+	},
+	{
+		"_id": "halfling",
+		"name": "Halfling",
+		"exotic": false
+	},
+	{
+		"_id": "orcish",
+		"name": "Orcish",
+		"exotic": false
+	},
+	{
+		"_id": "abyssal",
+		"name": "Abyssal",
+		"exotic": true
+	},
+	{
+		"_id": "celestial",
+		"name": "Celestial",
+		"exotic": true
+	},
+	{
+		"_id": "draconic",
+		"name": "Draconic",
+		"exotic": true
+	},
+	{
+		"_id": "deep-speech",
+		"name": "Deep Speech",
+		"exotic": true
+	},
+	{
+		"_id": "infernal",
+		"name": "Infernal",
+		"exotic": true
+	},
+	{
+		"_id": "primordial",
+		"name": "Primordial",
+		"exotic": true
+	},
+	{
+		"_id": "sylvan",
+		"name": "Sylvan",
+		"exotic": true
+	},
+	{
+		"_id": "undercommon",
+		"name": "Undercommon",
+		"exotic": true
+	}
+]
