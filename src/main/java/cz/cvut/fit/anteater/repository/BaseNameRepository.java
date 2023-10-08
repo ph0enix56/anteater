@@ -1,9 +1,9 @@
-package cz.cvut.fit.anteater.repository;
+//package cz.cvut.fit.anteater.repository;
 
-import java.util.List;
+//import java.util.List;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+//import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface BaseNameRepository<T> extends MongoRepository<T, String> {
-	public List<T> findByName(String name);
-}
+//public interface BaseNameRepository<T> extends MongoRepository<T, String> {
+//	public List<T> findByName(String name);
+//}
