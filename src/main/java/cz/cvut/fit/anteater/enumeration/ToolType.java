@@ -4,5 +4,6 @@ public enum ToolType {
 	ARTISAN,
 	INSTRUMENT,
 	GAMING,
-	TOOL
+	VEHICLE,
+	OTHER
 }
