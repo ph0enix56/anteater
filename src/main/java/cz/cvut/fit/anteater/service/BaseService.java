@@ -1,28 +1,33 @@
-//package cz.cvut.fit.anteater.service;
+package cz.cvut.fit.anteater.service;
 
-//import java.util.List;
+import java.util.List;
 
-//import org.springframework.stereotype.Service;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-//import cz.cvut.fit.anteater.repository.BaseNameRepository;
+public abstract class BaseService<T> {
+	private MongoRepository<T, String> repository;
 
-//@Service
-//public abstract class BaseService<T> {
-//	private BaseNameRepository<T> repository;
+	public BaseService(MongoRepository<T, String> repository) {
+		this.repository = repository;
+	}
 
-//	public BaseService(BaseNameRepository<T> repository) {
-//		this.repository = repository;
-//	}
+	public Long count() {
+		return repository.count();
+	}
 
-//	public List<T> findAll() {
-//		return repository.findAll();
-//	}
+	public List<T> findAll() {
+		return repository.findAll();
+	}
 
-//	public T findById(String id) {
-//		return repository.findById(id).orElse(null);
-//	}
+	public T findById(String id) {
+		return repository.findById(id).orElse(null);
+	}
 
-//	public List<T> findByName(String name) {
-//		return repository.findByName(name);
-//	}
-//}
+	public T save(T entity) {
+		return repository.save(entity);
+	}
+
+	public void delete(T entity) {
+		repository.delete(entity);
+	}
+}
