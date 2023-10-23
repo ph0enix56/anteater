@@ -1,5 +1,7 @@
 package cz.cvut.fit.anteater.entity;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -13,7 +15,7 @@ public class Background {
 	private String name;
 
 	private String description;
-	private String feature;
+	private List<TextFeature> features;
 
 	@Field("skills")
 	private BonusList<Skill> skillProficiencies;

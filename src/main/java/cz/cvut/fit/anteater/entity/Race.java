@@ -17,7 +17,7 @@ public class Race {
 	private String name;
 
 	private String description;
-	private List<String> features;
+	private List<TextFeature> features;
 
 	private Integer speed;
 	private Set<Size> sizeOptions;
