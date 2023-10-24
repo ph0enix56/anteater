@@ -1,202 +1,146 @@
 [
 	{
-		"_id": "alchemists-supplies",
-		"name": "Alchemist's Supplies",
+		"name": "Alchemist's supplies",
 		"type": "artisan"
 	},
 	{
-		"_id": "brewers-supplies",
-		"name": "Brewer's Supplies",
+		"name": "Brewer's supplies",
 		"type": "artisan"
 	},
 	{
-		"_id": "calligraphers-supplies",
-		"name": "Calligrapher's Supplies",
+		"name": "Calligrapher's supplies",
 		"type": "artisan"
 	},
 	{
-		"_id": "carpenters-tools",
-		"name": "Carpenter's Tools",
+		"name": "Carpenter's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "cartographers-tools",
-		"name": "Cartographer's Tools",
+		"name": "Cartographer's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "cobblers-tools",
-		"name": "Cobbler's Tools",
+		"name": "Cobbler's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "cooks-utensils",
-		"name": "Cook's Utensils",
+		"name": "Cook's utensils",
 		"type": "artisan"
 	},
 	{
-		"_id": "glassblowers-tools",
-		"name": "Glassblower's Tools",
+		"name": "Glassblower's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "jewelers-tools",
-		"name": "Jeweler's Tools",
+		"name": "Jeweler's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "leatherworkers-tools",
-		"name": "Leatherworker's Tools",
+		"name": "Leatherworker's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "masons-tools",
-		"name": "Mason's Tools",
+		"name": "Mason's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "painters-supplies",
-		"name": "Painter's Supplies",
+		"name": "Painter's supplies",
 		"type": "artisan"
 	},
 	{
-		"_id": "potters-tools",
-		"name": "Potter's Tools",
+		"name": "Potter's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "smiths-tools",
-		"name": "Smith's Tools",
+		"name": "Smith's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "tinkers-tools",
-		"name": "Tinker's Tools",
+		"name": "Tinker's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "weavers-tools",
-		"name": "Weaver's Tools",
+		"name": "Weaver's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "woodcarvers-tools",
-		"name": "Woodcarver's Tools",
+		"name": "Woodcarver's tools",
 		"type": "artisan"
 	},
 	{
-		"_id": "bagpipes",
+		"name": "Dice set",
+		"type": "gaming"
+	},
+	{
+		"name": "Playing card set",
+		"type": "gaming"
+	},
+	{
 		"name": "Bagpipes",
 		"type": "instrument"
 	},
 	{
-		"_id": "drum",
 		"name": "Drum",
 		"type": "instrument"
 	},
 	{
-		"_id": "dulcimer",
 		"name": "Dulcimer",
 		"type": "instrument"
 	},
 	{
-		"_id": "flute",
 		"name": "Flute",
 		"type": "instrument"
 	},
 	{
-		"_id": "lute",
 		"name": "Lute",
 		"type": "instrument"
 	},
 	{
-		"_id": "lyre",
 		"name": "Lyre",
 		"type": "instrument"
 	},
 	{
-		"_id": "horn",
 		"name": "Horn",
 		"type": "instrument"
 	},
 	{
-		"_id": "pan-flute",
-		"name": "Pan Flute",
+		"name": "Pan flute",
 		"type": "instrument"
 	},
 	{
-		"_id": "shawm",
 		"name": "Shawm",
 		"type": "instrument"
 	},
 	{
-		"_id": "viol",
 		"name": "Viol",
 		"type": "instrument"
 	},
 	{
-		"_id": "dice-set",
-		"name": "Dice Set",
-		"type": "gaming"
-	},
-	{
-		"_id": "dragonchess-set",
-		"name": "Dragonchess Set",
-		"type": "gaming"
-	},
-	{
-		"_id": "playing-card-set",
-		"name": "Playing Card Set",
-		"type": "gaming"
-	},
-	{
-		"_id": "three-dragon-ante-set",
-		"name": "Three-Dragon Ante Set",
-		"type": "gaming"
-	},
-	{
-		"_id": "disguise-kit",
-		"name": "Disguise Kit",
-		"type": "tool"
-	},
-	{
-		"_id": "forgery-kit",
-		"name": "Forgery Kit",
-		"type": "tool"
-	},
-	{
-		"_id": "herbalism-kit",
-		"name": "Herbalism Kit",
-		"type": "tool"
-	},
-	{
-		"_id": "navigator-tools",
-		"name": "Navigator's Tools",
-		"type": "tool"
-	},
-	{
-		"_id": "poisoners-kit",
-		"name": "Poisoner's Kit",
-		"type": "tool"
-	},
-	{
-		"_id": "thieves-tools",
-		"name": "Thieves' Tools",
-		"type": "tool"
-	},
-	{
-		"_id": "vehicles-air",
-		"name": "Vehicles (Air)",
+		"name": "Vehicles (land)",
 		"type": "vehicle"
 	},
 	{
-		"_id": "vehicles-land",
-		"name": "Vehicles (Land)",
+		"name": "Vehicles (water)",
 		"type": "vehicle"
 	},
 	{
-		"_id": "vehicles-water",
-		"name": "Vehicles (Water)",
-		"type": "vehicle"
+		"name": "Disguise kit",
+		"type": "other"
+	},
+	{
+		"name": "Forgery kit",
+		"type": "other"
+	},
+	{
+		"name": "Navigator's tools",
+		"type": "other"
+	},
+	{
+		"name": "Poisoner's kit",
+		"type": "other"
+	},
+	{
+		"name": "Thieves' tools",
+		"type": "other"
 	}
 ]
