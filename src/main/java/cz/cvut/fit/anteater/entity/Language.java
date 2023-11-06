@@ -1,15 +1,15 @@
 package cz.cvut.fit.anteater.entity;
 
-import org.springframework.data.annotation.Id;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-public class Language {
-	@Id
-	private String id;
-
-	private String name;
+@Getter
+@Setter
+public class Language extends BaseId {
 	private Boolean exotic;
+
+	public Language(String name, Boolean exotic) {
+		super(name);
+		this.exotic = exotic;
+	}
 }

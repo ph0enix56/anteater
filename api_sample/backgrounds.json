@@ -1,0 +1,25 @@
+{
+	"response": [
+		{
+			"id": 1,
+			"name": "Acolyte",
+			"description": "...",
+			"feature": "Shelter of the Faithful",
+			"skills": {
+				"amount": 2,
+				"defaults": [
+					"insight",
+					"religion"
+				]
+			},
+			"languages": {
+				"amount": 2,
+				"defaults": []
+			},
+			"tools": {
+				"amount": 0,
+				"defaults": []
+			}
+		}
+	]
+}

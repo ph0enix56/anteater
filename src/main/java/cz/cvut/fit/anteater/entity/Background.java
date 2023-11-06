@@ -2,18 +2,15 @@ package cz.cvut.fit.anteater.entity;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import cz.cvut.fit.anteater.enumeration.Skill;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class Background {
-	@Id
-	private String id;
-	private String name;
-
+@Getter
+@Setter
+public class Background extends BaseId {
 	private String description;
 	private List<TextFeature> features;
 
@@ -25,4 +22,15 @@ public class Background {
 
 	@Field("tools")
 	private BonusList<Tool> toolProficiencies;
+
+	public Background(String name, String description, List<TextFeature> features,
+			BonusList<Skill> skillProficiencies, BonusList<Language> languageProficiencies,
+			BonusList<Tool> toolProficiencies) {
+		super(name);
+		this.description = description;
+		this.features = features;
+		this.skillProficiencies = skillProficiencies;
+		this.languageProficiencies = languageProficiencies;
+		this.toolProficiencies = toolProficiencies;
+	}
 }

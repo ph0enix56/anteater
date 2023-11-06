@@ -1,0 +1,19 @@
+{
+	"response": [
+		{
+			"id": 1,
+			"name": "Common",
+			"exotic": false
+		},
+		{
+			"id": 2,
+			"name": "Drarwish",
+			"exotic": false
+		},
+		{
+			"id": 3,
+			"name": "Elvish",
+			"exotic": false
+		}
+	]
+}

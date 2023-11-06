@@ -1,17 +1,16 @@
 package cz.cvut.fit.anteater.entity;
 
-import org.springframework.data.annotation.Id;
-
 import cz.cvut.fit.anteater.enumeration.ToolType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-public class Tool {
-	@Id
-	private String id;
-	private String name;
-
+@Getter
+@Setter
+public class Tool extends BaseId {
 	private ToolType type;
+
+	public Tool(String name, ToolType type) {
+		super(name);
+		this.type = type;
+	}
 }

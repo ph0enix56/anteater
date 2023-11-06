@@ -1,0 +1,19 @@
+{
+	"response": [
+		{
+			"id": 1,
+			"name": "Weaver's Tools",
+			"type": "artisan"
+		},
+		{
+			"id": 2,
+			"name": "Vehicles (Water)",
+			"type": "vehicle"
+		},
+		{
+			"id": 3,
+			"name": "Lute",
+			"type": "instrument"
+		}
+	]
+}

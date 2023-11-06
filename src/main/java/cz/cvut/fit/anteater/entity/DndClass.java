@@ -1,14 +1,33 @@
 package cz.cvut.fit.anteater.entity;
 
-import org.springframework.data.annotation.Id;
+import java.util.List;
 
-import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Data
-public class DndClass {
-	@Id
-	private String id;
-	private String name;
+import cz.cvut.fit.anteater.enumeration.Skill;
+import lombok.Getter;
+import lombok.Setter;
 
-	//TODO: add other fields
+@Getter
+@Setter
+public class DndClass extends BaseId {
+	private String description;
+	private List<TextFeature> features;
+	private String hitDice;
+
+	@Field("skills")
+	private BonusList<Skill> skillProficiencies;
+
+	@Field("tools")
+	private BonusList<Tool> toolProficiencies;
+
+	public DndClass(String name, String description, List<TextFeature> features, String hitDice,
+			BonusList<Skill> skillProficiencies, BonusList<Tool> toolProficiencies) {
+		super(name);
+		this.description = description;
+		this.features = features;
+		this.hitDice = hitDice;
+		this.skillProficiencies = skillProficiencies;
+		this.toolProficiencies = toolProficiencies;
+	}
 }
