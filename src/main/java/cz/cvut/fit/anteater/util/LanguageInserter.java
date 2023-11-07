@@ -2,30 +2,28 @@ package cz.cvut.fit.anteater.util;
 
 import cz.cvut.fit.anteater.model.entity.Language;
 import cz.cvut.fit.anteater.repository.LanguageRepository;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class LanguageInserter {
-	private LanguageRepository languageRepository;
+	private final LanguageRepository languageRepository;
 
-	public LanguageInserter(LanguageRepository languageRepository) {
-		this.languageRepository = languageRepository;
+	public void insert() {
+		languageRepository.save(Language.builder().name("Common").exotic(false).build());
+		languageRepository.save(Language.builder().name("Dwarvish").exotic(false).build());
+		languageRepository.save(Language.builder().name("Elvish").exotic(false).build());
+		languageRepository.save(Language.builder().name("Giant").exotic(false).build());
+		languageRepository.save(Language.builder().name("Gnomish").exotic(false).build());
+		languageRepository.save(Language.builder().name("Goblin").exotic(false).build());
+		languageRepository.save(Language.builder().name("Halfling").exotic(false).build());
+		languageRepository.save(Language.builder().name("Orc").exotic(false).build());
+		languageRepository.save(Language.builder().name("Abyssal").exotic(true).build());
+		languageRepository.save(Language.builder().name("Celestial").exotic(true).build());
+		languageRepository.save(Language.builder().name("Draconic").exotic(true).build());
+		languageRepository.save(Language.builder().name("Deep Speech").exotic(true).build());
+		languageRepository.save(Language.builder().name("Infernal").exotic(true).build());
+		languageRepository.save(Language.builder().name("Primordial").exotic(true).build());
+		languageRepository.save(Language.builder().name("Sylvan").exotic(true).build());
+		languageRepository.save(Language.builder().name("Undercommon").exotic(true).build());
 	}
-
-	//public void insert() {
-	//	languageRepository.save(new Language("Common", false));
-	//	languageRepository.save(new Language("Dwarvish", false));
-	//	languageRepository.save(new Language("Elvish", false));
-	//	languageRepository.save(new Language("Giant", false));
-	//	languageRepository.save(new Language("Gnomish", false));
-	//	languageRepository.save(new Language("Goblin", false));
-	//	languageRepository.save(new Language("Halfling", false));
-	//	languageRepository.save(new Language("Orc", false));
-	//	languageRepository.save(new Language("Abyssal", true));
-	//	languageRepository.save(new Language("Celestial", true));
-	//	languageRepository.save(new Language("Draconic", true));
-	//	languageRepository.save(new Language("Deep Speech", true));
-	//	languageRepository.save(new Language("Infernal", true));
-	//	languageRepository.save(new Language("Primordial", true));
-	//	languageRepository.save(new Language("Sylvan", true));
-	//	languageRepository.save(new Language("Undercommon", true));
-	//}
 }

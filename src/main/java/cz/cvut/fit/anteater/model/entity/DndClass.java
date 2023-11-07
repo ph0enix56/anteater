@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.value.BonusList;
+import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,9 +21,11 @@ public class DndClass extends BaseId {
 
 	private String description;
 
+	private Dice hitDice;
+
 	private List<TextFeature> features;
 
-	private String hitDice;
+	private List<String> subclasses;
 
 	@Field("skills")
 	private BonusList<Skill> skillProficiencies;

@@ -30,11 +30,11 @@ public class Race extends BaseId {
 	@Field("sizes")
 	private Set<Size> sizeOptions;
 
-	@Field("abilities_plus_1")
-	private BonusList<Ability> abilityScoresPlus1;
-
 	@Field("abilities_plus_2")
 	private BonusList<Ability> abilityScoresPlus2;
+	
+	@Field("abilities_plus_1")
+	private BonusList<Ability> abilityScoresPlus1;
 
 	@Field("skills")
 	private BonusList<Skill> skillProficiencies;
