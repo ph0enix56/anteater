@@ -1,6 +1,6 @@
 package cz.cvut.fit.anteater.util;
 
-import cz.cvut.fit.anteater.entity.Source;
+import cz.cvut.fit.anteater.model.entity.Source;
 import cz.cvut.fit.anteater.repository.SourceRepository;
 
 public class SourceInserter {

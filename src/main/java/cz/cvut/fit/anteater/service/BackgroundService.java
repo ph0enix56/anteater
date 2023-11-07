@@ -2,7 +2,7 @@ package cz.cvut.fit.anteater.service;
 
 import org.springframework.stereotype.Service;
 
-import cz.cvut.fit.anteater.entity.Background;
+import cz.cvut.fit.anteater.model.entity.Background;
 import cz.cvut.fit.anteater.repository.BackgroundRepository;
 
 @Service

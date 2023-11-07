@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cz.cvut.fit.anteater.entity.Race;
-import cz.cvut.fit.anteater.enumeration.Ability;
+import cz.cvut.fit.anteater.model.entity.Race;
 import cz.cvut.fit.anteater.service.RaceService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -27,10 +26,6 @@ public class RaceController {
 
 	@GetMapping("races/{id}")
 	public Race getRace(@PathVariable String id) {
-		Race subject = raceService.findById(id);
-		System.out.println(subject.getAbilityScoresPlus2());
-		System.out.println(subject.getAbilityScoresPlus2().getDefaults().contains(Ability.charisma));
-		System.out.println(subject.getAbilityScoresPlus2().getDefaults().contains(Ability.strength));
-		return subject;
+		return raceService.findById(id);
 	}
 }

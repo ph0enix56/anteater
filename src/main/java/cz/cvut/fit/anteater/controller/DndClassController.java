@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cz.cvut.fit.anteater.entity.DndClass;
+import cz.cvut.fit.anteater.model.entity.DndClass;
 import cz.cvut.fit.anteater.service.DndClassService;
 
 @CrossOrigin(origins = "http://localhost:3000")

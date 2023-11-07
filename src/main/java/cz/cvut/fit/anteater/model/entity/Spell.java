@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.entity;
+package cz.cvut.fit.anteater.model.entity;
 
 import java.util.List;
 

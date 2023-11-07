@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.entity;
+package cz.cvut.fit.anteater.model.entity;
 
 import java.util.List;
 import java.util.Set;
@@ -8,14 +8,23 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Size;
 import cz.cvut.fit.anteater.enumeration.Skill;
-import lombok.Getter;
-import lombok.Setter;
+import cz.cvut.fit.anteater.model.value.BonusList;
+import cz.cvut.fit.anteater.model.value.TextFeature;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Race extends BaseId {
+
 	private String description;
+
 	private List<TextFeature> features;
+
 	private Integer speed;
 
 	@Field("sizes")
@@ -32,18 +41,4 @@ public class Race extends BaseId {
 
 	@Field("languages")
 	private BonusList<Language> languageProficiencies;
-
-	public Race(String name, String description, List<TextFeature> features, Integer speed, Set<Size> sizeOptions,
-			BonusList<Ability> abilityScoresPlus1, BonusList<Ability> abilityScoresPlus2,
-			BonusList<Skill> skillProficiencies, BonusList<Language> languageProficiencies) {
-		super(name);
-		this.description = description;
-		this.features = features;
-		this.speed = speed;
-		this.sizeOptions = sizeOptions;
-		this.abilityScoresPlus1 = abilityScoresPlus1;
-		this.abilityScoresPlus2 = abilityScoresPlus2;
-		this.skillProficiencies = skillProficiencies;
-		this.languageProficiencies = languageProficiencies;
-	}
 }

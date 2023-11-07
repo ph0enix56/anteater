@@ -2,7 +2,7 @@ package cz.cvut.fit.anteater.service;
 
 import org.springframework.stereotype.Service;
 
-import cz.cvut.fit.anteater.entity.Race;
+import cz.cvut.fit.anteater.model.entity.Race;
 import cz.cvut.fit.anteater.repository.RaceRepository;
 
 @Service
