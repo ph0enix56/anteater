@@ -21,11 +21,11 @@ public class LanguageController {
 
 	@GetMapping("languages")
 	public Iterable<Language> getLanguages() {
-	return languageService.findAll();
+		return languageService.findAll();
 	}
 
 	@GetMapping("languages/{id}")
 	public Language getLanguage(@PathVariable String id) {
-	return languageService.findById(id);
+		return languageService.findById(id);
 	}
 }
