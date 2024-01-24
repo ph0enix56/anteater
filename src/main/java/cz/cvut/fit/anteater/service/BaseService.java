@@ -2,10 +2,10 @@ package cz.cvut.fit.anteater.service;
 
 import java.util.List;
 
-import cz.cvut.fit.anteater.model.entity.BaseId;
+import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.repository.BaseRepository;
 
-public abstract class BaseService<T extends BaseId> {
+public abstract class BaseService<T extends SourceableEntity> {
 	private BaseRepository<T> repository;
 
 	public BaseService(BaseRepository<T> repository) {

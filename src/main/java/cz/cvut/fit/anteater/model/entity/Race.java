@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Race extends BaseId {
+public class Race extends SourceableEntity {
 
 	private String description;
 

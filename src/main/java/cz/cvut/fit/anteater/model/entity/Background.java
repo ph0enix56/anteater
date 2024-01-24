@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Background extends BaseId {
+public class Background extends SourceableEntity {
 
 	private String description;
 

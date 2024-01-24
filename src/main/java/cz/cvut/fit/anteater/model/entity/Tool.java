@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Tool extends BaseId {
+public class Tool extends SourceableEntity {
 
 	private ToolType type;
 }
