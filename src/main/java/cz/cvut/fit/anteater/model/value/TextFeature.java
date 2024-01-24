@@ -1,15 +1,16 @@
 package cz.cvut.fit.anteater.model.value;
 
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class TextFeature {
-	@NonNull private String title;
-	@NonNull private String text;
-	@NonNull private Integer levelMinimum;
+	private String title;
+	private String text;
+	private Integer levelMinimum;
 
 	public TextFeature(String title, String text) {
 		this(title, text, 1);

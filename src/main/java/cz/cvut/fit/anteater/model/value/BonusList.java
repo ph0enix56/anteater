@@ -2,13 +2,12 @@ package cz.cvut.fit.anteater.model.value;
 
 import java.util.Set;
 
-import lombok.NonNull;
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class BonusList<T> {
-	@NonNull private Integer amount;
-	@NonNull private Set<T> defaults;
+	private Integer amount;
+	private Set<T> defaults;
 
 	public BonusList() {
 		this(0, Set.of());

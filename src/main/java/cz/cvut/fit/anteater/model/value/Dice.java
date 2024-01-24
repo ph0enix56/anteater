@@ -1,15 +1,16 @@
 package cz.cvut.fit.anteater.model.value;
 
-import com.mongodb.lang.NonNull;
 
 import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Dice {
-	@NonNull private Integer amount;
-	@NonNull private Integer sides;
+	private Integer amount;
+	private Integer sides;
 
 	public String getNotation() {
 		return amount + "d" + sides;
