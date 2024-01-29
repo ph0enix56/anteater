@@ -60,7 +60,7 @@ public class DndClassInserter {
 			))
 			.skillProficiencies(new BonusList<>(4))
 			.toolProficiencies(new BonusList<>(1, Set.of(
-				toolRepository.findByName("Thieves' tools")
+				//toolRepository.findByName("Thieves' tools")
 			)))
 			.build()
 		);

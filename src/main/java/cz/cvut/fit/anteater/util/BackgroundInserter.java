@@ -48,8 +48,8 @@ public class BackgroundInserter {
 			))
 			.languageProficiencies(new BonusList<>())
 			.toolProficiencies(new BonusList<>(2, Set.of(
-				toolRepository.findByName("Disguise kit"),
-				toolRepository.findByName("Forgery kit")
+				//toolRepository.findByName("Disguise kit"),
+				//toolRepository.findByName("Forgery kit")
 			)))
 			.build()
 		);

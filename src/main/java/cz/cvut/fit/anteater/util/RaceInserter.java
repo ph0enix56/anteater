@@ -32,8 +32,8 @@ public class RaceInserter {
 			.abilityScoresPlus1(new BonusList<>(2))
 			.skillProficiencies(new BonusList<>(2))
 			.languageProficiencies(new BonusList<>(3, Set.of(
-				languageRepository.findByName("Common"),
-				languageRepository.findByName("Elvish")
+				//languageRepository.findByName("Common"),
+				//languageRepository.findByName("Elvish")
 			)))
 			.build()
 		);
@@ -55,7 +55,7 @@ public class RaceInserter {
 					Ability.charisma
 				)))
 				.skillProficiencies(new BonusList<>())
-				.languageProficiencies(new BonusList<>(2, Set.of(languageRepository.findByName("Common"))))
+				//.languageProficiencies(new BonusList<>(2, Set.of(languageRepository.findByName("Common"))))
 				.build()
 		);
 		
@@ -75,7 +75,7 @@ public class RaceInserter {
 			.abilityScoresPlus2(new BonusList<>(1, Set.of(Ability.dexterity)))
 			.abilityScoresPlus1(new BonusList<>(1, Set.of(Ability.intelligence)))
 			.skillProficiencies(new BonusList<>(0))
-			.languageProficiencies(new BonusList<>(2, Set.of(languageRepository.findByName("Common"), languageRepository.findByName("Gnomish"))))
+			//.languageProficiencies(new BonusList<>(2, Set.of(languageRepository.findByName("Common"), languageRepository.findByName("Gnomish"))))
 			.build()
 		);
 	}
