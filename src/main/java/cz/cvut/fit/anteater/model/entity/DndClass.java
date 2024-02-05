@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.value.BonusList;
 import cz.cvut.fit.anteater.model.value.Dice;
@@ -29,6 +30,9 @@ public class DndClass extends SourceableEntity {
 
 	@Field("skills")
 	private BonusList<Skill> skillProficiencies;
+
+	@Field("saves")
+	private BonusList<Ability> savingThrowProficiencies;
 
 	@Field("tools")
 	private BonusList<Tool> toolProficiencies;
