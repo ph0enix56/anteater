@@ -1,29 +1,19 @@
 package cz.cvut.fit.anteater.model.dto;
 
-import cz.cvut.fit.anteater.model.entity.Background;
-import cz.cvut.fit.anteater.model.entity.DndClass;
-import cz.cvut.fit.anteater.model.entity.Race;
-import lombok.Builder;
-import lombok.Data;
+public interface CharacterInfo {
 
-@Data
-@Builder
-public class CharacterInfo {
-	private String id;
+	String getId();
+	String getCharacterName();
+	String getPlayerName();
+	String getCardPhotoUrl();
+	String getSheetPhotoUrl();
+	Integer getLevel();
 
-	private String character_name;
+	ClassInfo getDndClass();
+	RaceInfo getRace();
+	BackgroundInfo getBackground();
 
-	private String player_name;
-
-	private String card_photo_url;
-
-	private String sheet_photo_url;
-
-	private DndClass dnd_class;
-
-	private Race race;
-
-	private Background background;
-
-	private Integer level;	
+	interface ClassInfo { String getId(); String getName(); }
+	interface RaceInfo { String getId(); String getName(); }
+	interface BackgroundInfo { String getId(); String getName(); }
 }

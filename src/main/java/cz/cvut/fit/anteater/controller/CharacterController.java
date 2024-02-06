@@ -1,15 +1,16 @@
 package cz.cvut.fit.anteater.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
-
-import cz.cvut.fit.anteater.model.dto.CharacterStats;
-import cz.cvut.fit.anteater.service.CharacterService;
-
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import cz.cvut.fit.anteater.model.dto.CharacterInfo;
+import cz.cvut.fit.anteater.model.dto.CharacterStats;
+import cz.cvut.fit.anteater.service.CharacterService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -21,28 +22,18 @@ public class CharacterController {
 		this.characterService = characterService;
 	}
 
-	//@GetMapping("/{id}/info")
-	//public SomeData getMethodName(@PathVariable String id) {
+	@GetMapping
+	public List<CharacterInfo> getCharacterInfos() {
+		return characterService.getCharacterInfos();
+	}
 
-	//}
+	@GetMapping("/{id}/info")
+	public CharacterInfo getCharacterInfo(@PathVariable String id) {
+		return characterService.getCharacterInfo(id);
+	}
 
 	@GetMapping("/{id}/stats")
 	public CharacterStats getCharacterStats(@PathVariable String id) {
 		return characterService.getCharacterStats(id);
 	}
-
-	//@GetMapping("/{id}/abilities")
-	//public SomeData getMethodName(@PathVariable String id) {
-
-	//}
-
-	//@GetMapping("/{id}/skills")
-	//public SomeData getMethodName(@RequestParam String param) {
-	//	return new SomeData();
-	//}
-	
-	//@GetMapping("/{id}/skills/{skill}")
-	//public SomeData getMethodName(@PathVariable String id, @PathVariable String skill) {
-
-	//}
 }

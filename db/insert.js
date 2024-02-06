@@ -124,7 +124,7 @@ let backgrounds = [
 			"amount": 2,
 			"defaults": [
 				"deception",
-				"sleight of hand",
+				"sleight_of_hand",
 			],
 		},
 		"tools": {
@@ -332,24 +332,67 @@ let classes = [
 db.dndClass.insertMany(classes);
 print(db.dndClass.countDocuments() + " classes inserted");
 
-let character = {
-	"character_name": "Test Character",
-	"player_name": "Filip",
-	"card_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
-	"sheet_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
-	"dnd_class": db.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
-	"race": db.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
-	"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
-	"level": 2,
-	"ability_scores": {
-		"strength": 16,
-		"dexterity": 14,
-		"constitution": 16,
-		"intelligence": 10,
-		"wisdom": 12,
-		"charisma": 10,
+let characters = [
+	{
+		"character_name": "Test Character",
+		"player_name": "Filip",
+		"card_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
+		"sheet_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
+		"class": db.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
+		"race": db.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
+		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
+		"level": 3,
+		"ability_scores": {
+			"strength": 16,
+			"dexterity": 11,
+			"constitution": 16,
+			"intelligence": 8,
+			"wisdom": 9,
+			"charisma": 10,
+		},
+		"skills": ["athletics", "perception", "religion", "survival"],
+		"saving_throws": ["strength", "constitution"],
 	},
-	"skills": ["athletics", "perception", "religion", "survival"],
-	"saving_throws": ["strength", "constitution"],
-}
-db.character.insertOne(character);
+	{
+		"character_name": "Cool elfka",
+		"player_name": "Nekdo",
+		"card_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
+		"sheet_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
+		"class": db.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
+		"race": db.race.findOne({ "name": "Human (test)" }, { "_id": 1 })._id,
+		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
+		"level": 11,
+		"ability_scores": {
+			"strength": 9,
+			"dexterity": 20,
+			"constitution": 10,
+			"intelligence": 15,
+			"wisdom": 16,
+			"charisma": 16,
+		},
+		"skills": ["acrobatics", "deception", "insight", "perception", "sleight_of_hand", "stealth"],
+		"saving_throws": ["dexterity", "intelligence"],
+	},
+	{
+		"character_name": "Gnomey",
+		"player_name": "Nekdo",
+		"card_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
+		"sheet_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
+		"class": db.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
+		"race": db.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
+		"background": db.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
+		"level": 2,
+		"ability_scores": {
+			"strength": 12,
+			"dexterity": 15,
+			"constitution": 13,
+			"intelligence": 16,
+			"wisdom": 8,
+			"charisma": 10,
+		},
+		"skills": ["arcana", "deception", "investigation", "sleight_of_hand", "stealth"],
+		"saving_throws": ["dexterity", "intelligence"],
+	}
+];
+db.character.insertMany(characters);
+print(db.character.countDocuments() + " characters inserted");
