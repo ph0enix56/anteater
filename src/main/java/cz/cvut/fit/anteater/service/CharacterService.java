@@ -4,32 +4,45 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+
+import com.mongodb.DBRef;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.dto.CharacterInfo;
+import cz.cvut.fit.anteater.model.dto.CharacterInput;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
 import cz.cvut.fit.anteater.model.dto.SkillStats;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.SkillAbilities;
+import cz.cvut.fit.anteater.repository.BackgroundRepository;
 import cz.cvut.fit.anteater.repository.DndCharacterRepository;
+import cz.cvut.fit.anteater.repository.DndClassRepository;
+import cz.cvut.fit.anteater.repository.RaceRepository;
 
 @Service
 public class CharacterService {
-	private DndCharacterRepository repository;
+	private DndCharacterRepository repo;
+	private DndClassRepository classRepo;
+	private RaceRepository raceRepo;
+	private BackgroundRepository backgroundRepo;
 
-	public CharacterService(DndCharacterRepository repository) {
-		this.repository = repository;
+	public CharacterService(DndCharacterRepository repository, DndClassRepository classRepository, RaceRepository raceRepository, BackgroundRepository backgroundRepository) {
+		this.repo = repository;
+		this.classRepo = classRepository;
+		this.raceRepo = raceRepository;
+		this.backgroundRepo = backgroundRepository;
 	}
 
 	public List<CharacterInfo> getCharacterInfos() {
-		return repository.findAllCharacterInfosBy();
+		return repo.findAllCharacterInfosBy();
 	}
 
 	public CharacterInfo getCharacterInfo(String id) {
-		return repository.findCharacterInfoById(id).orElse(null);
+		return repo.findCharacterInfoById(id).orElse(null);
 	}
 
 	public Integer getAbilityModifier(Integer abilityScore) {
@@ -62,7 +75,7 @@ public class CharacterService {
 	}
 
 	public CharacterStats getCharacterStats(String id) {
-		DndCharacter c = repository.findById(id).orElseThrow();
+		DndCharacter c = repo.findById(id).orElseThrow();
 		var builder = CharacterStats.builder()
 			.id(c.getId())
 			.proficiency_bonus(getProficiencyBonus(c.getLevel()))
@@ -91,5 +104,26 @@ public class CharacterService {
 		builder.skills(skills);
 		builder.saving_throws(saves);
 		return builder.build();
+	}
+
+	public DndCharacter saveCharacter(CharacterInput in, Boolean isUpdate) {
+		if (in == null) throw new IllegalArgumentException("Entity cannot be null");
+		//if (isUpdate != repository.existsById(in.getId())) throw new IllegalArgumentException("Invalid create/update operation");
+		DndCharacter c = DndCharacter.builder()
+			.characterName(in.getCharacterName())
+			.playerName(in.getPlayerName())
+			.cardPhotoUrl(in.getCardPhotoUrl())
+			.sheetPhotoUrl(in.getSheetPhotoUrl())
+			.level(in.getLevel())
+			.abilities(in.getAbilityScores())
+			.skills(in.getSkills())
+			.saves(in.getSavingThrows())
+			.dndClass(classRepo.findById(in.getDndClass()).orElseThrow(() -> new IllegalArgumentException("Invalid class id")))
+			.race(raceRepo.findById(in.getRace()).orElseThrow(() -> new IllegalArgumentException("Invalid race id")))
+			.background(backgroundRepo.findById(in.getBackground()).orElseThrow(() -> new IllegalArgumentException("Invalid background id")))
+			.build();
+		if (isUpdate) c.setId(in.getId());
+		System.out.println("Saving character: " + c);
+		return repo.save(c);
 	}
 }

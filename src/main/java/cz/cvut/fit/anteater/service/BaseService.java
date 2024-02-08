@@ -3,6 +3,7 @@ package cz.cvut.fit.anteater.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import cz.cvut.fit.anteater.model.entity.Source;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
@@ -27,7 +28,8 @@ public abstract class BaseService<T extends SourceableEntity> {
 	}
 
 	public T findById(String id) {
-		return repository.findById(id).orElse(null);
+		if (id == null) throw new IllegalArgumentException("ID cannot be null");
+		return repository.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 	}
 
 	public List<T> findByName(String name) {
@@ -38,10 +40,10 @@ public abstract class BaseService<T extends SourceableEntity> {
 	private List<Source> convertSources(List<String> sourceIds) {
 		List<Source> sourceList = new ArrayList<>();
 		for (String source : sourceIds) {
+			if (source == null) continue;
 			Optional<Source> s = sourceRepository.findById(source);
 			if (s.isPresent()) sourceList.add(s.get());
 		}
-		System.out.println("Searching for sources: " + sourceList);
 		return sourceList;
 	}
 
@@ -56,11 +58,15 @@ public abstract class BaseService<T extends SourceableEntity> {
 		return repository.findByNameAndSourceIn(name, convertSources(sourceIds));
 	}
 
-	public T save(T entity) {
+	public T save(T entity, Boolean isUpdate) {
+		if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
+		if (isUpdate != repository.existsById(entity.getId())) throw new IllegalArgumentException("Invalid create/update operation");
 		return repository.save(entity);
 	}
 
-	public void delete(T entity) {
-		repository.delete(entity);
+	public void delete(String id) {
+		if (id == null) throw new IllegalArgumentException("ID cannot be null");
+		if (!repository.existsById(id)) throw new NoSuchElementException("Entity with given ID not found");
+		repository.deleteById(id);
 	}
 }

@@ -52,5 +52,3 @@ public class DndCharacter {
 	@Field("saving_throws")
 	private HashSet<Ability> saves;
 }
-
-
