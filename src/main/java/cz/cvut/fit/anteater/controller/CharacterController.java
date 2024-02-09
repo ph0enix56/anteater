@@ -2,9 +2,11 @@ package cz.cvut.fit.anteater.controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +52,6 @@ public class CharacterController {
 	public DndCharacter createCharacter(@RequestBody CharacterInput entity) {
 		try {
 			if (entity.getId() != null) throw new IllegalArgumentException("ID must be null");
-			System.out.println("Got input:" + entity);
 			return characterService.saveCharacter(entity, false);
 		} catch (IllegalArgumentException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -60,10 +61,23 @@ public class CharacterController {
 	@PutMapping("/{id}")
 	public DndCharacter updateCharacter(@PathVariable String id, @RequestBody CharacterInput entity) {
 		try {
-			if (id != entity.getId()) throw new IllegalArgumentException("ID in path and body do not match");
+			if (entity.getId() == null) throw new IllegalArgumentException("ID cannot be null");
+			if (!Objects.equals(id, entity.getId())) throw new IllegalArgumentException("ID in path and body must match");
 			return characterService.saveCharacter(entity, true);
 		} catch (IllegalArgumentException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		} catch (NoSuchElementException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
+	}
+
+	@DeleteMapping("/{id}")
+	public String deleteCharacter(@PathVariable String id) {
+		try {
+			characterService.deleteCharacter(id);
+			return "Character deleted";
+		} catch (IllegalArgumentException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}

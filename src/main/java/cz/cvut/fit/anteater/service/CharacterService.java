@@ -2,12 +2,10 @@ package cz.cvut.fit.anteater.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-
-import com.mongodb.DBRef;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Skill;
@@ -108,7 +106,6 @@ public class CharacterService {
 
 	public DndCharacter saveCharacter(CharacterInput in, Boolean isUpdate) {
 		if (in == null) throw new IllegalArgumentException("Entity cannot be null");
-		//if (isUpdate != repository.existsById(in.getId())) throw new IllegalArgumentException("Invalid create/update operation");
 		DndCharacter c = DndCharacter.builder()
 			.characterName(in.getCharacterName())
 			.playerName(in.getPlayerName())
@@ -122,8 +119,16 @@ public class CharacterService {
 			.race(raceRepo.findById(in.getRace()).orElseThrow(() -> new IllegalArgumentException("Invalid race id")))
 			.background(backgroundRepo.findById(in.getBackground()).orElseThrow(() -> new IllegalArgumentException("Invalid background id")))
 			.build();
-		if (isUpdate) c.setId(in.getId());
-		System.out.println("Saving character: " + c);
+		if (isUpdate) {
+			if (repo.existsById(in.getId()) == false) throw new IllegalArgumentException("Invalid update: entity does not exist"); 
+			c.setId(in.getId());
+		}
 		return repo.save(c);
+	}
+
+	public void deleteCharacter(String id) {
+		if (id == null) throw new IllegalArgumentException("ID cannot be null");
+		if (repo.existsById(id) == false) throw new NoSuchElementException("Entity with given ID not found");
+		repo.deleteById(id);
 	}
 }

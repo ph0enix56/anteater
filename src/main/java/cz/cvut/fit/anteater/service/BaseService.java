@@ -33,7 +33,6 @@ public abstract class BaseService<T extends SourceableEntity> {
 	}
 
 	public List<T> findByName(String name) {
-		System.out.println("Searching for name: \"" + name + "\"");
 		return repository.findByName(name);
 	}
 

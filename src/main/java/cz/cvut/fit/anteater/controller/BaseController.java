@@ -25,7 +25,7 @@ public abstract class BaseController<T extends SourceableEntity> {
 	public Iterable<T> search(@RequestParam(required = false) String name, @RequestParam(required = false) List<String> sources) {
 		try { return baseService.findByNameAndSources(name, sources); }
 		catch (IllegalArgumentException e) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage()); }
-	}	
+	}
 
 	@GetMapping("/{id}")
 	public T getById(@PathVariable String id) {
