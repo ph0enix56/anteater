@@ -1,11 +1,11 @@
-package cz.cvut.fit.anteater.entity;
+package cz.cvut.fit.anteater.model.entity;
 
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-// TODO: needs proper mapping and annotations
+// TODO: this was just a test - will need complete redo once we start implementing spells
 public class Spell {
 	@Id
 	public String id;
