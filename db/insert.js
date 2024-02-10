@@ -151,7 +151,7 @@ let races = [
 		"sizes": ["medium"],
 		"languages": {
 			"amount": 2,
-			"defaults": [ db.tool.findOne({ "name": "Common" }), db.tool.findOne({ "name": "Elvish" }) ],
+			"defaults": [ db.language.findOne({ "name": "Common" }), db.language.findOne({ "name": "Elvish" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 1,
@@ -175,7 +175,7 @@ let races = [
 		"sizes": ["small", "medium"],
 		"languages": {
 			"amount": 3,
-			"defaults": [ db.tool.findOne({ "name": "Common" }) ],
+			"defaults": [ db.language.findOne({ "name": "Common" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 0,
@@ -196,28 +196,32 @@ let races = [
 		"description": "A constant hum of busy activity pervades the warrens and neighborhoods where gnomes form their close-knit communities. Louder sounds punctuate the hum: a crunch of grinding gears here, a minor explosion there, a yelp of surprise or triumph, and especially bursts of laughter. Gnomes take delight in life, enjoying every moment of invention, exploration, investigation, creation, and play.",
 		"features": [
 			{
-				"name": "Darkvision",
+				"title": "Darkvision",
 				"levelMinimum": 1,
 				"text": "Accustomed to life underground, you can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
 			},
 			{
-				"name": "Gnome Cunning",
+				"title": "Gnome Cunning",
 				"levelMinimum": 1,
 				"text": "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."
 			},
 			{
-				"name": "Natural Illusionist",
+				"title": "Natural Illusionist",
 				"levelMinimum": 1,
 				"text": "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it."
 			},
 			{
-				"name": "Speak with Small Beasts",
+				"title": "Speak with Small Beasts",
 				"levelMinimum": 1,
 				"text": "Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets."
 			}
 		],
 		"speed": 25,
 		"sizes": ["small"],
+		"languages": {
+			"amount": 1,
+			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+		},
 		"abilities_plus_2": {
 			"amount": 1,
 			"defaults": ["dexterity"]
