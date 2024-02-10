@@ -1,5 +1,6 @@
 package cz.cvut.fit.anteater.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -16,6 +17,7 @@ import cz.cvut.fit.anteater.model.dto.SkillStats;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.SkillAbilities;
+import cz.cvut.fit.anteater.model.value.TextFeature;
 import cz.cvut.fit.anteater.repository.BackgroundRepository;
 import cz.cvut.fit.anteater.repository.DndCharacterRepository;
 import cz.cvut.fit.anteater.repository.DndClassRepository;
@@ -102,6 +104,16 @@ public class CharacterService {
 		builder.skills(skills);
 		builder.saving_throws(saves);
 		return builder.build();
+	}
+
+	public List<TextFeature> getCharacterFeatures(String id, Boolean allLevels) {
+		DndCharacter c = repo.findById(id).orElseThrow();
+		List<TextFeature> features = new ArrayList<>();
+		features.addAll(c.getBackground().getFeatures());
+		features.addAll(c.getRace().getFeatures());
+		features.addAll(c.getDndClass().getFeatures());
+		if (!allLevels) features.removeIf(f -> f.getLevelMinimum() > c.getLevel());
+		return features;
 	}
 
 	public DndCharacter saveCharacter(CharacterInput in, Boolean isUpdate) {

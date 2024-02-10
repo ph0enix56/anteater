@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,6 +18,7 @@ import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
+import cz.cvut.fit.anteater.model.value.TextFeature;
 import cz.cvut.fit.anteater.service.CharacterService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,6 +48,12 @@ public class CharacterController {
 	@GetMapping("/{id}/stats")
 	public CharacterStats getCharacterStats(@PathVariable String id) {
 		return characterService.getCharacterStats(id);
+	}
+
+	@GetMapping("/{id}/features")
+	public List<TextFeature> getCharacterFeatures(@PathVariable String id, @RequestParam(required = false) Boolean all) {
+		if (all == null) all = false;
+		return characterService.getCharacterFeatures(id, all);
 	}
 
 	@PostMapping()
