@@ -2,6 +2,7 @@ package cz.cvut.fit.anteater.model.entity;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +10,9 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
+import cz.cvut.fit.anteater.enumeration.Size;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.model.value.Proficiency;
 import lombok.Builder;
 import lombok.Data;
 
@@ -32,12 +35,19 @@ public class DndCharacter {
 	@Field("sheet_photo_url")
 	private String sheetPhotoUrl;
 
+	@DocumentReference
+	private List<Source> sources;
+
 	@Field("class")
 	@DocumentReference
 	private DndClass dndClass;
 
+	private String subclass;
+
 	@DocumentReference
 	private Race race;
+
+	private Size size;
 
 	@DocumentReference
 	private Background background;
@@ -46,9 +56,13 @@ public class DndCharacter {
 
 	@Field("ability_scores")
 	private HashMap<Ability, Integer> abilities;
-	
+
 	private HashSet<Skill> skills;
 
 	@Field("saving_throws")
 	private HashSet<Ability> saves;
+
+	private List<Proficiency<Tool>> tools;
+
+	private List<Proficiency<Language>> languages;
 }

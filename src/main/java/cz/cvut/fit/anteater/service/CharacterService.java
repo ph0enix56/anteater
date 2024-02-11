@@ -77,13 +77,13 @@ public class CharacterService {
 	public CharacterStats getCharacterStats(String id) {
 		DndCharacter c = repo.findById(id).orElseThrow();
 		var builder = CharacterStats.builder()
-			.proficiency_bonus(getProficiencyBonus(c.getLevel()))
+			.proficiencyBonus(getProficiencyBonus(c.getLevel()))
 			.initiative(getAbilityModifier(c.getAbilities().get(Ability.dexterity)))
 			.speed(c.getRace().getSpeed())
-			.hit_dice(c.getDndClass().getHitDice())
-			.hit_points(getHitPoints(c.getDndClass().getHitDice(), c.getAbilities().get(Ability.constitution), c.getLevel()))
-			.armor_class(99)
-			.ability_scores(c.getAbilities());
+			.hitDice(c.getDndClass().getHitDice())
+			.hitPoints(getHitPoints(c.getDndClass().getHitDice(), c.getAbilities().get(Ability.constitution), c.getLevel()))
+			.armorClass(99)
+			.abilityScores(c.getAbilities());
 
 		Map<Skill, SkillStats> skills = new TreeMap<>();
 		for (Skill sk : Skill.values()) {
@@ -101,7 +101,9 @@ public class CharacterService {
 		}
 
 		builder.skills(skills);
-		builder.saving_throws(saves);
+		builder.savingThrows(saves);
+		builder.tools(c.getTools());
+		builder.languages(c.getLanguages());
 		return builder.build();
 	}
 
