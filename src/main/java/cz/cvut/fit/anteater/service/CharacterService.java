@@ -77,7 +77,6 @@ public class CharacterService {
 	public CharacterStats getCharacterStats(String id) {
 		DndCharacter c = repo.findById(id).orElseThrow();
 		var builder = CharacterStats.builder()
-			.id(c.getId())
 			.proficiency_bonus(getProficiencyBonus(c.getLevel()))
 			.initiative(getAbilityModifier(c.getAbilities().get(Ability.dexterity)))
 			.speed(c.getRace().getSpeed())

@@ -2,7 +2,6 @@ package cz.cvut.fit.anteater.model.dto;
 
 public interface CharacterInfo {
 
-	String getId();
 	String getCharacterName();
 	String getPlayerName();
 	String getCardPhotoUrl();

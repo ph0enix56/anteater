@@ -2,7 +2,6 @@ package cz.cvut.fit.anteater.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.NoSuchElementException;
 
 import cz.cvut.fit.anteater.model.entity.Source;
@@ -39,14 +38,13 @@ public abstract class BaseService<T extends SourceableEntity> {
 	private List<Source> convertSources(List<String> sourceIds) {
 		List<Source> sourceList = new ArrayList<>();
 		for (String source : sourceIds) {
-			if (source == null) continue;
-			Optional<Source> s = sourceRepository.findById(source);
-			if (s.isPresent()) sourceList.add(s.get());
+			sourceList.add(sourceRepository.findById(source).orElseThrow(() -> new IllegalArgumentException("Source with given ID not found")));
 		}
 		return sourceList;
 	}
 
 	public List<T> findBySourceList(List<String> sourceIds) {
+		if (sourceIds.isEmpty()) return findAll();
 		return repository.findBySourceIn(convertSources(sourceIds));
 	}
 

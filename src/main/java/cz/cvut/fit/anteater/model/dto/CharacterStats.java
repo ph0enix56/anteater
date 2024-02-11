@@ -11,8 +11,6 @@ import lombok.Data;
 @Data
 @Builder
 public class CharacterStats {
-	private String id;
-
 	private Integer speed;
 
 	private Integer initiative;
