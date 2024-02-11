@@ -520,7 +520,61 @@ let classes = [
 				"text": "Wait for it..."
 			}
 		]
-	}
+	},
+	{
+		"name": "Barbar",
+		"source": sourceEXP1,
+		"description": "A fierce warrior of primitive background who can enter a battle rage",
+		"hitDice": { "amount": 1, "sides": 12 },
+		"subclasses": ["Berserker", "Totem Warrior", "Ancestral Guardian", "Storm Herald", "Zealot"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": {
+			"amount": 2,
+			"defaults": ["strength", "constitution"]
+		},
+		"tools": {
+			"amount": 3,
+			"defaults": [
+				db.tool.findOne({ "name": "Alchemist's supplies" }),
+				db.tool.findOne({ "name": "Brewer's supplies" }),
+			]
+		},
+		"features": [
+			{
+				"title": "Rage",
+				"levelMinimum": 1,
+				"text": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. While raging, you gain the following benefits if you aren't wearing heavy armor: [Paragraphed text would follow here.]",
+			},
+			{
+				"title": "Unarmored Defense",
+				"levelMinimum": 1,
+				"text": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+			},
+			{
+				"title": "Reckless Attack",
+				"levelMinimum": 2,
+				"text": "Starting at 2nd level, you can throw aside all concern for defense to attack with fierce desperation. When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn."
+			},
+			{
+				"title": "Extra Attack",
+				"levelMinimum": 5,
+				"text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn."
+			},
+			{
+				"title": "Feral Instinct",
+				"levelMinimum": 7,
+				"text": "By 7th level, your instincts are so honed that you have advantage on initiative rolls. [Paragraph break here - TODO.] Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn."
+			},
+			{
+				"title": "Primal Champion",
+				"levelMinimum": 20,
+				"text": "At 20th level, you embody the power of the wilds. Your Strength and Constitution scores increase by 4. Your maximum for those scores is now 24."
+			}
+		]
+	},
 ]
 db.dndClass.insertMany(classes);
 print(db.dndClass.countDocuments() + " classes inserted");
@@ -546,6 +600,30 @@ let characters = [
 		},
 		"skills": ["athletics", "perception", "religion", "survival"],
 		"saving_throws": ["strength", "constitution"],
+		"tools": [
+			{
+				"item": db.tool.findOne({ "name": "Calligrapher's supplies" }),
+				"from": "background"
+			},
+			{
+				"item": db.tool.findOne({ "name": "Playing card set" }),
+				"from": "dndClass"
+			}
+		],
+		"languages": [
+			{
+				"item": db.language.findOne({ "name": "Common" }),
+				"from": "race"
+			},
+			{
+				"item": db.language.findOne({ "name": "Dwarvish" }),
+				"from": "race"
+			}
+		],
+		"testik": {
+			"item": db.tool.findOne({ "name": "Calligrapher's supplies" }),
+			"from": "background"	
+		}
 	},
 	{
 		"character_name": "Cool elfka",
@@ -567,6 +645,22 @@ let characters = [
 		},
 		"skills": ["acrobatics", "deception", "insight", "perception", "sleight_of_hand", "stealth"],
 		"saving_throws": ["dexterity", "intelligence"],
+		"tools": [
+			{
+				"item": db.tool.findOne({ "name": "Bagpipes" }),
+				"from": "background"
+			},
+		],
+		"languages": [
+			{
+				"item": db.language.findOne({ "name": "Common" }),
+				"from": "race"
+			},
+			{
+				"item": db.language.findOne({ "name": "Elvish" }),
+				"from": "background"
+			}
+		]
 	},
 	{
 		"character_name": "Gnomey",
@@ -588,6 +682,25 @@ let characters = [
 		},
 		"skills": ["arcana", "deception", "investigation", "sleight_of_hand", "stealth"],
 		"saving_throws": ["dexterity", "intelligence"],
+		"tools": [],
+		"languages": [
+			{
+				"item": db.language.findOne({ "name": "Common" }),
+				"from": "race"
+			},
+			{
+				"item": db.language.findOne({ "name": "Halfling" }),
+				"from": "race"
+			},
+			{
+				"item": db.language.findOne({ "name": "Draconic" }),
+				"from": "background"
+			},
+			{
+				"item": db.language.findOne({ "name": "Undercommon" }),
+				"from": "background"
+			}
+		]
 	}
 ];
 db.character.insertMany(characters);
