@@ -58,11 +58,23 @@ let vehicleTools = [
 	"Vehicles (land)",
 	"Vehicles (water)",
 ];
+let exp1Tools = [
+	"Test tool 1",
+	"Test tool 2",
+	"Test tool 3",
+];
+let exp2Tools = [
+	"Another tool 1",
+	"Another tool 2",
+	"Another tool 3",
+];
 db.tool.insertMany(artisanTools.map(tool => { return { "name": tool, "type": "artisan", "source": sourceSRD } }));
 db.tool.insertMany(instrumentTools.map(tool => { return { "name": tool, "type": "instrument", "source": sourceSRD } }));
 db.tool.insertMany(gamingTools.map(tool => { return { "name": tool, "type": "gaming", "source": sourceSRD } }));
 db.tool.insertMany(otherTools.map(tool => { return { "name": tool, "type": "other", "source": sourceSRD } }));
 db.tool.insertMany(vehicleTools.map(tool => { return { "name": tool, "type": "vehicle", "source": sourceSRD } }));
+db.tool.insertMany(exp1Tools.map(tool => { return { "name": tool, "type": "other", "source": sourceEXP1 } }));
+db.tool.insertMany(exp2Tools.map(tool => { return { "name": tool, "type": "other", "source": sourceEXP2 } }));
 print(db.tool.countDocuments() + " tools inserted");
 
 let languagesBasic = [
@@ -135,7 +147,76 @@ let backgrounds = [
 			"amount": 1,
 			"defaults": [],
 		},
-	}
+	},
+	{
+		"name": "Acolyte new",
+		"source": sourceEXP1,
+		"description": "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices in order to conduct worshipers into the presence of the divine.",
+		"features": [
+			{"title": "Shelter of the Faithful", "levelMinimum": 1, "text": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle."},
+		],
+		"skills": {
+			"amount": 2,
+			"defaults": [
+				"insight",
+				"religion",
+			],
+		},
+		"tools": {
+			"amount": 1,
+			"defaults": [],
+		},
+		"languages": {
+			"amount": 2,
+			"defaults": [],
+		},
+	},
+	{
+		"name": "Random dude",
+		"source": sourceEXP2,
+		"description": "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices in order to conduct worshipers into the presence of the divine.",
+		"features": [
+			{"title": "Some feature", "levelMinimum": 1, "text": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle."},
+		],
+		"skills": {
+			"amount": 2,
+			"defaults": [
+				"insight",
+				"religion",
+			],
+		},
+		"tools": {
+			"amount": 1,
+			"defaults": [],
+		},
+		"languages": {
+			"amount": 2,
+			"defaults": [],
+		},
+	},
+	{
+		"name": "Another background",
+		"source": sourceEXP1,
+		"description": "This is a background that is not the same as the others. It is different and unique.",
+		"features": [
+			{"title": "Shelter of the Faithful", "levelMinimum": 1, "text": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle."},
+		],
+		"skills": {
+			"amount": 2,
+			"defaults": [
+				"acrobatics",
+				"athletics",
+			],
+		},
+		"tools": {
+			"amount": 2,
+			"defaults": [],
+		},
+		"languages": {
+			"amount": 0,
+			"defaults": [],
+		},
+	},
 ];
 db.background.insertMany(backgrounds);
 print(db.background.countDocuments() + " backgrounds inserted");
@@ -168,6 +249,30 @@ let races = [
 	},
 	{
 		"name": "Human (test)",
+		"source": sourceEXP1,
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam ni",
+		"features": [],
+		"speed": 25,
+		"sizes": ["small", "medium"],
+		"languages": {
+			"amount": 3,
+			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+		},
+		"abilities_plus_2": {
+			"amount": 0,
+			"defaults": [],
+		},
+		"abilities_plus_1": {
+			"amount": 6,
+			"defaults": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
+		},
+		"skills": {
+			"amount": 0,
+			"defaults": [],
+		}
+	},
+	{
+		"name": "Human (test) 2",
 		"source": sourceEXP1,
 		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam ni",
 		"features": [],
@@ -234,7 +339,55 @@ let races = [
 			"amount": 0,
 			"defaults": []
 		}
-	}
+	},
+	{
+		"name": "Human 2",
+		"source": sourceEXP2,
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam ni",
+		"features": [],
+		"speed": 25,
+		"sizes": ["small", "medium"],
+		"languages": {
+			"amount": 3,
+			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+		},
+		"abilities_plus_2": {
+			"amount": 0,
+			"defaults": [],
+		},
+		"abilities_plus_1": {
+			"amount": 6,
+			"defaults": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
+		},
+		"skills": {
+			"amount": 0,
+			"defaults": [],
+		}
+	},
+	{
+		"name": "Human 3",
+		"source": sourceEXP2,
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam ni",
+		"features": [],
+		"speed": 25,
+		"sizes": ["small", "medium"],
+		"languages": {
+			"amount": 3,
+			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+		},
+		"abilities_plus_2": {
+			"amount": 0,
+			"defaults": [],
+		},
+		"abilities_plus_1": {
+			"amount": 6,
+			"defaults": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
+		},
+		"skills": {
+			"amount": 0,
+			"defaults": [],
+		}
+	},
 ]
 db.race.insertMany(races);
 print(db.race.countDocuments() + " races inserted");
@@ -331,6 +484,42 @@ let classes = [
 				"text": "By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws."
 			}
 		]
+	},
+	{
+		"name": "Wizard",
+		"source": sourceEXP1,
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam ni",
+		"hitDice": { "amount": 1, "sides": 6 },
+		"subclasses": ["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": {
+			"amount": 2,
+			"defaults": ["intelligence", "wisdom"]
+		},
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"features": [
+			{
+				"title": "Spellcasting",
+				"levelMinimum": 1,
+				"text": "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power."
+			},
+			{
+				"title": "Arcane Recovery",
+				"levelMinimum": 1,
+				"text": "Je to fakt super."
+			},
+			{
+				"title": "Spell Mastery",
+				"levelMinimum": 18,
+				"text": "Wait for it..."
+			}
+		]
 	}
 ]
 db.dndClass.insertMany(classes);
@@ -342,6 +531,7 @@ let characters = [
 		"player_name": "Filip",
 		"card_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
 		"sheet_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
+		"sources": [sourceSRD._id, sourceEXP1._id],
 		"class": db.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
 		"race": db.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
 		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
@@ -362,6 +552,7 @@ let characters = [
 		"player_name": "Nekdo",
 		"card_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
 		"sheet_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
+		"sources": [sourceSRD._id],
 		"class": db.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
 		"race": db.race.findOne({ "name": "Human (test)" }, { "_id": 1 })._id,
 		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
@@ -382,6 +573,7 @@ let characters = [
 		"player_name": "Nekdo",
 		"card_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
 		"sheet_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
+		"sources": [sourceSRD._id, sourceEXP2._id],
 		"class": db.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
 		"race": db.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
 		"background": db.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
