@@ -18,10 +18,11 @@ import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.service.CharacterService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -49,7 +50,7 @@ public class CharacterController {
 	}
 
 	@PostMapping()
-	public DndCharacter createCharacter(@RequestBody CharacterInput entity) {
+	public DndCharacter createCharacter(@RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() != null) throw new IllegalArgumentException("ID must be null");
 			return characterService.saveCharacter(entity, false);
@@ -59,7 +60,7 @@ public class CharacterController {
 	}
 
 	@PutMapping("/{id}")
-	public DndCharacter updateCharacter(@PathVariable String id, @RequestBody CharacterInput entity) {
+	public DndCharacter updateCharacter(@PathVariable String id, @RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() == null) throw new IllegalArgumentException("ID cannot be null");
 			if (!Objects.equals(id, entity.getId())) throw new IllegalArgumentException("ID in path and body must match");
