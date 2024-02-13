@@ -16,6 +16,7 @@ public interface CharacterInfo {
 	ClassInfo getDndClass();
 	RaceInfo getRace();
 	BackgroundInfo getBackground();
+	String getSubclass();
 
 	interface ClassInfo { String getId(); String getName(); }
 	interface RaceInfo { String getId(); String getName(); }

@@ -65,4 +65,6 @@ public class DndCharacter {
 	private List<Proficiency<Tool>> tools;
 
 	private List<Proficiency<Language>> languages;
+
+	private Armor armor;
 }

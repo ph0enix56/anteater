@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.model.entity.Armor;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -40,6 +41,8 @@ public class CharacterInput {
 	@NotEmpty
 	private String background;
 
+	private String subclass;
+
 	@NotNull
 	@Range(min = 1, max = 20)
 	private Integer level;
@@ -52,4 +55,6 @@ public class CharacterInput {
 	private HashSet<Skill> skillProficiencies;
 
 	private HashSet<Ability> saveProficiencies;
+
+	private Armor armor;
 }

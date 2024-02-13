@@ -8,6 +8,7 @@ db.background.drop();
 db.race.drop();
 db.dndClass.drop();
 db.character.drop();
+db.armor.drop();
 
 let sources = [
 	{
@@ -579,6 +580,117 @@ let classes = [
 db.dndClass.insertMany(classes);
 print(db.dndClass.countDocuments() + " classes inserted");
 
+let armor = [
+	{
+		"name": "Leather Armor",
+		"source": sourceSRD,
+		"type": "light",
+		"baseArmorClass": 11,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 }
+		],
+		"description": "Nice and light armor"
+	},
+	{
+		"name": "Chain Shirt",
+		"source": sourceSRD,
+		"type": "medium",
+		"baseArmorClass": 13,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 2 }
+		],
+		"description": "Light and flexible armor"
+	},
+	{
+		"name": "Chain Mail",
+		"source": sourceSRD,
+		"type": "heavy",
+		"baseArmorClass": 16,
+		"strengthRequirement": 13,
+		"stealthDisadvantage": true,
+		"bonuses": [],
+		"description": "Heavy and noisy armor"
+	},
+	{
+		"name": "Plate Armor",
+		"source": sourceSRD,
+		"type": "heavy",
+		"baseArmorClass": 18,
+		"strengthRequirement": 15,
+		"stealthDisadvantage": true,
+		"bonuses": [],
+		"description": "Heavy and noisy armor"
+	},
+	{
+		"name": "Test Armor",
+		"source": sourceEXP1,
+		"type": "light",
+		"baseArmorClass": 12,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 }
+		],
+		"description": "Light and testy armor"
+	},
+	{
+		"name": "Another Armor",
+		"source": sourceEXP2,
+		"type": "medium",
+		"baseArmorClass": 14,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 }
+		],
+		"description": "Medium and testy armor"
+	},
+	{
+		"name": "Unarmored",
+		"source": sourceSRD,
+		"type": "unarmored",
+		"baseArmorClass": 10,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 }
+		],
+		"description": "No armor at all"
+	},
+	{
+		"name": "Unarmored Defense (Barbarian)",
+		"source": sourceSRD,
+		"type": "unarmored",
+		"baseArmorClass": 10,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 },
+			{ "ability": "constitution", "max": 10 }
+		],
+		"description": "No armor at all for barbarians"
+	},
+	{
+		"name": "Unarmored Defense (Monk)",
+		"source": sourceSRD,
+		"type": "unarmored",
+		"baseArmorClass": 10,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 },
+			{ "ability": "wisdom", "max": 10 }
+		],
+		"description": "No armor at all for monks"
+	}
+];
+db.armor.insertMany(armor);
+print(db.armor.countDocuments() + " armor sets inserted");
+
 let characters = [
 	{
 		"character_name": "Test Character",
@@ -589,10 +701,11 @@ let characters = [
 		"class": db.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
 		"race": db.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
 		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
+		"subclass": "Totem Warrior",
 		"level": 3,
 		"ability_scores": {
 			"strength": 16,
-			"dexterity": 11,
+			"dexterity": 13,
 			"constitution": 16,
 			"intelligence": 8,
 			"wisdom": 9,
@@ -620,10 +733,7 @@ let characters = [
 				"from": "race"
 			}
 		],
-		"testik": {
-			"item": db.tool.findOne({ "name": "Calligrapher's supplies" }),
-			"from": "background"	
-		}
+		"armor": db.armor.findOne({ "name": "Chain Mail", "source": sourceSRD }),
 	},
 	{
 		"character_name": "Cool elfka",
@@ -635,6 +745,7 @@ let characters = [
 		"race": db.race.findOne({ "name": "Human (test)" }, { "_id": 1 })._id,
 		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
 		"level": 11,
+		"subclass": "Thief",
 		"ability_scores": {
 			"strength": 9,
 			"dexterity": 20,
@@ -660,7 +771,8 @@ let characters = [
 				"item": db.language.findOne({ "name": "Elvish" }),
 				"from": "background"
 			}
-		]
+		],
+		"armor": db.armor.findOne({ "name": "Chain Shirt", "source": sourceSRD }),
 	},
 	{
 		"character_name": "Gnomey",
@@ -671,6 +783,7 @@ let characters = [
 		"class": db.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
 		"race": db.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
 		"background": db.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
+		"subclass": "Arcane Trickster",
 		"level": 2,
 		"ability_scores": {
 			"strength": 12,
@@ -700,7 +813,8 @@ let characters = [
 				"item": db.language.findOne({ "name": "Undercommon" }),
 				"from": "background"
 			}
-		]
+		],
+		"armor": db.armor.findOne({ "name": "Leather Armor", "source": sourceSRD }),
 	}
 ];
 db.character.insertMany(characters);

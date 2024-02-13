@@ -14,6 +14,7 @@ import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
 import cz.cvut.fit.anteater.model.dto.SkillStats;
+import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.SkillAbilities;
@@ -74,6 +75,14 @@ public class CharacterService {
 		return proficient ? modifier + getProficiencyBonus(level) : modifier;
 	}
 
+	public Integer getArmorClass(Armor armor, Map<Ability, Integer> abilityScores) {
+		Integer result = armor.getBaseArmorClass();
+		for (var i : armor.getBonuses()) {
+			result += Math.min(i.getMax(), getAbilityModifier(abilityScores.get(i.getAbility())));
+		}
+		return result;
+	}
+
 	public CharacterStats getCharacterStats(String id) {
 		DndCharacter c = repo.findById(id).orElseThrow();
 		var builder = CharacterStats.builder()
@@ -82,7 +91,7 @@ public class CharacterService {
 			.speed(c.getRace().getSpeed())
 			.hitDice(c.getDndClass().getHitDice())
 			.hitPoints(getHitPoints(c.getDndClass().getHitDice(), c.getAbilities().get(Ability.constitution), c.getLevel()))
-			.armorClass(99)
+			.armorClass(getArmorClass(c.getArmor(), c.getAbilities()))
 			.abilityScores(c.getAbilities());
 
 		Map<Skill, SkillStats> skills = new TreeMap<>();
@@ -131,6 +140,7 @@ public class CharacterService {
 			.dndClass(classRepo.findById(in.getDndClass()).orElseThrow(() -> new IllegalArgumentException("Invalid class id")))
 			.race(raceRepo.findById(in.getRace()).orElseThrow(() -> new IllegalArgumentException("Invalid race id")))
 			.background(backgroundRepo.findById(in.getBackground()).orElseThrow(() -> new IllegalArgumentException("Invalid background id")))
+			.subclass(in.getSubclass())
 			.build();
 		if (isUpdate) {
 			if (repo.existsById(in.getId()) == false) throw new IllegalArgumentException("Invalid update: entity does not exist"); 
