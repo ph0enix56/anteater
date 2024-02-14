@@ -2,6 +2,7 @@ package cz.cvut.fit.anteater.model.dto;
 
 import java.util.List;
 
+import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Source;
 
 public interface CharacterInfo {
@@ -17,6 +18,7 @@ public interface CharacterInfo {
 	RaceInfo getRace();
 	BackgroundInfo getBackground();
 	String getSubclass();
+	Armor getArmor();
 
 	interface ClassInfo { String getId(); String getName(); }
 	interface RaceInfo { String getId(); String getName(); }
