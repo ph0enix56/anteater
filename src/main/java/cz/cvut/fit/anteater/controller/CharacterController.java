@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
-import cz.cvut.fit.anteater.model.dto.CharacterStats;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.service.CharacterService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -38,18 +39,18 @@ public class CharacterController {
 		return characterService.getCharacterInfos();
 	}
 
-	@GetMapping("/{id}/info")
-	public CharacterInfo getCharacterInfo(@PathVariable String id) {
-		return characterService.getCharacterInfo(id);
-	}
-
-	@GetMapping("/{id}/stats")
-	public CharacterStats getCharacterStats(@PathVariable String id) {
-		return characterService.getCharacterStats(id);
+	@GetMapping("/{id}")
+	public CharacterComplete getCharacterInfo(@PathVariable String id) {
+		return CharacterComplete.builder()
+			.id(id)
+			.info(characterService.getCharacterInfo(id))
+			.stats(characterService.getCharacterStats(id))
+			.features(characterService.getCharacterFeatures(id, false))
+			.build();
 	}
 
 	@PostMapping()
-	public DndCharacter createCharacter(@RequestBody CharacterInput entity) {
+	public DndCharacter createCharacter(@RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() != null) throw new IllegalArgumentException("ID must be null");
 			return characterService.saveCharacter(entity, false);
@@ -59,7 +60,7 @@ public class CharacterController {
 	}
 
 	@PutMapping("/{id}")
-	public DndCharacter updateCharacter(@PathVariable String id, @RequestBody CharacterInput entity) {
+	public DndCharacter updateCharacter(@PathVariable String id, @RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() == null) throw new IllegalArgumentException("ID cannot be null");
 			if (!Objects.equals(id, entity.getId())) throw new IllegalArgumentException("ID in path and body must match");

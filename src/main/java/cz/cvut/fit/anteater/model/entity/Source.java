@@ -9,7 +9,7 @@ import lombok.Data;
 @Builder
 public class Source {
 	@Id
-	private String abbreviation;
+	private String id;
 
 	private String name;
 }
