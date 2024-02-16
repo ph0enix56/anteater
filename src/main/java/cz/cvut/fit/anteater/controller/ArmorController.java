@@ -13,5 +13,5 @@ import cz.cvut.fit.anteater.service.ArmorService;
 public class ArmorController extends BaseController<Armor> {
 	public ArmorController(ArmorService armorService) {
 		super(armorService);
-	}	
+	}
 }

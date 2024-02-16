@@ -7,8 +7,9 @@ db.language.drop();
 db.background.drop();
 db.race.drop();
 db.dndClass.drop();
-db.character.drop();
 db.armor.drop();
+db.spell.drop();
+db.character.drop();
 
 let sources = [
 	{
@@ -520,7 +521,19 @@ let classes = [
 				"levelMinimum": 18,
 				"text": "Wait for it..."
 			}
-		]
+		],
+		"spellcasting": {
+			"ability": "intelligence",
+			"slots": [
+				[2, 0, 0, 0, 0, 0, 0, 0, 0],
+				[3, 0, 0, 0, 0, 0, 0, 0, 0],
+				[4, 2, 0, 0, 0, 0, 0, 0, 0],
+				[4, 3, 0, 0, 0, 0, 0, 0, 0],
+				[4, 3, 2, 0, 0, 0, 0, 0, 0],
+				[4, 3, 3, 0, 0, 0, 0, 0, 0],
+				[4, 3, 3, 1, 0, 0, 0, 0, 0],
+			]
+		}
 	},
 	{
 		"name": "Barbar",
@@ -576,6 +589,39 @@ let classes = [
 			}
 		]
 	},
+	{
+		"name": "Warlock",
+		"source": sourceEXP2,
+		"description": "A wielder of magic that is derived from a bargain with an extraplanar entity",
+		"hitDice": { "amount": 1, "sides": 8 },
+		"subclasses": ["The Archfey", "The Fiend", "The Great Old One", "The Celestial", "The Hexblade"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": {
+			"amount": 2,
+			"defaults": ["wisdom", "charisma"]
+		},
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"features": [
+			{
+				"title": "Otherworldly Patron",
+				"levelMinimum": 1,
+				"text": "At 1st level, you have struck a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One, each of which is detailed at the end of the class description"
+			}
+		],
+		"spellcasting": {
+			"ability": "charisma",
+			"slots": [
+				[1, 0, 0, 0, 0, 0, 0, 0, 0],
+				[2, 0, 0, 0, 0, 0, 0, 0, 0],
+			]
+		}
+	}
 ]
 db.dndClass.insertMany(classes);
 print(db.dndClass.countDocuments() + " classes inserted");
@@ -691,6 +737,165 @@ let armor = [
 db.armor.insertMany(armor);
 print(db.armor.countDocuments() + " armor sets inserted");
 
+let spells = [
+	{
+		"name": "Acid Splash",
+		"source": sourceSRD,
+		"level": 0,
+		"school": "conjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "60 feet",
+		"duration": "Instantaneous",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+		],
+		"description": "You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage.",
+		"atHigherLevels": "This spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6)."
+	},
+	{
+		"name": "Mage Hand",
+		"source": sourceSRD,
+		"level": 0,
+		"school": "conjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "60 feet",
+		"duration": "Instantaneous",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Prestidigitation",
+		"source": sourceSRD,
+		"level": 0,
+		"school": "conjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "60 feet",
+		"duration": "Instantaneous",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Aid",
+		"source": sourceSRD,
+		"level": 2,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny strip of white cloth"
+		},
+		"castingTime": "1 action",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+		],
+		"description": "Your spell bolsters your allies with toughness and resolve. Choose up to three creatures within range. Each target's hit point maximum and current hit points increase by 5 for the duration.",
+		"atHigherLevels": "When you cast this spell using a spell slot of 3rd level or higher, a target's hit points increase by an additional 5 for each slot level above 2nd."
+	},
+	{
+		"name": "Alarm",
+		"source": sourceSRD,
+		"level": 1,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Shield",
+		"source": sourceSRD,
+		"level": 1,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},	
+	{
+		"name": "Magic Missile",
+		"source": sourceSRD,
+		"level": 1,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Fireball",
+		"source": sourceSRD,
+		"level": 3,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+]
+db.spell.insertMany(spells);
+print(db.spell.countDocuments() + " spells inserted");
+
 let characters = [
 	{
 		"character_name": "Test Character",
@@ -780,10 +985,10 @@ let characters = [
 		"card_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
 		"sheet_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
 		"sources": [sourceSRD._id, sourceEXP2._id],
-		"class": db.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
+		"class": db.dndClass.findOne({ "name": "Wizard" }, { "_id": 1 })._id,
 		"race": db.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
 		"background": db.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
-		"subclass": "Arcane Trickster",
+		"subclass": "Abjuration",
 		"level": 2,
 		"ability_scores": {
 			"strength": 12,

@@ -1,13 +1,16 @@
 package cz.cvut.fit.anteater.model.entity;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
+import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.value.BonusList;
 import cz.cvut.fit.anteater.model.value.Dice;
+import cz.cvut.fit.anteater.model.value.Spellcasting;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,4 +39,9 @@ public class DndClass extends SourceableEntity {
 
 	@Field("tools")
 	private BonusList<Tool> toolProficiencies;
+
+	@Field("armor")
+	private BonusList<ArmorType> armorProficiencies;
+
+	private Spellcasting spellcasting;
 }

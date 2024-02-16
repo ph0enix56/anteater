@@ -2,87 +2,34 @@ package cz.cvut.fit.anteater.model.entity;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
+import cz.cvut.fit.anteater.enumeration.SpellSchool;
+import cz.cvut.fit.anteater.model.value.SpellComponents;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-// TODO: this was just a test - will need complete redo once we start implementing spells
-public class Spell {
-	@Id
-	public String id;
-	
-	public String name;
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class Spell extends SourceableEntity {
 
-	@Field("entries")
-	public String description;
+	private Integer level;
 
-	public Integer level;
+	private SpellSchool school;
 
-	public String school;
+	private SpellComponents components;
 
-	@Field("damageInflict")
-	public List<String> damageType;
+	private String castingTime;
 
-	public Spell() {}
+	private String range;
 
-	public Spell(String name, String description, Integer level, String school, List<String> damageType) {
-		this.name = name;
-		this.description = description;
-		this.level = level;
-		this.school = school;
-		this.damageType = damageType;
-	}
+	private String duration;
 
-	public String getId() {
-		return id;
-	}
+	private List<String> dndClassIds;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+	private String description;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public String getSchool() {
-		return school;
-	}
-
-	public void setSchool(String school) {
-		this.school = school;
-	}
-
-	public List<String> getDamageType() {
-		return damageType;
-	}
-
-	public void setDamageType(List<String> damageType) {
-		this.damageType = damageType;
-	}
-
-	@Override
-	public String toString() {
-		return "Spell [id=" + id + ", name=" + name + ", description=" + description + ", level=" + level + ", school="
-			+ school + ", damageType=" + damageType + "]";
-	}
+	private String atHigherLevels;
 }
