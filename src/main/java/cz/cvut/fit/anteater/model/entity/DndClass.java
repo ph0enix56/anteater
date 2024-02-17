@@ -1,7 +1,6 @@
 package cz.cvut.fit.anteater.model.entity;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 

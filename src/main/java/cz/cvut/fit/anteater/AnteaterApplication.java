@@ -1,13 +1,10 @@
 package cz.cvut.fit.anteater;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.repository.SpellRepository;
 
 @SpringBootApplication
