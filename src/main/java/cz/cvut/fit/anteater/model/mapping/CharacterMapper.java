@@ -10,6 +10,7 @@ import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.dto.AbilityInput;
 import cz.cvut.fit.anteater.model.dto.AbilityOutput;
+import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
@@ -153,5 +154,19 @@ public class CharacterMapper {
 		features.addAll(c.getDndClass().getFeatures());
 		if (!allLevels) features.removeIf(f -> f.getLevelMinimum() > c.getLevel());
 		return features;
+	}
+
+	public CharacterComplete toComplete(DndCharacter c) {
+		return CharacterComplete.builder()
+			.id(c.getId())
+			.info(toInfo(c))
+			.stats(toStats(c))
+			.abilities(toAbilities(c))
+			.skills(toSkills(c))
+			.savingThrows(toSavingThrows(c))
+			.tools(c.getTools())
+			.languages(c.getLanguages())
+			.features(toFeatures(c, false))
+			.build();
 	}
 }

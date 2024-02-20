@@ -35,12 +35,12 @@ public class CharacterController {
 	}
 
 	@GetMapping
-	public List<CharacterInfo> getCharacterInfos() {
-		return characterService.getCharacterInfos();
+	public List<CharacterComplete> getCompleteAll() {
+		return characterService.getAllCharacters();
 	}
 
 	@GetMapping("/{id}")
-	public CharacterComplete getCharacterInfo(@PathVariable String id) {
+	public CharacterComplete getCompleteById(@PathVariable String id) {
 		return characterService.getCompleteCharacter(id);
 	}
 
