@@ -5,7 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SkillStats {
+public class SkillOutput {
+	private String label;
+	private String ability;
 	private Integer modifier;
 	private Boolean proficient;
+	private String displayName;
 }
