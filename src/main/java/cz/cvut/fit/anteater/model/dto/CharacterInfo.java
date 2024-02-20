@@ -1,26 +1,29 @@
 package cz.cvut.fit.anteater.model.dto;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import cz.cvut.fit.anteater.model.entity.Armor;
-import cz.cvut.fit.anteater.model.entity.Source;
+import lombok.Builder;
+import lombok.Data;
 
-public interface CharacterInfo {
-	String getId();
-	String getCharacterName();
-	String getPlayerName();
-	String getCardPhotoUrl();
-	String getSheetPhotoUrl();
-	Integer getLevel();
+@Data
+@Builder
+public class CharacterInfo {
+	private String characterName;
 
-	List<Source> getSources();
-	ClassInfo getDndClass();
-	RaceInfo getRace();
-	BackgroundInfo getBackground();
-	String getSubclass();
-	Armor getArmor();
+	private String playerName;
 
-	interface ClassInfo { String getId(); String getName(); }
-	interface RaceInfo { String getId(); String getName(); }
-	interface BackgroundInfo { String getId(); String getName(); }
+	private String cardPhotoUrl;
+
+	private String sheetPhotoUrl;
+
+	@JsonProperty("class")
+	private SourcableInfo dndClass;
+
+	private SourcableInfo race;
+
+	private SourcableInfo background;
+
+	private Integer level;
+
+	private String subclass;
 }

@@ -50,7 +50,7 @@ public class CharacterInput {
 	@NotNull
 	@Size(min = 6, max = 6)
 	// this kinda works by being a map and the enum only having 6 values, but maybe could be done better
-	private HashMap<Ability, @Range(min = 1, max = 20) Integer> abilities;
+	private HashMap<Ability, AbilityInput> abilities;
 
 	private HashSet<Skill> skillProficiencies;
 

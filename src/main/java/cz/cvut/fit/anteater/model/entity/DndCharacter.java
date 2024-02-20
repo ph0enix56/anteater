@@ -1,8 +1,8 @@
 package cz.cvut.fit.anteater.model.entity;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Size;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.model.dto.AbilityInput;
 import cz.cvut.fit.anteater.model.value.Proficiency;
 import lombok.Builder;
 import lombok.Data;
@@ -55,7 +56,7 @@ public class DndCharacter {
 	private Integer level;
 
 	@Field("ability_scores")
-	private HashMap<Ability, Integer> abilities;
+	private Map<Ability, AbilityInput> abilities;
 
 	private HashSet<Skill> skills;
 

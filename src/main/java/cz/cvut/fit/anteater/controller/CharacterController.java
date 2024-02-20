@@ -41,12 +41,7 @@ public class CharacterController {
 
 	@GetMapping("/{id}")
 	public CharacterComplete getCharacterInfo(@PathVariable String id) {
-		return CharacterComplete.builder()
-			.id(id)
-			.info(characterService.getCharacterInfo(id))
-			.stats(characterService.getCharacterStats(id))
-			.features(characterService.getCharacterFeatures(id, false))
-			.build();
+		return characterService.getCompleteCharacter(id);
 	}
 
 	@PostMapping()
