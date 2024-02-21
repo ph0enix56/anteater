@@ -21,6 +21,8 @@ import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.SkillAbilities;
 import cz.cvut.fit.anteater.model.value.TextFeature;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Component
 public class CharacterMapper {
@@ -43,6 +45,23 @@ public class CharacterMapper {
 			.build();
 	}
 
+	@Data
+	@AllArgsConstructor
+	private class AbilityStats {
+		private Integer score;
+		private Integer mod;
+	}
+
+	public Map<Ability, AbilityStats> getAbilityStats(DndCharacter c) {
+		Map<Ability, AbilityStats> result = new HashMap<>();
+		for (var i : c.getAbilities().entrySet()) {
+			Integer bonus = (i.getValue().getUpByOne() ? 1 : 0) + (i.getValue().getUpByTwo() ? 2 : 0);
+			Integer finalScore = i.getValue().getScore() + bonus;
+			result.put(i.getKey(), new AbilityStats(finalScore, getAbilityModifier(finalScore)));
+		}
+		return result;
+	}
+
 	public Integer getProficiencyBonus(Integer level) {
 		return (level - 1) / 4 + 2;
 	}
@@ -55,66 +74,56 @@ public class CharacterMapper {
 		return proficient ? abilityModifier + getProficiencyBonus(level) : abilityModifier;
 	}
 
-	public Integer getHitPoints(Dice hitDice, Integer conScore, Integer level) {
-		Integer initialHP = hitDice.getSides() + getAbilityModifier(conScore);
-		Integer perLevelHP = hitDice.getSides() / 2 + 1 + getAbilityModifier(conScore);
+	public Integer getHitPoints(Dice hitDice, Integer conModifier, Integer level) {
+		Integer initialHP = hitDice.getSides() + conModifier;
+		Integer perLevelHP = hitDice.getSides() / 2 + 1 + conModifier;
 		return initialHP + perLevelHP * (level - 1);
 	}
 
-	public Integer getArmorClass(Armor armor, Map<Ability, Integer> abilities) {
+	public Integer getArmorClass(Armor armor, Map<Ability, AbilityStats> abilities) {
 		Integer result = armor.getBaseArmorClass();
 		for (var i : armor.getBonuses()) {
-			result += Math.min(i.getMax(), abilities.get(i.getAbility()));
-		}
-		return result;
-	}
-
-	public Map<Ability, Integer> getAbilityMods(DndCharacter c) {
-		Map<Ability, Integer> result = new HashMap<>();
-		for (var i : c.getAbilities().entrySet()) {
-			Integer score = i.getValue().getScore() + (i.getValue().getUpByOne() ? 1 : 0) + (i.getValue().getUpByTwo() ? 2 : 0);
-			result.put(i.getKey(), getAbilityModifier(score));
+			result += Math.min(i.getMax(), abilities.get(i.getAbility()).mod);
 		}
 		return result;
 	}
 
 	public CharacterStats toStats(DndCharacter c) {
-		Map<Ability, Integer> abilities = getAbilityMods(c);
+		var abilities = getAbilityStats(c);
 		return CharacterStats.builder()
 		.proficiencyBonus(getProficiencyBonus(c.getLevel()))
-		.initiative(abilities.get(Ability.dexterity))
+		.initiative(abilities.get(Ability.dexterity).getMod())
 		.speed(c.getRace().getSpeed())
 			.hitDice(c.getDndClass().getHitDice())
-			.hitPoints(getHitPoints(c.getDndClass().getHitDice(), abilities.get(Ability.constitution), c.getLevel()))
+			.hitPoints(getHitPoints(c.getDndClass().getHitDice(), abilities.get(Ability.constitution).getMod(), c.getLevel()))
 			.armorClass(getArmorClass(c.getArmor(), abilities))
 			.build();
 		}
 
-	public AbilityOutput getAbilityOutput(Ability a, AbilityInput in) {
-		Integer score = in.getScore();
-		Boolean upByOne = in.getUpByOne();
-		Boolean upByTwo = in.getUpByTwo();
-		Integer result = score + (upByOne ? 1 : 0) + (upByTwo ? 2 : 0);
-		Integer modifier = getAbilityModifier(result);
-		return new AbilityOutput(a.toString(), score, upByOne, upByTwo, result, modifier);
-	}
-
-	public List<AbilityOutput> toAbilities(DndCharacter c) {
+	public List<AbilityOutput> toAbilityOutput(DndCharacter c) {
 		List<AbilityOutput> result = new ArrayList<>();
+		var stats = getAbilityStats(c);
 		for (var i : c.getAbilities().entrySet()) {
-			result.add(getAbilityOutput(i.getKey(), i.getValue()));
+			result.add(new AbilityOutput(
+				i.getKey().toString(),
+				i.getValue().getScore(),
+				i.getValue().getUpByOne(),
+				i.getValue().getUpByTwo(),
+				stats.get(i.getKey()).getScore(),
+				stats.get(i.getKey()).getMod(),
+				i.getKey().getName()));
 		}
 		return result;
 	}
 
-	public Integer getSkillModifier(Skill skill, Map<Ability, Integer> abilities, Boolean proficient, Integer level) {
+	public Integer getSkillModifier(Skill skill, Map<Ability, AbilityStats> abilities, Boolean proficient, Integer level) {
 		Ability ability = SkillAbilities.SKILL_TO_ABILITY_MAP.get(skill);
-		Integer modifier = abilities.get(ability);
+		Integer modifier = abilities.get(ability).mod;
 		return proficient ? modifier + getProficiencyBonus(level) : modifier;
 	}
 
-	public Integer getSaveModifier(Ability ability, Map<Ability, Integer> abilities, Boolean proficient, Integer level) {
-		Integer modifier = abilities.get(ability);
+	public Integer getSaveModifier(Ability ability, Map<Ability, AbilityStats> abilities, Boolean proficient, Integer level) {
+		Integer modifier = abilities.get(ability).mod;
 		return proficient ? modifier + getProficiencyBonus(level) : modifier;
 	}
 
@@ -126,7 +135,7 @@ public class CharacterMapper {
 				new SkillOutput(
 					sk.toString(),
 					ab.toString(),
-					getSkillModifier(sk, getAbilityMods(c), c.getSkills().contains(sk), c.getLevel()),
+					getSkillModifier(sk, getAbilityStats(c), c.getSkills().contains(sk), c.getLevel()),
 					c.getSkills().contains(sk),
 					sk.getName() + " (" + ab.getAbbreviation() + ")"));
 		}
@@ -140,7 +149,7 @@ public class CharacterMapper {
 				new SkillOutput(
 					ab.toString(),
 					ab.toString(),
-					getSaveModifier(ab, getAbilityMods(c), c.getSaves().contains(ab), c.getLevel()),
+					getSaveModifier(ab, getAbilityStats(c), c.getSaves().contains(ab), c.getLevel()),
 					c.getSaves().contains(ab),
 					ab.getName()));
 		}
@@ -161,7 +170,7 @@ public class CharacterMapper {
 			.id(c.getId())
 			.info(toInfo(c))
 			.stats(toStats(c))
-			.abilities(toAbilities(c))
+			.abilities(toAbilityOutput(c))
 			.skills(toSkills(c))
 			.savingThrows(toSavingThrows(c))
 			.tools(c.getTools())

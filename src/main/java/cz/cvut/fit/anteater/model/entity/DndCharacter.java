@@ -17,7 +17,7 @@ import cz.cvut.fit.anteater.model.value.Proficiency;
 import lombok.Builder;
 import lombok.Data;
 
-@Data	
+@Data
 @Builder
 @Document(collection = "character")
 public class DndCharacter {

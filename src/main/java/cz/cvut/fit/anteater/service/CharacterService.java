@@ -5,9 +5,7 @@ import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
-import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
-import cz.cvut.fit.anteater.model.dto.CharacterShort;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.mapping.CharacterMapper;
 import cz.cvut.fit.anteater.repository.BackgroundRepository;

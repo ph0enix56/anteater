@@ -12,4 +12,5 @@ public class AbilityOutput {
 	private Boolean upByTwo;
 	private Integer result;
 	private Integer modifier;
+	private String displayName;
 }
