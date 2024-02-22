@@ -15,11 +15,13 @@ import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.dto.SourcableInfo;
+import cz.cvut.fit.anteater.model.dto.SpellcastingOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.SkillAbilities;
+import cz.cvut.fit.anteater.model.value.SlotData;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -156,6 +158,25 @@ public class CharacterMapper {
 		return result;
 	}
 
+	public SpellcastingOutput toSpellcastingOutput(DndCharacter c) {
+		if (c.getDndClass().getSpellcasting() == null) return null;
+
+		var abilities = getAbilityStats(c);
+		Ability spellAbility = c.getDndClass().getSpellcasting().getAbility();
+		Integer modifier = abilities.get(spellAbility).mod;
+		Integer saveDc = 8 + modifier + getProficiencyBonus(c.getLevel());
+		List<SlotData> slotsRes = new ArrayList<>();
+		List<Integer> slots = c.getDndClass().getSpellcasting().getSlots().get(c.getLevel());
+		for (int i = 0; i < slots.size(); i++) slotsRes.add(new SlotData(i + 1, slots.get(i)));
+		return SpellcastingOutput.builder()
+			.ability(spellAbility)
+			.modifier(modifier)
+			.saveDc(saveDc)
+			.slots(slotsRes)
+			.spells(c.getSpells())
+			.build();
+	}
+
 	public List<TextFeature> toFeatures(DndCharacter c, Boolean allLevels) {
 		List<TextFeature> features = new ArrayList<>();
 		features.addAll(c.getBackground().getFeatures());
@@ -175,6 +196,8 @@ public class CharacterMapper {
 			.savingThrows(toSavingThrows(c))
 			.tools(c.getTools())
 			.languages(c.getLanguages())
+			.armor(c.getArmor())
+			.spellcasting(toSpellcastingOutput(c))
 			.features(toFeatures(c, false))
 			.build();
 	}

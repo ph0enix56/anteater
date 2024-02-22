@@ -68,4 +68,6 @@ public class DndCharacter {
 	private List<Proficiency<Language>> languages;
 
 	private Armor armor;
+
+	private List<Spell> spells;
 }

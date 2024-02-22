@@ -532,6 +532,19 @@ let classes = [
 				[4, 3, 2, 0, 0, 0, 0, 0, 0],
 				[4, 3, 3, 0, 0, 0, 0, 0, 0],
 				[4, 3, 3, 1, 0, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 1, 0, 0, 0],
+				[4, 3, 3, 2, 1, 1, 1, 0, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
 			]
 		}
 	},
@@ -618,7 +631,25 @@ let classes = [
 			"ability": "charisma",
 			"slots": [
 				[1, 0, 0, 0, 0, 0, 0, 0, 0],
-				[2, 0, 0, 0, 0, 0, 0, 0, 0],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 2, 0, 0, 0, 0, 0, 0, 0],
+				[0, 2, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 2, 0, 0, 0, 0, 0, 0],
+				[0, 0, 2, 0, 0, 0, 0, 0, 0],
+				[0, 0, 3, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 3, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
 			]
 		}
 	}
@@ -903,18 +934,18 @@ let characters = [
 		"card_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
 		"sheet_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
 		"sources": [sourceSRD._id, sourceEXP1._id],
-		"class": dndDb.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
+		"class": dndDb.dndClass.findOne({ "name": "Warlock" }, { "_id": 1 })._id,
 		"race": dndDb.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
 		"background": dndDb.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
-		"subclass": "Totem Warrior",
-		"level": 3,
+		"subclass": "The Archfey",
+		"level": 5,
 		"ability_scores": {
 			"strength": { "score": 16, "upByOne": false, "upByTwo": true },
 			"dexterity": { "score": 9, "upByOne": true, "upByTwo": false },
-			"constitution": { "score": 16, "upByOne": false, "upByTwo": false },
+			"constitution": { "score": 12, "upByOne": false, "upByTwo": false },
 			"intelligence": { "score": 11, "upByOne": false, "upByTwo": false },
 			"wisdom": { "score": 12, "upByOne": false, "upByTwo": false },
-			"charisma": { "score": 8, "upByOne": false, "upByTwo": false },
+			"charisma": { "score": 17, "upByOne": true, "upByTwo": false },
 		},
 		"skills": ["athletics", "perception", "religion", "survival"],
 		"saving_throws": ["strength", "constitution"],
@@ -939,6 +970,11 @@ let characters = [
 			}
 		],
 		"armor": dndDb.armor.findOne({ "name": "Chain Mail", "source": sourceSRD }),
+		"spells": [
+			dndDb.spell.findOne({ "name": "Acid Splash" }),
+			dndDb.spell.findOne({ "name": "Mage Hand" }),
+			dndDb.spell.findOne({ "name": "Shield" }),
+		]
 	},
 	{
 		"character_name": "Cool elfka",
@@ -989,7 +1025,7 @@ let characters = [
 		"race": dndDb.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
 		"background": dndDb.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
 		"subclass": "Abjuration",
-		"level": 2,
+		"level": 14,
 		"ability_scores": {
 			"strength": { "score": 8, "upByOne": false, "upByTwo": false },
 			"dexterity": { "score": 14, "upByOne": false, "upByTwo": false },
@@ -1020,6 +1056,14 @@ let characters = [
 			}
 		],
 		"armor": dndDb.armor.findOne({ "name": "Leather Armor", "source": sourceSRD }),
+		"spells": [
+			dndDb.spell.findOne({ "name": "Prestidigitation" }),
+			dndDb.spell.findOne({ "name": "Aid" }),
+			dndDb.spell.findOne({ "name": "Alarm" }),
+			dndDb.spell.findOne({ "name": "Shield" }),
+			dndDb.spell.findOne({ "name": "Magic Missile" }),
+			dndDb.spell.findOne({ "name": "Fireball" }),
+		]
 	}
 ];
 dndDb.character.insertMany(characters);
