@@ -1,15 +1,15 @@
-db.getSiblingDB("dnd")
+let dndDb = db.getSiblingDB('dnd');
 
 // clear all collections
-db.source.drop();
-db.tool.drop();
-db.language.drop();
-db.background.drop();
-db.race.drop();
-db.dndClass.drop();
-db.armor.drop();
-db.spell.drop();
-db.character.drop();
+dndDb.source.drop();
+dndDb.tool.drop();
+dndDb.language.drop();
+dndDb.background.drop();
+dndDb.race.drop();
+dndDb.dndClass.drop();
+dndDb.armor.drop();
+dndDb.spell.drop();
+dndDb.character.drop();
 
 let sources = [
 	{
@@ -25,12 +25,12 @@ let sources = [
 		"name": "Experimental Source 2",
 	},
 ];
-db.source.insertMany(sources);
-print(db.source.countDocuments() + " sources inserted");
+dndDb.source.insertMany(sources);
+print(dndDb.source.countDocuments() + " sources inserted");
 
-let sourceSRD = db.source.findOne({ "_id": "SRD" });
-let sourceEXP1 = db.source.findOne({ "_id": "EXP1" });
-let sourceEXP2 = db.source.findOne({ "_id": "EXP2" });
+let sourceSRD = dndDb.source.findOne({ "_id": "SRD" });
+let sourceEXP1 = dndDb.source.findOne({ "_id": "EXP1" });
+let sourceEXP2 = dndDb.source.findOne({ "_id": "EXP2" });
 
 let artisanTools = [
 	"Alchemist's supplies",
@@ -70,14 +70,14 @@ let exp2Tools = [
 	"Another tool 2",
 	"Another tool 3",
 ];
-db.tool.insertMany(artisanTools.map(tool => { return { "name": tool, "type": "artisan", "source": sourceSRD } }));
-db.tool.insertMany(instrumentTools.map(tool => { return { "name": tool, "type": "instrument", "source": sourceSRD } }));
-db.tool.insertMany(gamingTools.map(tool => { return { "name": tool, "type": "gaming", "source": sourceSRD } }));
-db.tool.insertMany(otherTools.map(tool => { return { "name": tool, "type": "other", "source": sourceSRD } }));
-db.tool.insertMany(vehicleTools.map(tool => { return { "name": tool, "type": "vehicle", "source": sourceSRD } }));
-db.tool.insertMany(exp1Tools.map(tool => { return { "name": tool, "type": "other", "source": sourceEXP1 } }));
-db.tool.insertMany(exp2Tools.map(tool => { return { "name": tool, "type": "other", "source": sourceEXP2 } }));
-print(db.tool.countDocuments() + " tools inserted");
+dndDb.tool.insertMany(artisanTools.map(tool => { return { "name": tool, "type": "artisan", "source": sourceSRD } }));
+dndDb.tool.insertMany(instrumentTools.map(tool => { return { "name": tool, "type": "instrument", "source": sourceSRD } }));
+dndDb.tool.insertMany(gamingTools.map(tool => { return { "name": tool, "type": "gaming", "source": sourceSRD } }));
+dndDb.tool.insertMany(otherTools.map(tool => { return { "name": tool, "type": "other", "source": sourceSRD } }));
+dndDb.tool.insertMany(vehicleTools.map(tool => { return { "name": tool, "type": "vehicle", "source": sourceSRD } }));
+dndDb.tool.insertMany(exp1Tools.map(tool => { return { "name": tool, "type": "other", "source": sourceEXP1 } }));
+dndDb.tool.insertMany(exp2Tools.map(tool => { return { "name": tool, "type": "other", "source": sourceEXP2 } }));
+print(dndDb.tool.countDocuments() + " tools inserted");
 
 let languagesBasic = [
 	"Common",
@@ -99,9 +99,9 @@ let languagesExotic = [
 	"Sylvan",
 	"Undercommon",
 ];
-db.language.insertMany(languagesBasic.map(language => { return { "name": language, "exotic": false, "source": sourceSRD } }));
-db.language.insertMany(languagesExotic.map(language => { return { "name": language, "exotic": true, "source": sourceSRD } }));
-print(db.language.countDocuments() + " languages inserted");
+dndDb.language.insertMany(languagesBasic.map(language => { return { "name": language, "exotic": false, "source": sourceSRD } }));
+dndDb.language.insertMany(languagesExotic.map(language => { return { "name": language, "exotic": true, "source": sourceSRD } }));
+print(dndDb.language.countDocuments() + " languages inserted");
 
 let backgrounds = [
 	{
@@ -143,7 +143,7 @@ let backgrounds = [
 		},
 		"tools": {
 			"amount": 1,
-			"defaults": [ db.tool.findOne({ "name": "Disguise kit" }) ],
+			"defaults": [ dndDb.tool.findOne({ "name": "Disguise kit" }) ],
 		},
 		"languages": {
 			"amount": 1,
@@ -220,8 +220,8 @@ let backgrounds = [
 		},
 	},
 ];
-db.background.insertMany(backgrounds);
-print(db.background.countDocuments() + " backgrounds inserted");
+dndDb.background.insertMany(backgrounds);
+print(dndDb.background.countDocuments() + " backgrounds inserted");
 
 let races = [
 	{
@@ -234,7 +234,7 @@ let races = [
 		"sizes": ["medium"],
 		"languages": {
 			"amount": 2,
-			"defaults": [ db.language.findOne({ "name": "Common" }), db.language.findOne({ "name": "Elvish" }) ],
+			"defaults": [ dndDb.language.findOne({ "name": "Common" }), dndDb.language.findOne({ "name": "Elvish" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 1,
@@ -258,7 +258,7 @@ let races = [
 		"sizes": ["small", "medium"],
 		"languages": {
 			"amount": 3,
-			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+			"defaults": [ dndDb.language.findOne({ "name": "Common" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 0,
@@ -282,7 +282,7 @@ let races = [
 		"sizes": ["small", "medium"],
 		"languages": {
 			"amount": 3,
-			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+			"defaults": [ dndDb.language.findOne({ "name": "Common" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 0,
@@ -327,7 +327,7 @@ let races = [
 		"sizes": ["small"],
 		"languages": {
 			"amount": 1,
-			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+			"defaults": [ dndDb.language.findOne({ "name": "Common" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 1,
@@ -351,7 +351,7 @@ let races = [
 		"sizes": ["small", "medium"],
 		"languages": {
 			"amount": 3,
-			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+			"defaults": [ dndDb.language.findOne({ "name": "Common" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 0,
@@ -375,7 +375,7 @@ let races = [
 		"sizes": ["small", "medium"],
 		"languages": {
 			"amount": 3,
-			"defaults": [ db.language.findOne({ "name": "Common" }) ],
+			"defaults": [ dndDb.language.findOne({ "name": "Common" }) ],
 		},
 		"abilities_plus_2": {
 			"amount": 0,
@@ -391,8 +391,8 @@ let races = [
 		}
 	},
 ]
-db.race.insertMany(races);
-print(db.race.countDocuments() + " races inserted");
+dndDb.race.insertMany(races);
+print(dndDb.race.countDocuments() + " races inserted");
 
 let classes = [
 	{
@@ -462,7 +462,7 @@ let classes = [
 		},
 		"tools": {
 			"amount": 1,
-			"defaults": [db.tool.findOne({ "name": "Thieves' tools", "source": sourceSRD })]
+			"defaults": [dndDb.tool.findOne({ "name": "Thieves' tools", "source": sourceSRD })]
 		},
 		"features": [
 			{
@@ -552,8 +552,8 @@ let classes = [
 		"tools": {
 			"amount": 3,
 			"defaults": [
-				db.tool.findOne({ "name": "Alchemist's supplies" }),
-				db.tool.findOne({ "name": "Brewer's supplies" }),
+				dndDb.tool.findOne({ "name": "Alchemist's supplies" }),
+				dndDb.tool.findOne({ "name": "Brewer's supplies" }),
 			]
 		},
 		"features": [
@@ -623,8 +623,8 @@ let classes = [
 		}
 	}
 ]
-db.dndClass.insertMany(classes);
-print(db.dndClass.countDocuments() + " classes inserted");
+dndDb.dndClass.insertMany(classes);
+print(dndDb.dndClass.countDocuments() + " classes inserted");
 
 let armor = [
 	{
@@ -734,8 +734,8 @@ let armor = [
 		"description": "No armor at all for monks"
 	}
 ];
-db.armor.insertMany(armor);
-print(db.armor.countDocuments() + " armor sets inserted");
+dndDb.armor.insertMany(armor);
+print(dndDb.armor.countDocuments() + " armor sets inserted");
 
 let spells = [
 	{
@@ -751,8 +751,8 @@ let spells = [
 		"range": "60 feet",
 		"duration": "Instantaneous",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
-			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+			dndDb.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			dndDb.dndClass.findOne({ "name": "Warlock" })._id.toString()
 		],
 		"description": "You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage.",
 		"atHigherLevels": "This spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6)."
@@ -770,7 +770,7 @@ let spells = [
 		"range": "60 feet",
 		"duration": "Instantaneous",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+			dndDb.dndClass.findOne({ "name": "Warlock" })._id.toString()
 		],
 		"description": "...",
 		"atHigherLevels": "..."
@@ -788,7 +788,7 @@ let spells = [
 		"range": "60 feet",
 		"duration": "Instantaneous",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			dndDb.dndClass.findOne({ "name": "Wizard" })._id.toString(),
 		],
 		"description": "...",
 		"atHigherLevels": "..."
@@ -807,8 +807,8 @@ let spells = [
 		"range": "30 feet",
 		"duration": "8 hours",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
-			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+			dndDb.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			dndDb.dndClass.findOne({ "name": "Warlock" })._id.toString()
 		],
 		"description": "Your spell bolsters your allies with toughness and resolve. Choose up to three creatures within range. Each target's hit point maximum and current hit points increase by 5 for the duration.",
 		"atHigherLevels": "When you cast this spell using a spell slot of 3rd level or higher, a target's hit points increase by an additional 5 for each slot level above 2nd."
@@ -827,8 +827,8 @@ let spells = [
 		"range": "30 feet",
 		"duration": "8 hours",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
-			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+			dndDb.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			dndDb.dndClass.findOne({ "name": "Warlock" })._id.toString()
 		],
 		"description": "...",
 		"atHigherLevels": "..."
@@ -847,8 +847,8 @@ let spells = [
 		"range": "30 feet",
 		"duration": "8 hours",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
-			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+			dndDb.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			dndDb.dndClass.findOne({ "name": "Warlock" })._id.toString()
 		],
 		"description": "...",
 		"atHigherLevels": "..."
@@ -867,7 +867,7 @@ let spells = [
 		"range": "30 feet",
 		"duration": "8 hours",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			dndDb.dndClass.findOne({ "name": "Wizard" })._id.toString(),
 		],
 		"description": "...",
 		"atHigherLevels": "..."
@@ -886,15 +886,15 @@ let spells = [
 		"range": "30 feet",
 		"duration": "8 hours",
 		"dndClassIds": [
-			db.dndClass.findOne({ "name": "Wizard" })._id.toString(),
-			db.dndClass.findOne({ "name": "Warlock" })._id.toString()
+			dndDb.dndClass.findOne({ "name": "Wizard" })._id.toString(),
+			dndDb.dndClass.findOne({ "name": "Warlock" })._id.toString()
 		],
 		"description": "...",
 		"atHigherLevels": "..."
 	},
 ]
-db.spell.insertMany(spells);
-print(db.spell.countDocuments() + " spells inserted");
+dndDb.spell.insertMany(spells);
+print(dndDb.spell.countDocuments() + " spells inserted");
 
 let characters = [
 	{
@@ -903,9 +903,9 @@ let characters = [
 		"card_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
 		"sheet_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
 		"sources": [sourceSRD._id, sourceEXP1._id],
-		"class": db.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
-		"race": db.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
-		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
+		"class": dndDb.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
+		"race": dndDb.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
+		"background": dndDb.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
 		"subclass": "Totem Warrior",
 		"level": 3,
 		"ability_scores": {
@@ -920,25 +920,25 @@ let characters = [
 		"saving_throws": ["strength", "constitution"],
 		"tools": [
 			{
-				"item": db.tool.findOne({ "name": "Calligrapher's supplies" }),
+				"item": dndDb.tool.findOne({ "name": "Calligrapher's supplies" }),
 				"from": "background"
 			},
 			{
-				"item": db.tool.findOne({ "name": "Playing card set" }),
+				"item": dndDb.tool.findOne({ "name": "Playing card set" }),
 				"from": "dndClass"
 			}
 		],
 		"languages": [
 			{
-				"item": db.language.findOne({ "name": "Common" }),
+				"item": dndDb.language.findOne({ "name": "Common" }),
 				"from": "race"
 			},
 			{
-				"item": db.language.findOne({ "name": "Dwarvish" }),
+				"item": dndDb.language.findOne({ "name": "Dwarvish" }),
 				"from": "race"
 			}
 		],
-		"armor": db.armor.findOne({ "name": "Chain Mail", "source": sourceSRD }),
+		"armor": dndDb.armor.findOne({ "name": "Chain Mail", "source": sourceSRD }),
 	},
 	{
 		"character_name": "Cool elfka",
@@ -946,9 +946,9 @@ let characters = [
 		"card_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
 		"sheet_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
 		"sources": [sourceSRD._id],
-		"class": db.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
-		"race": db.race.findOne({ "name": "Human (test)" }, { "_id": 1 })._id,
-		"background": db.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
+		"class": dndDb.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
+		"race": dndDb.race.findOne({ "name": "Human (test)" }, { "_id": 1 })._id,
+		"background": dndDb.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
 		"level": 11,
 		"subclass": "Thief",
 		"ability_scores": {
@@ -963,21 +963,21 @@ let characters = [
 		"saving_throws": ["dexterity", "intelligence"],
 		"tools": [
 			{
-				"item": db.tool.findOne({ "name": "Bagpipes" }),
+				"item": dndDb.tool.findOne({ "name": "Bagpipes" }),
 				"from": "background"
 			},
 		],
 		"languages": [
 			{
-				"item": db.language.findOne({ "name": "Common" }),
+				"item": dndDb.language.findOne({ "name": "Common" }),
 				"from": "race"
 			},
 			{
-				"item": db.language.findOne({ "name": "Elvish" }),
+				"item": dndDb.language.findOne({ "name": "Elvish" }),
 				"from": "background"
 			}
 		],
-		"armor": db.armor.findOne({ "name": "Chain Shirt", "source": sourceSRD }),
+		"armor": dndDb.armor.findOne({ "name": "Chain Shirt", "source": sourceSRD }),
 	},
 	{
 		"character_name": "Gnomey",
@@ -985,9 +985,9 @@ let characters = [
 		"card_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
 		"sheet_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
 		"sources": [sourceSRD._id, sourceEXP2._id],
-		"class": db.dndClass.findOne({ "name": "Wizard" }, { "_id": 1 })._id,
-		"race": db.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
-		"background": db.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
+		"class": dndDb.dndClass.findOne({ "name": "Wizard" }, { "_id": 1 })._id,
+		"race": dndDb.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
+		"background": dndDb.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
 		"subclass": "Abjuration",
 		"level": 2,
 		"ability_scores": {
@@ -1003,24 +1003,24 @@ let characters = [
 		"tools": [],
 		"languages": [
 			{
-				"item": db.language.findOne({ "name": "Common" }),
+				"item": dndDb.language.findOne({ "name": "Common" }),
 				"from": "race"
 			},
 			{
-				"item": db.language.findOne({ "name": "Halfling" }),
+				"item": dndDb.language.findOne({ "name": "Halfling" }),
 				"from": "race"
 			},
 			{
-				"item": db.language.findOne({ "name": "Draconic" }),
+				"item": dndDb.language.findOne({ "name": "Draconic" }),
 				"from": "background"
 			},
 			{
-				"item": db.language.findOne({ "name": "Undercommon" }),
+				"item": dndDb.language.findOne({ "name": "Undercommon" }),
 				"from": "background"
 			}
 		],
-		"armor": db.armor.findOne({ "name": "Leather Armor", "source": sourceSRD }),
+		"armor": dndDb.armor.findOne({ "name": "Leather Armor", "source": sourceSRD }),
 	}
 ];
-db.character.insertMany(characters);
-print(db.character.countDocuments() + " characters inserted");
+dndDb.character.insertMany(characters);
+print(dndDb.character.countDocuments() + " characters inserted");

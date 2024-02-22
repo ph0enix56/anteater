@@ -5,7 +5,6 @@ plugins {
 }
 
 group = 'cz.cvut.fit'
-version = '0.0.1'
 
 java {
 	sourceCompatibility = '17'

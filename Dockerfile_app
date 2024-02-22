@@ -1,0 +1,18 @@
+# Get the official OpenJDK 17 image from Docker Hub
+FROM eclipse-temurin:17
+
+# Copy Gradle  to the container
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+# Build the application using the Gradle wrapper
+RUN ./gradlew build
+
+# Expose port 8080 for the Spring Boot application
+EXPOSE 8080
+
+# Run the application from the built JAR file
+CMD ["java", "-jar", "build/libs/anteater.jar"]
