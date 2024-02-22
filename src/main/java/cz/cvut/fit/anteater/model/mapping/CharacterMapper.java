@@ -167,7 +167,9 @@ public class CharacterMapper {
 		Integer saveDc = 8 + modifier + getProficiencyBonus(c.getLevel());
 		List<SlotData> slotsRes = new ArrayList<>();
 		List<Integer> slots = c.getDndClass().getSpellcasting().getSlots().get(c.getLevel());
-		for (int i = 0; i < slots.size(); i++) slotsRes.add(new SlotData(i + 1, slots.get(i)));
+		for (int i = 0; i < slots.size(); i++) {
+			if (slots.get(i) > 0) slotsRes.add(new SlotData(i + 1, slots.get(i)));
+		}
 		return SpellcastingOutput.builder()
 			.ability(spellAbility)
 			.modifier(modifier)
