@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.enumeration.WeaponType;
 import cz.cvut.fit.anteater.model.value.BonusList;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.Spellcasting;
@@ -39,8 +40,17 @@ public class DndClass extends SourceableEntity {
 	@Field("tools")
 	private BonusList<Tool> toolProficiencies;
 
+	@Field("armor_types")
+	private List<ArmorType> armorProficiencies;
+
 	@Field("armor")
-	private BonusList<ArmorType> armorProficiencies;
+	private List<String> armorProficiencyIds;
+
+	@Field("weapon_types")
+	private List<WeaponType> weaponProficiencies;
+
+	@Field("weapons")
+	private List<String> weaponProficiencyIds;
 
 	private Spellcasting spellcasting;
 }

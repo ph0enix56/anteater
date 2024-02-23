@@ -4,8 +4,8 @@ import java.util.List;
 
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Language;
-import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.model.entity.Tool;
+import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.value.Proficiency;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.Builder;
@@ -28,7 +28,11 @@ public class CharacterComplete {
 
 	private Armor armor;
 
+	private List<Weapon> weapons;
+
 	private SpellcastingOutput spellcasting;
+
+	private ProficiencyList proficiencies;
 
 	private List<Proficiency<Tool>> tools;
 

@@ -69,5 +69,7 @@ public class DndCharacter {
 
 	private Armor armor;
 
+	private List<Weapon> weapons;
+
 	private List<Spell> spells;
 }

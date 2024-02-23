@@ -7,12 +7,14 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
+import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
-import cz.cvut.fit.anteater.model.dto.AbilityInput;
+import cz.cvut.fit.anteater.enumeration.WeaponType;
 import cz.cvut.fit.anteater.model.dto.AbilityOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
+import cz.cvut.fit.anteater.model.dto.ProficiencyList;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.dto.SourcableInfo;
 import cz.cvut.fit.anteater.model.dto.SpellcastingOutput;
@@ -179,6 +181,24 @@ public class CharacterMapper {
 			.build();
 	}
 
+	// TODO: add individual weapon and armor proficiencies, not just the types
+	public ProficiencyList toProficiencies(DndCharacter c) {
+		List<String> armor = new ArrayList<>();
+		c.getDndClass().getArmorProficiencies().stream().map(ArmorType::getName).forEach(armor::add);
+
+		List<String> weapons = new ArrayList<>();
+		c.getDndClass().getWeaponProficiencies().stream().map(WeaponType::getName).forEach(weapons::add);
+
+		List<String> tools = c.getTools().stream().map(i -> i.getItem().getName()).toList();
+		List<String> languages = c.getLanguages().stream().map(i -> i.getItem().getName()).toList();
+		return ProficiencyList.builder()
+			.armor(armor)
+			.weapons(weapons)
+			.tools(tools)
+			.languages(languages)
+			.build();
+	}
+
 	public List<TextFeature> toFeatures(DndCharacter c, Boolean allLevels) {
 		List<TextFeature> features = new ArrayList<>();
 		features.addAll(c.getBackground().getFeatures());
@@ -196,10 +216,12 @@ public class CharacterMapper {
 			.abilities(toAbilityOutput(c))
 			.skills(toSkills(c))
 			.savingThrows(toSavingThrows(c))
+			.armor(c.getArmor())
+			.weapons(c.getWeapons())
+			.spellcasting(toSpellcastingOutput(c))
+			.proficiencies(toProficiencies(c))
 			.tools(c.getTools())
 			.languages(c.getLanguages())
-			.armor(c.getArmor())
-			.spellcasting(toSpellcastingOutput(c))
 			.features(toFeatures(c, false))
 			.build();
 	}

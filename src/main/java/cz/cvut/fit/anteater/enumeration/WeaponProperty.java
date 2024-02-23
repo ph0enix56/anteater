@@ -10,6 +10,6 @@ public enum WeaponProperty {
 	reach,
 	special,
 	thrown,
-	twoHanded,
-	versatile
+	two_handed,
+	versatile;
 }
