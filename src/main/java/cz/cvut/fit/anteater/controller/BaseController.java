@@ -22,8 +22,9 @@ public abstract class BaseController<T extends SourceableEntity> {
 	}
 
 	@GetMapping
-	public Iterable<T> search(@RequestParam(required = false) String name, @RequestParam(required = false) List<String> source) {
-		try { return baseService.findByNameAndSources(name, source); }
+	public Iterable<T> search(@RequestParam(required = false) String name, @RequestParam(required = false) List<String> source,
+			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+		try { return baseService.searchPaginated(name, source, page, size); }
 		catch (IllegalArgumentException e) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage()); }
 	}
 
