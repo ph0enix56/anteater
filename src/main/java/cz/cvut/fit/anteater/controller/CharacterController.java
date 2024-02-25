@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
+import cz.cvut.fit.anteater.model.dto.IdWrapper;
 import cz.cvut.fit.anteater.model.dto.SkillInput;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
@@ -87,9 +88,9 @@ public class CharacterController {
 		return characterService.editSkills(id, skills);
 	}
 
-	@PutMapping("/{id}/armor/{armorId}")
-	public Armor editArmor(@PathVariable String id, @PathVariable String armorId) {
-		return characterService.editArmor(id, armorId);
+	@PutMapping("/{id}/armor")
+	public Armor editArmor(@PathVariable String id, @RequestBody IdWrapper armorId) {
+		return characterService.editArmor(id, armorId.getId());
 	}
 
 	@PutMapping("/{id}/spells")
