@@ -15,7 +15,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
+import cz.cvut.fit.anteater.model.dto.SkillInput;
+import cz.cvut.fit.anteater.model.dto.SkillOutput;
+import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
+import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.service.CharacterService;
 import jakarta.validation.Valid;
 
@@ -76,5 +80,20 @@ public class CharacterController {
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
+	}
+
+	@PutMapping("/{id}/skills")
+	public List<SkillOutput> putMethodName(@PathVariable String id, @RequestBody List<SkillInput> skills) {
+		return characterService.editSkills(id, skills);
+	}
+
+	@PutMapping("/{id}/armor/{armorId}")
+	public Armor editArmor(@PathVariable String id, @PathVariable String armorId) {
+		return characterService.editArmor(id, armorId);
+	}
+
+	@PutMapping("/{id}/spells")
+	public List<Spell> editSpells(@PathVariable String id, @RequestBody List<String> spellIds) {
+		return characterService.editSpells(id, spellIds);
 	}
 }
