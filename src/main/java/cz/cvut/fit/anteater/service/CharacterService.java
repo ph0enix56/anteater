@@ -117,4 +117,12 @@ public class CharacterService {
 		c.setSpells(newSpells);
 		return repo.save(c).getSpells();
 	}
+
+	public CharacterComplete levelUp(String id) {
+		if (id == null) throw new IllegalArgumentException("ID cannot be null");
+		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		if (c.getLevel() == 20) throw new IllegalArgumentException("Character is already at max level");
+		c.setLevel(c.getLevel() + 1);
+		return mapper.toComplete(repo.save(c));
+	}
 }

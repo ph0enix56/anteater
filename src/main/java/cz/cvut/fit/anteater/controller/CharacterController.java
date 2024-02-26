@@ -97,4 +97,9 @@ public class CharacterController {
 	public List<Spell> editSpells(@PathVariable String id, @RequestBody List<String> spellIds) {
 		return characterService.editSpells(id, spellIds);
 	}
+
+	@PostMapping("/{id}/levelup")
+	public CharacterComplete levelUp(@PathVariable String id) {
+		return characterService.levelUp(id);
+	}
 }
