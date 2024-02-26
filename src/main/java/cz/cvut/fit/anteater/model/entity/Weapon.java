@@ -19,6 +19,8 @@ public class Weapon extends SourceableEntity {
 
 	private WeaponType type;
 
+	private Boolean ranged;
+
 	private Integer range;
 
 	private Set<WeaponProperty> properties;

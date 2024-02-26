@@ -1,6 +1,7 @@
 package cz.cvut.fit.anteater.model.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -41,16 +42,16 @@ public class DndClass extends SourceableEntity {
 	private BonusList<Tool> toolProficiencies;
 
 	@Field("armor_types")
-	private List<ArmorType> armorProficiencies;
+	private Set<ArmorType> armorProficiencies;
 
 	@Field("armor")
-	private List<String> armorProficiencyIds;
+	private Set<String> armorProficiencyIds;
 
 	@Field("weapon_types")
-	private List<WeaponType> weaponProficiencies;
+	private Set<WeaponType> weaponProficiencies;
 
 	@Field("weapons")
-	private List<String> weaponProficiencyIds;
+	private Set<String> weaponProficiencyIds;
 
 	private Spellcasting spellcasting;
 }

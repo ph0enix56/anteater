@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.enumeration.WeaponProperty;
 import cz.cvut.fit.anteater.enumeration.WeaponType;
 import cz.cvut.fit.anteater.model.dto.AbilityOutput;
+import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
@@ -120,17 +122,6 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public Integer getSkillModifier(Skill skill, Map<Ability, AbilityStats> abilities, Boolean proficient, Integer level) {
-		Ability ability = SkillAbilities.SKILL_TO_ABILITY_MAP.get(skill);
-		Integer modifier = abilities.get(ability).mod;
-		return proficient ? modifier + getProficiencyBonus(level) : modifier;
-	}
-
-	public Integer getSaveModifier(Ability ability, Map<Ability, AbilityStats> abilities, Boolean proficient, Integer level) {
-		Integer modifier = abilities.get(ability).mod;
-		return proficient ? modifier + getProficiencyBonus(level) : modifier;
-	}
-
 	public List<SkillOutput> toSkills(DndCharacter c) {
 		List<SkillOutput> result = new ArrayList<>();
 		for (Skill sk : Skill.values()) {
@@ -139,7 +130,7 @@ public class CharacterMapper {
 				new SkillOutput(
 					sk.toString(),
 					ab.toString(),
-					getSkillModifier(sk, getAbilityStats(c), c.getSkills().contains(sk), c.getLevel()),
+					getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSkills().contains(sk), c.getLevel()),
 					c.getSkills().contains(sk),
 					sk.getName() + " (" + ab.getAbbreviation() + ")"));
 		}
@@ -153,9 +144,27 @@ public class CharacterMapper {
 				new SkillOutput(
 					ab.toString(),
 					ab.toString(),
-					getSaveModifier(ab, getAbilityStats(c), c.getSaves().contains(ab), c.getLevel()),
+					getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSaves().contains(ab), c.getLevel()),
 					c.getSaves().contains(ab),
 					ab.getName()));
+		}
+		return result;
+	}
+
+	public List<AttackOutput> toAttacks(DndCharacter c) {
+		List<AttackOutput> result = new ArrayList<>();
+		for (var i : c.getWeapons()) {
+			Boolean proficient = c.getDndClass().getWeaponProficiencies().contains(i.getType())
+				|| c.getDndClass().getWeaponProficiencyIds().contains(i.getId());
+			Integer strMod = getAbilityStats(c).get(Ability.strength).mod;
+			Integer dexMod = getAbilityStats(c).get(Ability.dexterity).mod;
+			Integer attackMod = 0;
+			if (i.getProperties().contains(WeaponProperty.finesse)) attackMod = Math.max(strMod, dexMod);
+			else if (i.getRanged() == true) attackMod = dexMod;
+			else attackMod = strMod;
+			Integer attackBonus = getSkillModifier(attackMod, proficient, c.getLevel());
+			String damage = i.getDamage().getNotation() + " + " + attackMod + " " + i.getDamageType();
+			result.add(new AttackOutput(i.getName(), attackBonus, damage));
 		}
 		return result;
 	}
@@ -217,7 +226,7 @@ public class CharacterMapper {
 			.skills(toSkills(c))
 			.savingThrows(toSavingThrows(c))
 			.armor(c.getArmor())
-			.weapons(c.getWeapons())
+			.attacks(toAttacks(c))
 			.spellcasting(toSpellcastingOutput(c))
 			.proficiencies(toProficiencies(c))
 			.tools(c.getTools())
