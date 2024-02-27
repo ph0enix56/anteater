@@ -164,7 +164,7 @@ public class CharacterMapper {
 			else attackMod = strMod;
 			Integer attackBonus = getSkillModifier(attackMod, proficient, c.getLevel());
 			String damage = i.getDamage().getNotation() + " + " + attackMod + " " + i.getDamageType();
-			result.add(new AttackOutput(i.getName(), attackBonus, damage));
+			result.add(new AttackOutput(i.getId(), i.getName(), attackBonus, damage));
 		}
 		return result;
 	}

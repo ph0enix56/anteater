@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
 import cz.cvut.fit.anteater.model.dto.IdWrapper;
@@ -90,7 +91,7 @@ public class CharacterController {
 	}
 
 	@PutMapping("/{id}/weapons")
-	public List<Weapon> editWeapons(@PathVariable String id, @RequestBody List<String> weaponIds) {
+	public List<AttackOutput> editWeapons(@PathVariable String id, @RequestBody List<String> weaponIds) {
 		return characterService.editWeapons(id, weaponIds);
 	}
 

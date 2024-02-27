@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
 import cz.cvut.fit.anteater.model.dto.SkillInput;
@@ -108,7 +109,7 @@ public class CharacterService {
 		return repo.save(c).getArmor();
 	}
 
-	public List<Weapon> editWeapons(String id, List<String> weaponIds) {
+	public List<AttackOutput> editWeapons(String id, List<String> weaponIds) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		List<Weapon> newWeapons = new ArrayList<>();
@@ -118,7 +119,8 @@ public class CharacterService {
 			newWeapons.add(w);
 		}
 		c.setWeapons(newWeapons);
-		return repo.save(c).getWeapons();
+		repo.save(c);
+		return mapper.toAttacks(c);
 	}
 
 	public List<Spell> editSpells(String id, List<String> spellIds) {
