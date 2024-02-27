@@ -1,7 +1,10 @@
 package cz.cvut.fit.anteater.enumeration;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public enum Skill {
 	acrobatics("Acrobatics"),
 	animal_handling("Animal Handling"),
@@ -23,7 +26,4 @@ public enum Skill {
 	survival("Survival");
 
 	private String name;
-
-	Skill(String name) { this.name = name; }
-	@JsonValue public String getName() { return name; }
 }

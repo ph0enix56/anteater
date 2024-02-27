@@ -22,7 +22,6 @@ import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.Spell;
-import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.service.CharacterService;
 import jakarta.validation.Valid;
 
@@ -86,7 +85,7 @@ public class CharacterController {
 	}
 
 	@PutMapping("/{id}/skills")
-	public List<SkillOutput> putMethodName(@PathVariable String id, @RequestBody List<SkillInput> skills) {
+	public List<SkillOutput> editSkills(@PathVariable String id, @RequestBody List<SkillInput> skills) {
 		return characterService.editSkills(id, skills);
 	}
 

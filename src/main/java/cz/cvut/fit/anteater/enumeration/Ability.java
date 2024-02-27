@@ -2,21 +2,23 @@ package cz.cvut.fit.anteater.enumeration;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Ability {
-	strength("Strength", "Str"),
-	dexterity("Dexterity", "Dex"),
-	constitution("Constitution", "Con"),
-	intelligence("Intelligence", "Int"),
-	wisdom("Wisdom", "Wis"),
-	charisma("Charisma", "Cha");
+	strength("Strength"),
+	dexterity("Dexterity"),
+	constitution("Constitution"),
+	intelligence("Intelligence"),
+	wisdom("Wisdom"),
+	charisma("Charisma");
 
 	private String name;
-	private String abbreviation;
-
-	Ability(String name, String abbreviation) { this.name = name; this.abbreviation = abbreviation; }
 
 	@JsonValue
 	public String getName() { return name; }
 
-	public String getAbbreviation() { return abbreviation; }
+	public String getAbbreviation() { return name.substring(0, 2); }
 }
