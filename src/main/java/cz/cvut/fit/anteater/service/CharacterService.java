@@ -14,6 +14,7 @@ import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.Spell;
+import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.mapping.CharacterMapper;
 import cz.cvut.fit.anteater.repository.ArmorRepository;
 import cz.cvut.fit.anteater.repository.BackgroundRepository;
@@ -21,6 +22,7 @@ import cz.cvut.fit.anteater.repository.DndCharacterRepository;
 import cz.cvut.fit.anteater.repository.DndClassRepository;
 import cz.cvut.fit.anteater.repository.RaceRepository;
 import cz.cvut.fit.anteater.repository.SpellRepository;
+import cz.cvut.fit.anteater.repository.WeaponRepository;
 
 @Service
 public class CharacterService {
@@ -28,17 +30,20 @@ public class CharacterService {
 	private DndClassRepository classRepo;
 	private RaceRepository raceRepo;
 	private BackgroundRepository backgroundRepo;
+	private WeaponRepository weaponRepo;
 	private SpellRepository spellRepo;
 	private ArmorRepository armorRepo;
 	private CharacterMapper mapper;
 
 	public CharacterService(DndCharacterRepository repository, DndClassRepository classRepository,
 			RaceRepository raceRepository, BackgroundRepository backgroundRepository,
-			SpellRepository spellRepository, ArmorRepository armorRepository, CharacterMapper mapper) {
+			WeaponRepository weaponRepository, SpellRepository spellRepository,
+			ArmorRepository armorRepository, CharacterMapper mapper) {
 		this.repo = repository;
 		this.classRepo = classRepository;
 		this.raceRepo = raceRepository;
 		this.backgroundRepo = backgroundRepository;
+		this.weaponRepo = weaponRepository;
 		this.spellRepo = spellRepository;
 		this.armorRepo = armorRepository;
 		this.mapper = mapper;
@@ -101,6 +106,19 @@ public class CharacterService {
 		Armor a = armorRepo.findById(armorId).orElseThrow(() -> new NoSuchElementException("Armor with given ID not found"));
 		c.setArmor(a);
 		return repo.save(c).getArmor();
+	}
+
+	public List<Weapon> editWeapons(String id, List<String> weaponIds) {
+		if (id == null) throw new IllegalArgumentException("ID cannot be null");
+		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		List<Weapon> newWeapons = new ArrayList<>();
+		for (String wid : weaponIds) {
+			if (wid == null) throw new IllegalArgumentException("Weapon ID cannot be null");
+			Weapon w = weaponRepo.findById(wid).orElseThrow(() -> new NoSuchElementException("Weapon with given ID not found"));
+			newWeapons.add(w);
+		}
+		c.setWeapons(newWeapons);
+		return repo.save(c).getWeapons();
 	}
 
 	public List<Spell> editSpells(String id, List<String> spellIds) {
