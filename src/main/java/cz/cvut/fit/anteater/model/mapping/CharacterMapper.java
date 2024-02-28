@@ -135,7 +135,7 @@ public class CharacterMapper {
 					getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSkills().contains(sk), c.getLevel()),
 					c.getSkills().contains(sk),
 					sk.getName() + " (" + ab.getAbbreviation() + ")"));
-		}
+	}
 		return result;
 	}
 

@@ -15,7 +15,7 @@ public class CharacterInput {
 
 	private String id;
 
-	private InfoInput info;
+	private InfoInput basicInfo;
 
 	@JsonProperty("class")
 	private ClassInput dndClass;
