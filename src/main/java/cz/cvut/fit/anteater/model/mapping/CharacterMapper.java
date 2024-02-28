@@ -166,7 +166,11 @@ public class CharacterMapper {
 			else if (i.getRanged() == true) attackMod = dexMod;
 			else attackMod = strMod;
 			Integer attackBonus = getSkillModifier(attackMod, proficient, c.getLevel());
-			String damage = i.getDamage().getNotation() + " + " + attackMod + " " + i.getDamageType();
+
+			StringBuilder dmgBuilder = new StringBuilder(i.getDamage().getNotation());
+            if (attackMod > 0) dmgBuilder.append(" + ").append(attackMod);
+            else if (attackMod < 0) dmgBuilder.append(" - ").append(-attackMod);
+            String damage = dmgBuilder.append(" ").append(i.getDamageType()).toString();
 			result.add(new AttackOutput(i.getId(), i.getName(), attackBonus, damage));
 		}
 		return result;
@@ -185,7 +189,7 @@ public class CharacterMapper {
 			if (slots.get(i) > 0) slotsRes.add(new SlotData(i + 1, slots.get(i)));
 		}
 		return SpellcastingOutput.builder()
-			.ability(spellAbility)
+			.abilityAbbreviation(spellAbility.getAbbreviation())
 			.modifier(modifier)
 			.saveDc(saveDc)
 			.slots(slotsRes)

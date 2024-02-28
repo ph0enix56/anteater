@@ -1,7 +1,5 @@
 package cz.cvut.fit.anteater.enumeration;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -20,7 +20,6 @@ import cz.cvut.fit.anteater.model.dto.IdWrapper;
 import cz.cvut.fit.anteater.model.dto.SkillInput;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
-import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.service.CharacterService;
 import jakarta.validation.Valid;
