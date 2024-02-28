@@ -25,6 +25,7 @@ import cz.cvut.fit.anteater.model.dto.SpellcastingOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
+import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.SkillAbilities;
 import cz.cvut.fit.anteater.model.value.SlotData;
@@ -141,7 +142,7 @@ public class CharacterMapper {
 
 	public List<SkillOutput> toSavingThrows(DndCharacter c) {
 		List<SkillOutput> result = new ArrayList<>();
-		Set<Ability> saves = c.getDndClass().getSavingThrowProficiencies().getDefaults();
+		Set<Ability> saves = c.getDndClass().getSavingThrowProficiencies();
 		for (Ability ab : Ability.values()) {
 			result.add(
 				new SkillOutput(
@@ -157,8 +158,9 @@ public class CharacterMapper {
 	public List<AttackOutput> toAttacks(DndCharacter c) {
 		List<AttackOutput> result = new ArrayList<>();
 		for (var i : c.getWeapons()) {
-			Boolean proficient = c.getDndClass().getWeaponProficiencies().contains(i.getType())
-				|| c.getDndClass().getWeaponProficiencyIds().contains(i.getId());
+			Boolean proficient = c.getDndClass().getWeaponProficiencyTypes().contains(i.getType())
+				|| c.getDndClass().getWeaponProficiencies().contains(i.getId());
+
 			Integer strMod = getAbilityStats(c).get(Ability.strength).mod;
 			Integer dexMod = getAbilityStats(c).get(Ability.dexterity).mod;
 			Integer attackMod = 0;
@@ -200,10 +202,12 @@ public class CharacterMapper {
 	// TODO: add individual weapon and armor proficiencies, not just the types
 	public ProficiencyList toProficiencies(DndCharacter c) {
 		List<String> armor = new ArrayList<>();
-		c.getDndClass().getArmorProficiencies().stream().map(ArmorType::getName).forEach(armor::add);
+		c.getDndClass().getArmorProficiencyTypes().stream().map(ArmorType::getName).forEach(armor::add);
+		c.getDndClass().getArmorProficiencies().stream().map(Armor::getName).forEach(armor::add);
 
 		List<String> weapons = new ArrayList<>();
-		c.getDndClass().getWeaponProficiencies().stream().map(WeaponType::getName).forEach(weapons::add);
+		c.getDndClass().getWeaponProficiencyTypes().stream().map(WeaponType::getName).forEach(weapons::add);
+		c.getDndClass().getWeaponProficiencies().stream().map(Weapon::getName).forEach(weapons::add);
 
 		List<String> tools = c.getTools().stream().map(i -> i.getItem().getName()).toList();
 		List<String> languages = c.getLanguages().stream().map(i -> i.getItem().getName()).toList();

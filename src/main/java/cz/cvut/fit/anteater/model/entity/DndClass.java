@@ -36,22 +36,22 @@ public class DndClass extends SourceableEntity {
 	private BonusList<Skill> skillProficiencies;
 
 	@Field("saves")
-	private BonusList<Ability> savingThrowProficiencies;
+	private Set<Ability> savingThrowProficiencies;
 
 	@Field("tools")
 	private BonusList<Tool> toolProficiencies;
 
 	@Field("armor_types")
-	private Set<ArmorType> armorProficiencies;
+	private Set<ArmorType> armorProficiencyTypes;
 
 	@Field("armor")
-	private Set<String> armorProficiencyIds;
+	private List<Armor> armorProficiencies;
 
 	@Field("weapon_types")
-	private Set<WeaponType> weaponProficiencies;
+	private Set<WeaponType> weaponProficiencyTypes;
 
 	@Field("weapons")
-	private Set<String> weaponProficiencyIds;
+	private List<Weapon> weaponProficiencies;
 
 	private Spellcasting spellcasting;
 }

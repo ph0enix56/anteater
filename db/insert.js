@@ -732,10 +732,7 @@ let classes = [
 			"amount": 2,
 			"defaults": []
 		},
-		"saves": {
-			"amount": 2,
-			"defaults": ["strength", "constitution"]
-		},
+		"saves": ["strength", "constitution"],
 		"tools": {
 			"amount": 0,
 			"defaults": []
@@ -787,10 +784,7 @@ let classes = [
 			"amount": 4,
 			"defaults": []
 		},
-		"saves": {
-			"amount": 2,
-			"defaults": ["dexterity", "intelligence"]
-		},
+		"saves": ["dexterity", "intelligence"],
 		"tools": {
 			"amount": 1,
 			"defaults": [dndDb.tool.findOne({ "name": "Thieves' tools", "source": sourceSRD })]
@@ -798,8 +792,8 @@ let classes = [
 		"armor_types": ["unarmored", "light"],
 		"armor": [],
 		"weapon_types": ["simple"],
-		"weapons": [dndDb.weapon.findOne({ "name": "Rapier", "source": sourceSRD })._id,
-					dndDb.weapon.findOne({ "name": "Longsword", "source": sourceSRD })._id],
+		"weapons": [dndDb.weapon.findOne({ "name": "Rapier", "source": sourceSRD }),
+					dndDb.weapon.findOne({ "name": "Longsword", "source": sourceSRD })],
 		"features": [
 			{
 				"title": "Expertise",
@@ -833,10 +827,7 @@ let classes = [
 			"amount": 2,
 			"defaults": []
 		},
-		"saves": {
-			"amount": 2,
-			"defaults": ["intelligence", "wisdom"]
-		},
+		"saves": ["intelligence", "wisdom"],
 		"tools": {
 			"amount": 0,
 			"defaults": []
@@ -844,7 +835,7 @@ let classes = [
 		"armor_types": ["unarmored"],
 		"armor": [],
 		"weapon_types": [],
-		"weapons": [dndDb.weapon.findOne({ "name": "Dagger", "source": sourceSRD })._id],
+		"weapons": [dndDb.weapon.findOne({ "name": "Dagger", "source": sourceSRD })],
 		"features": [
 			{
 				"title": "Spellcasting",
@@ -898,10 +889,7 @@ let classes = [
 			"amount": 2,
 			"defaults": []
 		},
-		"saves": {
-			"amount": 2,
-			"defaults": ["strength", "constitution"]
-		},
+		"saves": ["strength", "constitution"],
 		"tools": {
 			"amount": 3,
 			"defaults": [
@@ -956,10 +944,7 @@ let classes = [
 			"amount": 2,
 			"defaults": []
 		},
-		"saves": {
-			"amount": 2,
-			"defaults": ["wisdom", "charisma"]
-		},
+		"saves": ["wisdom", "charisma"],
 		"tools": {
 			"amount": 0,
 			"defaults": []
