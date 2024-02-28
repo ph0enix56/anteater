@@ -50,21 +50,21 @@ public class CharacterController {
 	}
 
 	@PostMapping()
-	public DndCharacter createCharacter(@RequestBody @Valid CharacterInput entity) {
+	public CharacterComplete createCharacter(@RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() != null) throw new IllegalArgumentException("ID must be null");
-			return characterService.saveCharacter(entity, false);
+			return characterService.saveCharacter(entity, true);
 		} catch (IllegalArgumentException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 	}
 
 	@PutMapping("/{id}")
-	public DndCharacter updateCharacter(@PathVariable String id, @RequestBody @Valid CharacterInput entity) {
+	public CharacterComplete updateCharacter(@PathVariable String id, @RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() == null) throw new IllegalArgumentException("ID cannot be null");
 			if (!Objects.equals(id, entity.getId())) throw new IllegalArgumentException("ID in path and body must match");
-			return characterService.saveCharacter(entity, true);
+			return characterService.saveCharacter(entity, false);
 		} catch (IllegalArgumentException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		} catch (NoSuchElementException e) {

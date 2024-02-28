@@ -17,8 +17,5 @@ public enum Ability {
 
 	private String name;
 
-	@JsonValue
-	public String getName() { return name; }
-
-	public String getAbbreviation() { return name.substring(0, 2); }
+	public String getAbbreviation() { return name.substring(0, 3); }
 }

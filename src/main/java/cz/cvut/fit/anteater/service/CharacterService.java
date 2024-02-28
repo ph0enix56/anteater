@@ -1,12 +1,19 @@
 package cz.cvut.fit.anteater.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
+import cz.cvut.fit.anteater.enumeration.Ability;
+import cz.cvut.fit.anteater.enumeration.ProficiencySource;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.model.dto.AbilityInput;
 import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
@@ -14,36 +21,50 @@ import cz.cvut.fit.anteater.model.dto.SkillInput;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
+import cz.cvut.fit.anteater.model.entity.Language;
 import cz.cvut.fit.anteater.model.entity.Spell;
+import cz.cvut.fit.anteater.model.entity.Tool;
 import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.mapping.CharacterMapper;
+import cz.cvut.fit.anteater.model.value.Proficiency;
 import cz.cvut.fit.anteater.repository.ArmorRepository;
 import cz.cvut.fit.anteater.repository.BackgroundRepository;
 import cz.cvut.fit.anteater.repository.DndCharacterRepository;
 import cz.cvut.fit.anteater.repository.DndClassRepository;
+import cz.cvut.fit.anteater.repository.LanguageRepository;
 import cz.cvut.fit.anteater.repository.RaceRepository;
+import cz.cvut.fit.anteater.repository.SourceRepository;
 import cz.cvut.fit.anteater.repository.SpellRepository;
+import cz.cvut.fit.anteater.repository.ToolRepository;
 import cz.cvut.fit.anteater.repository.WeaponRepository;
 
 @Service
 public class CharacterService {
 	private DndCharacterRepository repo;
+	private SourceRepository sourceRepo;
 	private DndClassRepository classRepo;
 	private RaceRepository raceRepo;
 	private BackgroundRepository backgroundRepo;
+	private ToolRepository toolRepo;
+	private LanguageRepository languageRepo;
 	private WeaponRepository weaponRepo;
 	private SpellRepository spellRepo;
 	private ArmorRepository armorRepo;
 	private CharacterMapper mapper;
 
-	public CharacterService(DndCharacterRepository repository, DndClassRepository classRepository,
-			RaceRepository raceRepository, BackgroundRepository backgroundRepository,
-			WeaponRepository weaponRepository, SpellRepository spellRepository,
-			ArmorRepository armorRepository, CharacterMapper mapper) {
+	public CharacterService(DndCharacterRepository repository, SourceRepository sourceRepository,
+			DndClassRepository classRepository,	RaceRepository raceRepository,
+			BackgroundRepository backgroundRepository, ToolRepository toolRepository,
+			LanguageRepository languageRepository, WeaponRepository weaponRepository,
+			SpellRepository spellRepository, ArmorRepository armorRepository,
+			CharacterMapper mapper) {
 		this.repo = repository;
+		this.sourceRepo = sourceRepository;
 		this.classRepo = classRepository;
 		this.raceRepo = raceRepository;
 		this.backgroundRepo = backgroundRepository;
+		this.toolRepo = toolRepository;
+		this.languageRepo = languageRepository;
 		this.weaponRepo = weaponRepository;
 		this.spellRepo = spellRepository;
 		this.armorRepo = armorRepository;
@@ -60,28 +81,63 @@ public class CharacterService {
 		return mapper.toComplete(c);
 	}
 
-	// TODO: this will not work now
-	public DndCharacter saveCharacter(CharacterInput in, Boolean isUpdate) {
+	public CharacterComplete saveCharacter(CharacterInput in, Boolean isCreate) {
 		if (in == null) throw new IllegalArgumentException("Entity cannot be null");
 		var builder = DndCharacter.builder()
-			.characterName(in.getCharacterName())
-			.playerName(in.getPlayerName())
-			.cardPhotoUrl(in.getCardPhotoUrl())
-			.sheetPhotoUrl(in.getSheetPhotoUrl())
-			.level(in.getLevel())
-			.skills(in.getSkillProficiencies())
-			.saves(in.getSaveProficiencies())
-			.dndClass(classRepo.findById(in.getDndClass()).orElseThrow(() -> new IllegalArgumentException("Invalid class id")))
-			.race(raceRepo.findById(in.getRace()).orElseThrow(() -> new IllegalArgumentException("Invalid race id")))
-			.background(backgroundRepo.findById(in.getBackground()).orElseThrow(() -> new IllegalArgumentException("Invalid background id")))
-			.subclass(in.getSubclass());
+			.characterName(in.getInfo().getCharacterName())
+			.playerName(in.getInfo().getPlayerName())
+			.cardPhotoUrl(in.getInfo().getCardPhotoUrl())
+			.sheetPhotoUrl(in.getInfo().getSheetPhotoUrl())
+			.sources(in.getInfo().getSourceIds().stream().map(id -> sourceRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid source id"))).toList())
+			.dndClass(classRepo.findById(in.getDndClass().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid class id")))
+			.subclass(in.getDndClass().getSubclass())
+			.race(raceRepo.findById(in.getRace().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid race id")))
+			.size(in.getRace().getSize())
+			.background(backgroundRepo.findById(in.getBackground().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid background id")));
 
-		DndCharacter c = builder.build();
-		if (isUpdate) {
-			if (repo.existsById(in.getId()) == false) throw new IllegalArgumentException("Invalid update: entity does not exist"); 
-			c.setId(in.getId());
-		}
-		return repo.save(c);
+			List<Proficiency<Tool>> toolProf = new ArrayList<>();
+			for (String tid : in.getBackground().getToolIds()) {
+				Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
+				toolProf.add(new Proficiency<Tool>(t, ProficiencySource.background));
+			}
+			for (String tid : in.getDndClass().getToolIds()) {
+				Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
+				toolProf.add(new Proficiency<Tool>(t, ProficiencySource.dndClass));
+			}
+			builder.tools(toolProf);
+
+			List<Proficiency<Language>> langProf = new ArrayList<>();
+			for (String lid : in.getBackground().getLanguageIds()) {
+				Language l =languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
+				langProf.add(new Proficiency<Language>(l, ProficiencySource.background));
+			}
+			for (String lid : in.getRace().getLanguageIds()) {
+				Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
+				langProf.add(new Proficiency<Language>(l, ProficiencySource.race));
+			}
+			builder.languages(langProf);
+
+			Map<Ability, AbilityInput> abilities = new HashMap<>();
+			for (AbilityInput ai : in.getAbilityScores()) abilities.put(ai.getLabel(), ai);
+			builder.abilities(abilities);
+
+			if (isCreate) {
+				builder.level(1)
+				.skills(new HashSet<>())
+				.armor(armorRepo.findByNameLike("Unarmored").get(0))
+				.weapons(new ArrayList<>())
+				.spells(new ArrayList<>());
+				return mapper.toComplete(repo.save(builder.build()));
+			} else {
+				DndCharacter c = repo.findById(in.getId()).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
+				builder.id(in.getId())
+				.level(c.getLevel())
+				.skills(c.getSkills())
+				.armor(c.getArmor())
+				.weapons(c.getWeapons())
+				.spells(c.getSpells());
+				return mapper.toComplete(repo.save(builder.build()));
+			}
 	}
 
 	public void deleteCharacter(String id) {

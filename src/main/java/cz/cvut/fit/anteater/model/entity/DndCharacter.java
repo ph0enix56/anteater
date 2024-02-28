@@ -1,8 +1,8 @@
 package cz.cvut.fit.anteater.model.entity;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -58,10 +58,7 @@ public class DndCharacter {
 	@Field("ability_scores")
 	private Map<Ability, AbilityInput> abilities;
 
-	private HashSet<Skill> skills;
-
-	@Field("saving_throws")
-	private HashSet<Ability> saves;
+	private Set<Skill> skills;
 
 	private List<Proficiency<Tool>> tools;
 

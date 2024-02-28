@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.springframework.stereotype.Component;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
@@ -139,13 +141,14 @@ public class CharacterMapper {
 
 	public List<SkillOutput> toSavingThrows(DndCharacter c) {
 		List<SkillOutput> result = new ArrayList<>();
+		Set<Ability> saves = c.getDndClass().getSavingThrowProficiencies().getDefaults();
 		for (Ability ab : Ability.values()) {
 			result.add(
 				new SkillOutput(
 					ab.toString(),
 					ab.toString(),
-					getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSaves().contains(ab), c.getLevel()),
-					c.getSaves().contains(ab),
+					getSkillModifier(getAbilityStats(c).get(ab).mod, saves.contains(ab), c.getLevel()),
+					saves.contains(ab),
 					ab.getName()));
 		}
 		return result;
