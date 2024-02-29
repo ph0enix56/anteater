@@ -99,11 +99,13 @@ public class CharacterMapper {
 
 	public CharacterStats toStats(DndCharacter c) {
 		var abilities = getAbilityStats(c);
+		Dice hitDice = c.getDndClass().getHitDice();
+		hitDice.setAmount(c.getLevel());
 		return CharacterStats.builder()
-		.proficiencyBonus(getProficiencyBonus(c.getLevel()))
-		.initiative(abilities.get(Ability.dexterity).getMod())
-		.speed(c.getRace().getSpeed())
-			.hitDice(c.getDndClass().getHitDice())
+			.proficiencyBonus(getProficiencyBonus(c.getLevel()))
+			.initiative(abilities.get(Ability.dexterity).getMod())
+			.speed(c.getRace().getSpeed())
+			.hitDice(hitDice)
 			.hitPoints(getHitPoints(c.getDndClass().getHitDice(), abilities.get(Ability.constitution).getMod(), c.getLevel()))
 			.armorClass(getArmorClass(c.getArmor(), abilities))
 			.build();
