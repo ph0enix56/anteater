@@ -51,6 +51,7 @@ public class CharacterMapper {
 			.race(toSrcInfo(c.getRace()))
 			.background(toSrcInfo(c.getBackground()))
 			.level(c.getLevel())
+			.size(c.getSize().toString())
 			.subclass(c.getSubclass())
 			.build();
 	}

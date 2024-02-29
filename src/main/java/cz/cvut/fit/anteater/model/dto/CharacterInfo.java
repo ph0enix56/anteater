@@ -25,5 +25,7 @@ public class CharacterInfo {
 
 	private Integer level;
 
+	private String size;
+
 	private String subclass;
 }

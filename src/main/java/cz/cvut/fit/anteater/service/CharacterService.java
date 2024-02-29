@@ -107,7 +107,7 @@ public class CharacterService {
 
 			List<Proficiency<Language>> langProf = new ArrayList<>();
 			for (String lid : in.getBackground().getLanguageIds()) {
-				Language l =languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
+				Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
 				langProf.add(new Proficiency<Language>(l, ProficiencySource.background));
 			}
 			for (String lid : in.getRace().getLanguageIds()) {
