@@ -124,7 +124,18 @@ public class CharacterMapper {
 				stats.get(i.getKey()).getMod(),
 				i.getKey().getName()));
 		}
-		return result;
+
+		// TODO: this is ugly, get rid of it somehow, but otherwise the order is messed up in the frontend
+		List<AbilityOutput> sorted = new ArrayList<>();
+		for (Ability ab : Ability.values()) {
+			for (AbilityOutput ao : result) {
+				if (ao.getLabel().equals(ab.toString())) {
+					sorted.add(ao);
+					break;
+				}
+			}
+		}
+		return sorted;
 	}
 
 	public List<SkillOutput> toSkills(DndCharacter c) {
@@ -201,7 +212,6 @@ public class CharacterMapper {
 			.build();
 	}
 
-	// TODO: add individual weapon and armor proficiencies, not just the types
 	public ProficiencyList toProficiencies(DndCharacter c) {
 		List<String> armor = new ArrayList<>();
 		c.getDndClass().getArmorProficiencyTypes().stream().map(ArmorType::getName).forEach(armor::add);

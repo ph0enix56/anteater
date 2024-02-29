@@ -14,7 +14,6 @@ public class InfoInput {
 	@NotEmpty
 	private String playerName;
 
-	@NotEmpty
 	private List<String> sourceIds;
 
 	private String cardPhotoUrl;
