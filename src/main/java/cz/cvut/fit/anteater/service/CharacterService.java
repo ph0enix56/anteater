@@ -15,6 +15,7 @@ import cz.cvut.fit.anteater.model.dto.AbilityInput;
 import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
+import cz.cvut.fit.anteater.model.dto.CharacterShort;
 import cz.cvut.fit.anteater.model.dto.SkillInput;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
@@ -69,8 +70,8 @@ public class CharacterService {
 		this.mapper = mapper;
 	}
 
-	public List<CharacterComplete> getAllCharacters() {
-		return repo.findAll().stream().map(mapper::toComplete).toList();
+	public List<CharacterShort> getAllCharacters() {
+		return repo.findAll().stream().map(mapper::toShort).toList();
 	}
 
 	public CharacterComplete getCompleteCharacter(String id) {

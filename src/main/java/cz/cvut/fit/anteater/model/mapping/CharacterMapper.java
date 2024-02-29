@@ -17,6 +17,7 @@ import cz.cvut.fit.anteater.model.dto.AbilityOutput;
 import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInfo;
+import cz.cvut.fit.anteater.model.dto.CharacterShort;
 import cz.cvut.fit.anteater.model.dto.CharacterStats;
 import cz.cvut.fit.anteater.model.dto.ProficiencyList;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
@@ -52,6 +53,10 @@ public class CharacterMapper {
 			.level(c.getLevel())
 			.subclass(c.getSubclass())
 			.build();
+	}
+
+	public CharacterShort toShort(DndCharacter c) {
+		return new CharacterShort(c.getId(), toInfo(c));
 	}
 
 	@Data
@@ -199,7 +204,7 @@ public class CharacterMapper {
 		Integer modifier = abilities.get(spellAbility).mod;
 		Integer saveDc = 8 + modifier + getProficiencyBonus(c.getLevel());
 		List<SlotData> slotsRes = new ArrayList<>();
-		List<Integer> slots = c.getDndClass().getSpellcasting().getSlots().get(c.getLevel());
+		List<Integer> slots = c.getDndClass().getSpellcasting().getSlotsByLevel(c.getLevel());
 		for (int i = 0; i < slots.size(); i++) {
 			if (slots.get(i) > 0) slotsRes.add(new SlotData(i + 1, slots.get(i)));
 		}

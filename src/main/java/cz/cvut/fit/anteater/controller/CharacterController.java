@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
+import cz.cvut.fit.anteater.model.dto.CharacterShort;
 import cz.cvut.fit.anteater.model.dto.IdWrapper;
 import cz.cvut.fit.anteater.model.dto.SkillInput;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
@@ -39,7 +40,7 @@ public class CharacterController {
 	}
 
 	@GetMapping
-	public List<CharacterComplete> getCompleteAll() {
+	public List<CharacterShort> getCompleteAll() {
 		return characterService.getAllCharacters();
 	}
 
