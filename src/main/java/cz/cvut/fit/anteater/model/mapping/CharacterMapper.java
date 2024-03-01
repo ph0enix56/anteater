@@ -178,7 +178,7 @@ public class CharacterMapper {
 		List<AttackOutput> result = new ArrayList<>();
 		for (var i : c.getWeapons()) {
 			Boolean proficient = c.getDndClass().getWeaponProficiencyTypes().contains(i.getType())
-				|| c.getDndClass().getWeaponProficiencies().contains(i.getId());
+				|| c.getDndClass().getWeaponProficiencies().contains(i);
 
 			Integer strMod = getAbilityStats(c).get(Ability.strength).mod;
 			Integer dexMod = getAbilityStats(c).get(Ability.dexterity).mod;
@@ -189,9 +189,9 @@ public class CharacterMapper {
 			Integer attackBonus = getSkillModifier(attackMod, proficient, c.getLevel());
 
 			StringBuilder dmgBuilder = new StringBuilder(i.getDamage().getNotation());
-            if (attackMod > 0) dmgBuilder.append(" + ").append(attackMod);
-            else if (attackMod < 0) dmgBuilder.append(" - ").append(-attackMod);
-            String damage = dmgBuilder.append(" ").append(i.getDamageType()).toString();
+			if (attackMod > 0) dmgBuilder.append(" + ").append(attackMod);
+			else if (attackMod < 0) dmgBuilder.append(" - ").append(-attackMod);
+			String damage = dmgBuilder.append(" ").append(i.getDamageType()).toString();
 			result.add(new AttackOutput(i.getId(), i.getName(), attackBonus, damage));
 		}
 		return result;
@@ -251,6 +251,7 @@ public class CharacterMapper {
 			.id(c.getId())
 			.info(toInfo(c))
 			.stats(toStats(c))
+			.sources(c.getSources())
 			.abilities(toAbilityOutput(c))
 			.skills(toSkills(c))
 			.savingThrows(toSavingThrows(c))

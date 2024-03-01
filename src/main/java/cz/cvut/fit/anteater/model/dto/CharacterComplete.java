@@ -4,6 +4,7 @@ import java.util.List;
 
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Language;
+import cz.cvut.fit.anteater.model.entity.Source;
 import cz.cvut.fit.anteater.model.entity.Tool;
 import cz.cvut.fit.anteater.model.value.Proficiency;
 import cz.cvut.fit.anteater.model.value.TextFeature;
@@ -18,6 +19,8 @@ public class CharacterComplete {
 	private CharacterInfo info;
 
 	private CharacterStats stats;
+
+	private List<Source> sources;
 
 	private List<AbilityOutput> abilities;
 

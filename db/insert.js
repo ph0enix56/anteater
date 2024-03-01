@@ -102,6 +102,20 @@ let languagesExotic = [
 ];
 dndDb.language.insertMany(languagesBasic.map(language => { return { "name": language, "exotic": false, "source": sourceSRD } }));
 dndDb.language.insertMany(languagesExotic.map(language => { return { "name": language, "exotic": true, "source": sourceSRD } }));
+
+let languagesExp1 = [
+	"English",
+	"French",
+	"German",
+	"Spanish",
+];
+let languagesExp2 = [
+	"Klingon",
+	"Vulcan",
+	"Romulan",
+];
+dndDb.language.insertMany(languagesExp1.map(language => { return { "name": language, "exotic": false, "source": sourceEXP1 } }));
+dndDb.language.insertMany(languagesExp2.map(language => { return { "name": language, "exotic": false, "source": sourceEXP2 } }));
 print(dndDb.language.countDocuments() + " languages inserted");
 
 let backgrounds = [
@@ -453,6 +467,28 @@ let armor = [
 		"description": "Light and testy armor"
 	},
 	{
+		"name": "Armor of Testing",
+		"source": sourceEXP1,
+		"type": "medium",
+		"baseArmorClass": 15,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 2 }
+		],
+		"description": "Become shrouded in the armor of testing"
+	},
+	{
+		"name": "Bastion of Testing",
+		"source": sourceEXP2,
+		"type": "heavy",
+		"baseArmorClass": 22,
+		"strengthRequirement": 16,
+		"stealthDisadvantage": true,
+		"bonuses": [],
+		"description": "Impenetrable armor, tested to the limit"
+	},
+	{
 		"name": "Another Armor",
 		"source": sourceEXP2,
 		"type": "medium",
@@ -698,6 +734,36 @@ let weapons = [
 		"damageType": "bludgeoning",
 	},
 	{
+		"name": "Walking Stick",
+		"source": sourceEXP1,
+		"type": "simple",
+		"ranged": false,
+		"range": 5,
+		"properties": ["light"],
+		"damage": { "amount": 1, "sides": 4 },
+		"damageType": "bludgeoning",
+	},
+	{
+		"name": "Comically Large Sword",
+		"source": sourceEXP1,
+		"type": "martial",
+		"ranged": false,
+		"range": 10,
+		"properties": ["heavy", "two_handed", "reach"],
+		"damage": { "amount": 2, "sides": 8 },
+		"damageType": "slashing",
+	},
+	{
+		"name": "Crossbow of Annoyance",
+		"source": sourceEXP1,
+		"type": "simple",
+		"ranged": true,
+		"range": 80,
+		"properties": ["two_handed", "loading"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "piercing",
+	},
+	{
 		"name": "Test Weapon",
 		"source": sourceEXP2,
 		"type": "simple",
@@ -717,6 +783,16 @@ let weapons = [
 		"damage": { "amount": 1, "sides": 12 },
 		"damageType": "slashing",
 	},
+	{
+		"name": "Ranged Masterpiece",
+		"source": sourceEXP2,
+		"type": "martial",
+		"ranged": true,
+		"range": 150,
+		"properties": ["two_handed", "heavy"],
+		"damage": { "amount": 4, "sides": 6 },
+		"damageType": "piercing",
+	}
 ];
 dndDb.weapon.insertMany(weapons);
 print(dndDb.weapon.countDocuments() + " weapons inserted");
@@ -819,8 +895,8 @@ let classes = [
 	},
 	{
 		"name": "Wizard",
-		"source": sourceEXP1,
-		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam ni",
+		"source": sourceSRD,
+		"description": "A human in claret-colored robes stands in a room dimly lit by a flickering candle. He holds his hands out, palms forward, fingers splayed, and then hurls a lance of fire at the creatures stalking him.",
 		"hitDice": { "amount": 1, "sides": 6 },
 		"subclasses": ["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"],
 		"skills": {
@@ -845,12 +921,12 @@ let classes = [
 			{
 				"title": "Arcane Recovery",
 				"levelMinimum": 1,
-				"text": "Je to fakt super."
+				"text": "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your wizard level (rounded up), and none of the slots can be 6th level or higher.",
 			},
 			{
 				"title": "Spell Mastery",
 				"levelMinimum": 18,
-				"text": "Wait for it..."
+				"text": "At 18th level, you have achieved such mastery over certain spells that you can cast them at will. Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal. By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels."
 			}
 		],
 		"spellcasting": {
@@ -1178,10 +1254,11 @@ let characters = [
 		"player_name": "Filip",
 		"card_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
 		"sheet_photo_url": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
-		"sources": [sourceSRD._id, sourceEXP1._id],
+		"sources": [sourceSRD, sourceEXP1],
 		"class": dndDb.dndClass.findOne({ "name": "Warlock" }, { "_id": 1 })._id,
 		"race": dndDb.race.findOne({ "name": "Half-Elf" }, { "_id": 1 })._id,
 		"background": dndDb.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
+		"size": "medium",
 		"subclass": "The Archfey",
 		"level": 5,
 		"ability_scores": {
@@ -1230,12 +1307,13 @@ let characters = [
 		"player_name": "Nekdo",
 		"card_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
 		"sheet_photo_url": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
-		"sources": [sourceSRD._id],
+		"sources": [sourceSRD, sourceEXP1, sourceEXP2],
 		"class": dndDb.dndClass.findOne({ "name": "Rogue (altered)" }, { "_id": 1 })._id,
 		"race": dndDb.race.findOne({ "name": "Human (test)" }, { "_id": 1 })._id,
 		"background": dndDb.background.findOne({ "name": "Acolyte" }, { "_id": 1 })._id,
-		"level": 11,
+		"size": "medium",
 		"subclass": "Thief",
+		"level": 11,
 		"ability_scores": {
 			"strength": { "score": 10, "upByOne": false, "upByTwo": false },
 			"dexterity": { "score": 18, "upByOne": false, "upByTwo": true },
@@ -1262,7 +1340,7 @@ let characters = [
 				"from": "background"
 			}
 		],
-		"armor": dndDb.armor.findOne({ "name": "Chain Shirt", "source": sourceSRD }),
+		"armor": dndDb.armor.findOne({ "name": "Test Armor", "source": sourceEXP1 }),
 		"weapons" : [
 			dndDb.weapon.findOne({ "name": "Dagger", "source": sourceSRD }),
 			dndDb.weapon.findOne({ "name": "Longsword", "source": sourceSRD }),
@@ -1275,10 +1353,11 @@ let characters = [
 		"player_name": "Nekdo",
 		"card_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
 		"sheet_photo_url": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
-		"sources": [sourceSRD._id, sourceEXP2._id],
+		"sources": [sourceSRD],
 		"class": dndDb.dndClass.findOne({ "name": "Wizard" }, { "_id": 1 })._id,
 		"race": dndDb.race.findOne({ "name": "Gnome (Forest)" }, { "_id": 1 })._id,
 		"background": dndDb.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
+		"size": "small",
 		"subclass": "Abjuration",
 		"level": 14,
 		"ability_scores": {
@@ -1329,10 +1408,12 @@ let characters = [
 		"player_name": "Tester",
 		"card_photo_url": "https://cdnb.artstation.com/p/assets/images/images/005/395/785/large/anthony-l-m-barbarian-massacre-anthony-lm-ss.jpg",
 		"sheet_photo_url": "https://cdnb.artstation.com/p/assets/images/images/005/395/785/large/anthony-l-m-barbarian-massacre-anthony-lm-ss.jpg",
-		"sources": [sourceSRD._id],
+		"sources": [sourceSRD],
 		"class": dndDb.dndClass.findOne({ "name": "Barbarian" }, { "_id": 1 })._id,
 		"race": dndDb.race.findOne({ "name": "Human (test)" }, { "_id": 1 })._id,
 		"background": dndDb.background.findOne({ "name": "Charlatan" }, { "_id": 1 })._id,
+		"size": "medium",
+		"subclass": "Storm Herald",
 		"level": 7,
 		"ability_scores": {
 			"strength": { "score": 18, "upByOne": false, "upByTwo": true },

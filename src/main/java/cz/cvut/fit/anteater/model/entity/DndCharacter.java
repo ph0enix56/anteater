@@ -36,7 +36,6 @@ public class DndCharacter {
 	@Field("sheet_photo_url")
 	private String sheetPhotoUrl;
 
-	@DocumentReference
 	private List<Source> sources;
 
 	@Field("class")

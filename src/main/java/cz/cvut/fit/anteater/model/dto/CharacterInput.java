@@ -15,13 +15,17 @@ public class CharacterInput {
 
 	private String id;
 
+	@NotNull
 	private InfoInput basicInfo;
 
+	@NotNull
 	@JsonProperty("class")
 	private ClassInput dndClass;
 
+	@NotNull
 	private RaceInput race;
 
+	@NotNull
 	private BackgroundInput background;
 
 	@NotNull
