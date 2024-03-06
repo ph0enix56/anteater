@@ -85,7 +85,7 @@ public class CharacterController {
 	}
 
 	@PutMapping("/{id}/skills")
-	public List<SkillOutput> editSkills(@PathVariable String id, @RequestBody List<SkillInput> skills) {
+	public List<SkillOutput> editSkills(@PathVariable String id, @RequestBody @Valid List<SkillInput> skills) {
 		return characterService.editSkills(id, skills);
 	}
 
@@ -95,7 +95,7 @@ public class CharacterController {
 	}
 
 	@PutMapping("/{id}/armor")
-	public Armor editArmor(@PathVariable String id, @RequestBody IdWrapper armorId) {
+	public Armor editArmor(@PathVariable String id, @RequestBody @Valid IdWrapper armorId) {
 		return characterService.editArmor(id, armorId.getId());
 	}
 

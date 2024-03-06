@@ -83,11 +83,11 @@ public class CharacterService {
 	public CharacterComplete saveCharacter(CharacterInput in, Boolean isCreate) {
 		if (in == null) throw new IllegalArgumentException("Entity cannot be null");
 		var builder = DndCharacter.builder()
-			.characterName(in.getBasicInfo().getCharacterName())
-			.playerName(in.getBasicInfo().getPlayerName())
-			.cardPhotoUrl(in.getBasicInfo().getCardPhotoUrl())
-			.sheetPhotoUrl(in.getBasicInfo().getSheetPhotoUrl())
-			.sources(in.getBasicInfo().getSourceIds().stream().map(id -> sourceRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid source id"))).toList())
+			.characterName(in.getInfo().getCharacterName())
+			.playerName(in.getInfo().getPlayerName())
+			.cardPhotoUrl(in.getInfo().getCardPhotoUrl())
+			.sheetPhotoUrl(in.getInfo().getSheetPhotoUrl())
+			.sources(in.getInfo().getSourceIds().stream().map(id -> sourceRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid source id"))).toList())
 			.dndClass(classRepo.findById(in.getDndClass().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid class id")))
 			.subclass(in.getDndClass().getSubclass())
 			.race(raceRepo.findById(in.getRace().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid race id")))
