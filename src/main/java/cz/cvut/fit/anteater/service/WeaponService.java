@@ -7,8 +7,8 @@ import cz.cvut.fit.anteater.repository.SourceRepository;
 import cz.cvut.fit.anteater.repository.WeaponRepository;
 
 @Service
-public class WeaponService extends BaseService<Weapon> {
-	public WeaponService(WeaponRepository repository, SourceRepository sourceRepository) {
-		super(repository, sourceRepository);
+public class WeaponService extends SourcableService<Weapon> {
+	public WeaponService(WeaponRepository weaponRepository, SourceRepository sourceRepository) {
+		super(weaponRepository, sourceRepository);
 	}
 }

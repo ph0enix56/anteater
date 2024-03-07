@@ -10,7 +10,7 @@ import cz.cvut.fit.anteater.service.WeaponService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/weapons")
-public class WeaponController extends BaseController<Weapon> {
+public class WeaponController extends SourcableController<Weapon> {
 	public WeaponController(WeaponService weaponService) {
 		super(weaponService);
 	}
