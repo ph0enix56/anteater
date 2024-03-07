@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import cz.cvut.fit.anteater.business.CharacterService;
 import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
@@ -22,7 +23,6 @@ import cz.cvut.fit.anteater.model.dto.SkillInput;
 import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Spell;
-import cz.cvut.fit.anteater.service.CharacterService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;

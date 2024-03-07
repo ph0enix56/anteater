@@ -24,10 +24,11 @@ public class SourceController {
 		this.repository = repository;
 	}
 
-	@GetMapping("/{abbreviation}")
-	public Source findByAbbreviation(@PathVariable String abbreviation) {
+	@GetMapping("/{id}")
+	public Source findById(@PathVariable String id) {
 		try {
-			return repository.findById(abbreviation).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
+			if (id == null) throw new IllegalArgumentException("ID must not be null");
+			return repository.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
