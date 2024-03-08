@@ -2,13 +2,11 @@ package cz.cvut.fit.anteater.model.entity;
 
 import org.springframework.data.annotation.Id;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
-@SuperBuilder
-@NoArgsConstructor
+@Getter
+@AllArgsConstructor
 public abstract class SourceableEntity {
 	@Id
 	private String id;

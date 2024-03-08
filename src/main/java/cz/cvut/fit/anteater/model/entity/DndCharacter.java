@@ -9,16 +9,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import cz.cvut.fit.anteater.dto.request.AbilityInput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Size;
 import cz.cvut.fit.anteater.enumeration.Skill;
-import cz.cvut.fit.anteater.model.dto.AbilityInput;
 import cz.cvut.fit.anteater.model.value.Proficiency;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
-@Data
-@Builder
+@Value
+@Builder(toBuilder = true)
 @Document(collection = "character")
 public class DndCharacter {
 	@Id

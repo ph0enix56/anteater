@@ -3,6 +3,7 @@ package cz.cvut.fit.anteater.business.abstracts;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
@@ -28,7 +29,12 @@ public abstract class SourcableBaseService<T extends SourceableEntity> {
 		return sourcableRepo.findAll();
 	}
 
-	public Page<T> search(String name, List<String> sourceIds, Pageable pageable) {
+	public Page<T> search(String name, List<String> sourceIds, Integer page, Integer size) {
+		Pageable pageable;
+		if (page == null && size == null) pageable = Pageable.unpaged();
+		else if (page == null) pageable = PageRequest.of(0, size);
+		else if (size == null) pageable = PageRequest.of(page, 10);
+		else pageable = PageRequest.of(page, size);
 		return sourcableRepo.search(name, sourceIds, pageable);
 	}
 

@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.model.dto;
+package cz.cvut.fit.anteater.dto.response;
 
 import cz.cvut.fit.anteater.model.value.Dice;
 import lombok.Builder;

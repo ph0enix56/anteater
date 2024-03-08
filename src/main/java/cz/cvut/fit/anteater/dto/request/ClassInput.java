@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.model.dto;
+package cz.cvut.fit.anteater.dto.request;
 
 import java.util.List;
 

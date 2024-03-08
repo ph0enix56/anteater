@@ -13,14 +13,10 @@ import cz.cvut.fit.anteater.model.value.BonusList;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.Spellcasting;
 import cz.cvut.fit.anteater.model.value.TextFeature;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Value;
 
-@Data
-@SuperBuilder
-@NoArgsConstructor
+@Value
 @EqualsAndHashCode(callSuper = true)
 public class DndClass extends SourceableEntity {
 
@@ -54,4 +50,23 @@ public class DndClass extends SourceableEntity {
 	private List<Weapon> weaponProficiencies;
 
 	private Spellcasting spellcasting;
+
+	public DndClass(String id, String name, Source source, String description, Dice hitDice, List<TextFeature> features,
+			List<String> subclasses, BonusList<Skill> skillProficiencies, Set<Ability> savingThrowProficiencies,
+			BonusList<Tool> toolProficiencies, Set<ArmorType> armorProficiencyTypes, List<Armor> armorProficiencies,
+			Set<WeaponType> weaponProficiencyTypes, List<Weapon> weaponProficiencies, Spellcasting spellcasting) {
+		super(id, name, source);
+		this.description = description;
+		this.hitDice = hitDice;
+		this.features = features;
+		this.subclasses = subclasses;
+		this.skillProficiencies = skillProficiencies;
+		this.savingThrowProficiencies = savingThrowProficiencies;
+		this.toolProficiencies = toolProficiencies;
+		this.armorProficiencyTypes = armorProficiencyTypes;
+		this.armorProficiencies = armorProficiencies;
+		this.weaponProficiencyTypes = weaponProficiencyTypes;
+		this.weaponProficiencies = weaponProficiencies;
+		this.spellcasting = spellcasting;
+	}
 }

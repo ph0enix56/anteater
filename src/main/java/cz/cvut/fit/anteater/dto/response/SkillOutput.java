@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.model.dto;
+package cz.cvut.fit.anteater.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

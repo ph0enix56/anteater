@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.model.mapping;
+package cz.cvut.fit.anteater.business.mapping;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,21 +8,21 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import cz.cvut.fit.anteater.dto.response.AbilityOutput;
+import cz.cvut.fit.anteater.dto.response.AttackOutput;
+import cz.cvut.fit.anteater.dto.response.CharacterComplete;
+import cz.cvut.fit.anteater.dto.response.CharacterInfo;
+import cz.cvut.fit.anteater.dto.response.CharacterShort;
+import cz.cvut.fit.anteater.dto.response.CharacterStats;
+import cz.cvut.fit.anteater.dto.response.ProficiencyList;
+import cz.cvut.fit.anteater.dto.response.SkillOutput;
+import cz.cvut.fit.anteater.dto.response.SourcableInfo;
+import cz.cvut.fit.anteater.dto.response.SpellcastingOutput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.enumeration.WeaponProperty;
 import cz.cvut.fit.anteater.enumeration.WeaponType;
-import cz.cvut.fit.anteater.model.dto.AbilityOutput;
-import cz.cvut.fit.anteater.model.dto.AttackOutput;
-import cz.cvut.fit.anteater.model.dto.CharacterComplete;
-import cz.cvut.fit.anteater.model.dto.CharacterInfo;
-import cz.cvut.fit.anteater.model.dto.CharacterShort;
-import cz.cvut.fit.anteater.model.dto.CharacterStats;
-import cz.cvut.fit.anteater.model.dto.ProficiencyList;
-import cz.cvut.fit.anteater.model.dto.SkillOutput;
-import cz.cvut.fit.anteater.model.dto.SourcableInfo;
-import cz.cvut.fit.anteater.model.dto.SpellcastingOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;

@@ -7,14 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.value.BonusList;
 import cz.cvut.fit.anteater.model.value.TextFeature;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Value;
 
-@Data
-@SuperBuilder
-@NoArgsConstructor
+@Value
 @EqualsAndHashCode(callSuper = true)
 public class Background extends SourceableEntity {
 
@@ -30,4 +26,15 @@ public class Background extends SourceableEntity {
 
 	@Field("tools")
 	private BonusList<Tool> toolProficiencies;
+
+	public Background(String id, String name, Source source, String description, List<TextFeature> features,
+			BonusList<Skill> skillProficiencies, BonusList<Language> languageProficiencies,
+			BonusList<Tool> toolProficiencies) {
+		super(id, name, source);
+		this.description = description;
+		this.features = features;
+		this.skillProficiencies = skillProficiencies;
+		this.languageProficiencies = languageProficiencies;
+		this.toolProficiencies = toolProficiencies;
+	}
 }

@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.model.dto;
+package cz.cvut.fit.anteater.dto.request;
 
 import cz.cvut.fit.anteater.enumeration.Skill;
 import jakarta.validation.constraints.NotNull;

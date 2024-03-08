@@ -1,11 +1,11 @@
-package cz.cvut.fit.anteater.model.dto;
+package cz.cvut.fit.anteater.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SourcableInfo {
+public class CharacterShort {
 	private String id;
-	private String name;	
+	private CharacterInfo info;
 }

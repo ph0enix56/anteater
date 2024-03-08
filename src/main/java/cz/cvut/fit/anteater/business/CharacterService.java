@@ -10,23 +10,23 @@ import java.util.NoSuchElementException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import cz.cvut.fit.anteater.business.mapping.CharacterMapper;
+import cz.cvut.fit.anteater.dto.request.AbilityInput;
+import cz.cvut.fit.anteater.dto.request.CharacterInput;
+import cz.cvut.fit.anteater.dto.request.SkillInput;
+import cz.cvut.fit.anteater.dto.response.AttackOutput;
+import cz.cvut.fit.anteater.dto.response.CharacterComplete;
+import cz.cvut.fit.anteater.dto.response.CharacterShort;
+import cz.cvut.fit.anteater.dto.response.SkillOutput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ProficiencySource;
 import cz.cvut.fit.anteater.enumeration.Skill;
-import cz.cvut.fit.anteater.model.dto.AbilityInput;
-import cz.cvut.fit.anteater.model.dto.AttackOutput;
-import cz.cvut.fit.anteater.model.dto.CharacterComplete;
-import cz.cvut.fit.anteater.model.dto.CharacterInput;
-import cz.cvut.fit.anteater.model.dto.CharacterShort;
-import cz.cvut.fit.anteater.model.dto.SkillInput;
-import cz.cvut.fit.anteater.model.dto.SkillOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.Language;
 import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.model.entity.Tool;
 import cz.cvut.fit.anteater.model.entity.Weapon;
-import cz.cvut.fit.anteater.model.mapping.CharacterMapper;
 import cz.cvut.fit.anteater.model.value.Proficiency;
 import cz.cvut.fit.anteater.repository.DndCharacterRepository;
 import cz.cvut.fit.anteater.repository.SourceRepository;
@@ -152,9 +152,7 @@ public class CharacterService {
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		HashSet<Skill> newSkills = new HashSet<>();
 		for (SkillInput si : skills) if (si.getProficient()) newSkills.add(si.getName());
-		c.setSkills(newSkills);
-		c = repo.save(c);
-		return mapper.toSkills(c);
+		return mapper.toSkills(repo.save(c.toBuilder().skills(newSkills).build()));
 	}
 
 	public Armor editArmor(String id, String armorId) {
@@ -162,8 +160,7 @@ public class CharacterService {
 		if (armorId == null) throw new IllegalArgumentException("Armor ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		Armor a = armorRepo.findById(armorId).orElseThrow(() -> new NoSuchElementException("Armor with given ID not found"));
-		c.setArmor(a);
-		return repo.save(c).getArmor();
+		return repo.save(c.toBuilder().armor(a).build()).getArmor();
 	}
 
 	public List<AttackOutput> editWeapons(String id, List<String> weaponIds) {
@@ -175,9 +172,7 @@ public class CharacterService {
 			Weapon w = weaponRepo.findById(wid).orElseThrow(() -> new NoSuchElementException("Weapon with given ID not found"));
 			newWeapons.add(w);
 		}
-		c.setWeapons(newWeapons);
-		repo.save(c);
-		return mapper.toAttacks(c);
+		return mapper.toAttacks(repo.save(c.toBuilder().weapons(newWeapons).build()));
 	}
 
 	public List<Spell> editSpells(String id, List<String> spellIds) {
@@ -189,15 +184,13 @@ public class CharacterService {
 			Spell sp = spellRepo.findById(sid).orElseThrow(() -> new NoSuchElementException("Spell with given ID not found"));
 			newSpells.add(sp);
 		}
-		c.setSpells(newSpells);
-		return repo.save(c).getSpells();
+		return repo.save(c.toBuilder().spells(newSpells).build()).getSpells();
 	}
 
 	public CharacterComplete levelUp(String id) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		if (c.getLevel() == 20) throw new IllegalArgumentException("Character is already at max level");
-		c.setLevel(c.getLevel() + 1);
-		return mapper.toComplete(repo.save(c));
+		return mapper.toComplete(repo.save(c.toBuilder().level(c.getLevel() + 1).build()));
 	}
 }

@@ -1,16 +1,17 @@
 package cz.cvut.fit.anteater.model.entity;
 
 import cz.cvut.fit.anteater.enumeration.ToolType;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Value;
 
-@Data
-@SuperBuilder
-@NoArgsConstructor
+@Value
 @EqualsAndHashCode(callSuper = true)
 public class Tool extends SourceableEntity {
 
 	private ToolType type;
+
+	public Tool(String id, String name, Source source, ToolType type) {
+		super(id, name, source);
+		this.type = type;
+	}
 }

@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.model.mapping;
+package cz.cvut.fit.anteater.business.mapping;
 
 import java.io.IOException;
 import java.util.Map;
