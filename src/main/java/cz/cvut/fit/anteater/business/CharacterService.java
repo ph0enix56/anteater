@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import cz.cvut.fit.anteater.business.mapping.CharacterMapper;
@@ -125,7 +124,7 @@ public class CharacterService {
 			if (isCreate) {
 				builder.level(1)
 				.skills(new HashSet<>())
-				.armor(armorRepo.search("Unarmored", null, Pageable.unpaged()).getContent().get(0))
+				.armor(null)
 				.weapons(new ArrayList<>())
 				.spells(new ArrayList<>());
 				return mapper.toComplete(repo.save(builder.build()));

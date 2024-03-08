@@ -23,16 +23,16 @@ import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.enumeration.WeaponProperty;
 import cz.cvut.fit.anteater.enumeration.WeaponType;
+import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.value.Dice;
-import cz.cvut.fit.anteater.model.value.SkillAbilities;
 import cz.cvut.fit.anteater.model.value.SlotData;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
 @Component
 public class CharacterMapper {
@@ -60,7 +60,7 @@ public class CharacterMapper {
 		return new CharacterShort(c.getId(), toInfo(c));
 	}
 
-	@Data
+	@Value
 	@AllArgsConstructor
 	private class AbilityStats {
 		private Integer score;
@@ -120,34 +120,24 @@ public class CharacterMapper {
 	public List<AbilityOutput> toAbilityOutput(DndCharacter c) {
 		List<AbilityOutput> result = new ArrayList<>();
 		var stats = getAbilityStats(c);
-		for (var i : c.getAbilities().entrySet()) {
+		for (Ability ab : Constants.ABILITY_ORDER) {
+			var input = c.getAbilities().get(ab);
 			result.add(new AbilityOutput(
-				i.getKey().toString(),
-				i.getValue().getScore(),
-				i.getValue().getUpByOne(),
-				i.getValue().getUpByTwo(),
-				stats.get(i.getKey()).getScore(),
-				stats.get(i.getKey()).getMod(),
-				i.getKey().getName()));
+				ab.toString(),
+				input.getScore(),
+				input.getUpByOne(),
+				input.getUpByTwo(),
+				stats.get(ab).getScore(),
+				stats.get(ab).getMod(),
+				ab.getName()));
 		}
-
-		// TODO: this is ugly, get rid of it somehow, but otherwise the order is messed up in the frontend
-		List<AbilityOutput> sorted = new ArrayList<>();
-		for (Ability ab : Ability.values()) {
-			for (AbilityOutput ao : result) {
-				if (ao.getLabel().equals(ab.toString())) {
-					sorted.add(ao);
-					break;
-				}
-			}
-		}
-		return sorted;
+		return result;
 	}
 
 	public List<SkillOutput> toSkills(DndCharacter c) {
 		List<SkillOutput> result = new ArrayList<>();
 		for (Skill sk : Skill.values()) {
-			Ability ab = SkillAbilities.SKILL_TO_ABILITY_MAP.get(sk);
+			Ability ab = Constants.SKILL_TO_ABILITY_MAP.get(sk);
 			result.add(
 				new SkillOutput(
 					sk.toString(),

@@ -499,44 +499,6 @@ let armor = [
 			{ "ability": "dexterity", "max": 10 }
 		],
 		"description": "Medium and testy armor"
-	},
-	{
-		"name": "Unarmored",
-		"source": sourceSRD,
-		"type": "unarmored",
-		"baseArmorClass": 10,
-		"strengthRequirement": 0,
-		"stealthDisadvantage": false,
-		"bonuses": [
-			{ "ability": "dexterity", "max": 10 }
-		],
-		"description": "No armor at all"
-	},
-	{
-		"name": "Unarmored Defense (Barbarian)",
-		"source": sourceSRD,
-		"type": "unarmored",
-		"baseArmorClass": 10,
-		"strengthRequirement": 0,
-		"stealthDisadvantage": false,
-		"bonuses": [
-			{ "ability": "dexterity", "max": 10 },
-			{ "ability": "constitution", "max": 10 }
-		],
-		"description": "No armor at all for barbarians"
-	},
-	{
-		"name": "Unarmored Defense (Monk)",
-		"source": sourceSRD,
-		"type": "unarmored",
-		"baseArmorClass": 10,
-		"strengthRequirement": 0,
-		"stealthDisadvantage": false,
-		"bonuses": [
-			{ "ability": "dexterity", "max": 10 },
-			{ "ability": "wisdom", "max": 10 }
-		],
-		"description": "No armor at all for monks"
 	}
 ];
 dndDb.armor.insertMany(armor);
@@ -815,6 +777,18 @@ let classes = [
 		},
 		"armor_types": ["unarmored", "light", "medium", "shield"],
 		"armor": [],
+		"default_armor": {
+			"name": "Unarmored Defense",
+			"type": "unarmored",
+			"baseArmorClass": 10,
+			"strengthRequirement": 0,
+			"stealthDisadvantage": false,
+			"bonuses": [
+				{ "ability": "dexterity", "max": 10 },
+				{ "ability": "constitution", "max": 10 }
+			],
+			"description": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+		},
 		"weapon_types": ["simple", "martial"],
 		"weapons": [],
 		"features": [

@@ -2,7 +2,6 @@ package cz.cvut.fit.anteater.controller.abstracts;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +18,7 @@ public abstract class SourcableBaseController<T extends SourceableEntity> {
 	}
 
 	@GetMapping
-	public Page<T> search(@RequestParam(required = false) String name,
+	public Iterable<T> search(@RequestParam(required = false) String name,
 			@RequestParam(required = false) List<String> sources,
 			@RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size) {

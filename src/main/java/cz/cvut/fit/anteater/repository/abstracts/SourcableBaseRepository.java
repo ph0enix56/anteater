@@ -52,6 +52,15 @@ public abstract class SourcableBaseRepository<T extends SourceableEntity> {
 		return new PageImpl<>(content, pageable, total);
 	}
 
+	public List<T> searchFull(String name, List<String> sourceIds) {
+		Query query = new Query();
+		if (name != null) query.addCriteria(Criteria.where("name").regex(name, "i"));
+		if (sourceIds != null && !sourceIds.isEmpty()) {
+			query.addCriteria(Criteria.where("source._id").in(sourceIds));
+		}
+		return mongoTemplate.find(query, entityClass);
+	}
+
 	public T save(@NonNull T entity) {
 		return mongoTemplate.save(entity);
 	}

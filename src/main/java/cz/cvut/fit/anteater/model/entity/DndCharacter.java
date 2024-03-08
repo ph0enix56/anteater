@@ -13,6 +13,7 @@ import cz.cvut.fit.anteater.dto.request.AbilityInput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Size;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.value.Proficiency;
 import lombok.Builder;
 import lombok.Value;
@@ -68,4 +69,10 @@ public class DndCharacter {
 	private List<Weapon> weapons;
 
 	private List<Spell> spells;
+
+	public Armor getArmor() {
+		if (armor != null) return armor;
+		if (dndClass != null && dndClass.getDefaultArmor() != null) return dndClass.getDefaultArmor();
+		return Constants.NO_ARMOR_DEFAULT;
+	}
 }

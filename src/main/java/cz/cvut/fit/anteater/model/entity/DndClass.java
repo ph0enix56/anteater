@@ -43,6 +43,9 @@ public class DndClass extends SourceableEntity {
 	@Field("armor")
 	private List<Armor> armorProficiencies;
 
+	@Field("default_armor")
+	private Armor defaultArmor;
+
 	@Field("weapon_types")
 	private Set<WeaponType> weaponProficiencyTypes;
 
@@ -54,7 +57,8 @@ public class DndClass extends SourceableEntity {
 	public DndClass(String id, String name, Source source, String description, Dice hitDice, List<TextFeature> features,
 			List<String> subclasses, BonusList<Skill> skillProficiencies, Set<Ability> savingThrowProficiencies,
 			BonusList<Tool> toolProficiencies, Set<ArmorType> armorProficiencyTypes, List<Armor> armorProficiencies,
-			Set<WeaponType> weaponProficiencyTypes, List<Weapon> weaponProficiencies, Spellcasting spellcasting) {
+			Armor defaultArmor, Set<WeaponType> weaponProficiencyTypes, List<Weapon> weaponProficiencies,
+			Spellcasting spellcasting) {
 		super(id, name, source);
 		this.description = description;
 		this.hitDice = hitDice;
@@ -65,6 +69,7 @@ public class DndClass extends SourceableEntity {
 		this.toolProficiencies = toolProficiencies;
 		this.armorProficiencyTypes = armorProficiencyTypes;
 		this.armorProficiencies = armorProficiencies;
+		this.defaultArmor = defaultArmor;
 		this.weaponProficiencyTypes = weaponProficiencyTypes;
 		this.weaponProficiencies = weaponProficiencies;
 		this.spellcasting = spellcasting;

@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ArmorType {
-	unarmored("Unarmored"),
+	unarmored("Clothing"),
 	light("Light Armor"),
 	medium("Medium Armor"),
 	heavy("Heavy Armor"),
