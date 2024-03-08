@@ -3,13 +3,22 @@ package cz.cvut.fit.anteater.model.entity;
 import java.util.List;
 
 import cz.cvut.fit.anteater.enumeration.SpellSchool;
-import cz.cvut.fit.anteater.model.value.SpellComponents;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
 public class Spell extends SourceableEntity {
+
+	@Value
+	public static class SpellComponents {
+
+		private Boolean verbal;
+
+		private Boolean somatic;
+
+		private String material;
+	}
 
 	private Integer level;
 

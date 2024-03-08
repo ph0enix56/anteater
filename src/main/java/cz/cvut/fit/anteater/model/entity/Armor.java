@@ -11,6 +11,14 @@ import lombok.Value;
 @EqualsAndHashCode(callSuper = true)
 public class Armor extends SourceableEntity {
 
+	@Value
+	public static class AbilityBonus {
+
+		private Ability ability;
+
+		private Integer max;
+	}
+
 	private ArmorType type;
 
 	private Integer baseArmorClass;
@@ -18,13 +26,6 @@ public class Armor extends SourceableEntity {
 	private Integer strengthRequirement;
 
 	private Boolean stealthDisadvantage;
-
-	@Value
-	public static class AbilityBonus {
-		private Ability ability;
-
-		private Integer max;
-	}
 
 	private List<AbilityBonus> bonuses;
 

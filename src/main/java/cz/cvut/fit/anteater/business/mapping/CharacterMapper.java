@@ -29,7 +29,6 @@ import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.value.Dice;
-import cz.cvut.fit.anteater.model.value.SlotData;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -89,6 +88,11 @@ public class CharacterMapper {
 		return proficient ? abilityModifier + getProficiencyBonus(level) : abilityModifier;
 	}
 
+	public Integer getSpeed(Integer baseSpeed, Armor armor, Integer strengthScore) {
+		if (strengthScore < armor.getStrengthRequirement()) return baseSpeed - Constants.ARMOR_SPEED_PENALTY;
+		return baseSpeed;
+	}
+
 	public Integer getHitPoints(Dice hitDice, Integer conModifier, Integer level) {
 		Integer initialHP = hitDice.getSides() + conModifier;
 		Integer perLevelHP = hitDice.getSides() / 2 + 1 + conModifier;
@@ -105,13 +109,11 @@ public class CharacterMapper {
 
 	public CharacterStats toStats(DndCharacter c) {
 		var abilities = getAbilityStats(c);
-		Dice hitDice = c.getDndClass().getHitDice();
-		hitDice.setAmount(c.getLevel());
 		return CharacterStats.builder()
 			.proficiencyBonus(getProficiencyBonus(c.getLevel()))
 			.initiative(abilities.get(Ability.dexterity).getMod())
-			.speed(c.getRace().getSpeed())
-			.hitDice(hitDice)
+			.speed(getSpeed(c.getRace().getSpeed(), c.getArmor(), abilities.get(Ability.strength).score))
+			.hitDice(new Dice(c.getLevel(), c.getDndClass().getHitDice().getSides()))
 			.hitPoints(getHitPoints(c.getDndClass().getHitDice(), abilities.get(Ability.constitution).getMod(), c.getLevel()))
 			.armorClass(getArmorClass(c.getArmor(), abilities))
 			.build();
@@ -194,10 +196,10 @@ public class CharacterMapper {
 		Ability spellAbility = c.getDndClass().getSpellcasting().getAbility();
 		Integer modifier = abilities.get(spellAbility).mod;
 		Integer saveDc = 8 + modifier + getProficiencyBonus(c.getLevel());
-		List<SlotData> slotsRes = new ArrayList<>();
+		List<SpellcastingOutput.SlotData> slotsRes = new ArrayList<>();
 		List<Integer> slots = c.getDndClass().getSpellcasting().getSlotsByLevel(c.getLevel());
 		for (int i = 0; i < slots.size(); i++) {
-			if (slots.get(i) > 0) slotsRes.add(new SlotData(i + 1, slots.get(i)));
+			if (slots.get(i) > 0) slotsRes.add(new SpellcastingOutput.SlotData(i + 1, slots.get(i)));
 		}
 		return SpellcastingOutput.builder()
 			.abilityAbbreviation(spellAbility.getAbbreviation())

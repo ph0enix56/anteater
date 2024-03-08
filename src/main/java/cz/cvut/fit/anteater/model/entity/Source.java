@@ -6,6 +6,7 @@ import lombok.Value;
 
 @Value
 public class Source {
+
 	@Id
 	private String id;
 
