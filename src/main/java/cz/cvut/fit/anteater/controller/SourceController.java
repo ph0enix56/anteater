@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Source;
 import cz.cvut.fit.anteater.repository.SourceRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("api/sources")
+@CrossOrigin(origins = Constants.FRONTEND_URL)
+@RequestMapping(Constants.BASE_API_URL + "sources")
 public class SourceController {
 	private SourceRepository repository;
 

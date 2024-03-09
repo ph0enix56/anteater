@@ -10,6 +10,12 @@ import cz.cvut.fit.anteater.model.entity.Armor;
 public class Constants {
 	private Constants() {}
 
+	/** Base URL of the API. */
+	public static final String BASE_API_URL = "api/";
+
+	/** URL of the frontend for allowing CORS. */
+	public static final String FRONTEND_URL = "http://localhost:3000";
+
 	/** List of abilities in the order they are traditionally presented in the character sheet. */
 	public static final List<Ability> ABILITY_ORDER = List.of(
 		Ability.strength,

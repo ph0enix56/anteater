@@ -1,4 +1,4 @@
-let dndDb = db.getSiblingDB('dnd');
+let dndDb = db.getSiblingDB('dnd_dev');
 
 // clear all collections
 dndDb.source.drop();

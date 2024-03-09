@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cz.cvut.fit.anteater.business.sourcable.RaceService;
 import cz.cvut.fit.anteater.controller.abstracts.SourcableBaseController;
+import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Race;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = Constants.FRONTEND_URL)
 @RestController
-@RequestMapping("api/races")
+@RequestMapping(Constants.BASE_API_URL + "races")
 public class RaceController extends SourcableBaseController<Race> {
 	public RaceController(RaceService raceService) {
 		super(raceService);

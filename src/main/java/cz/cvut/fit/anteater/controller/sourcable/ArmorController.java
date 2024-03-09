@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cz.cvut.fit.anteater.business.sourcable.ArmorService;
 import cz.cvut.fit.anteater.controller.abstracts.SourcableBaseController;
+import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = Constants.FRONTEND_URL)
 @RestController
-@RequestMapping("api/armor")
+@RequestMapping(Constants.BASE_API_URL + "armor")
 public class ArmorController extends SourcableBaseController<Armor> {
 	public ArmorController(ArmorService armorService) {
 		super(armorService);

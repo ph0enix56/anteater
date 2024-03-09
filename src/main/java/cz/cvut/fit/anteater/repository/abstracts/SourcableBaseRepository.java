@@ -43,22 +43,12 @@ public abstract class SourcableBaseRepository<T extends SourceableEntity> {
 		Query query = new Query();
 		if (name != null) query.addCriteria(Criteria.where("name").regex(name, "i"));
 		if (sourceIds != null && !sourceIds.isEmpty()) {
-			query.addCriteria(Criteria.where("source._id").in(sourceIds));
+			query.addCriteria(Criteria.where("source.id").in(sourceIds));
 		}
+		query.with(pageable);
 
-		long total = mongoTemplate.count(query, entityClass);
-		if (pageable != Pageable.unpaged()) query.with(pageable);
 		List<T> content = mongoTemplate.find(query, entityClass);
-		return new PageImpl<>(content, pageable, total);
-	}
-
-	public List<T> searchFull(String name, List<String> sourceIds) {
-		Query query = new Query();
-		if (name != null) query.addCriteria(Criteria.where("name").regex(name, "i"));
-		if (sourceIds != null && !sourceIds.isEmpty()) {
-			query.addCriteria(Criteria.where("source._id").in(sourceIds));
-		}
-		return mongoTemplate.find(query, entityClass);
+		return new PageImpl<>(content, pageable, content.size());
 	}
 
 	public T save(@NonNull T entity) {

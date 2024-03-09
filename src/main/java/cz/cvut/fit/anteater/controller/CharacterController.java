@@ -21,6 +21,7 @@ import cz.cvut.fit.anteater.dto.response.AttackOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterComplete;
 import cz.cvut.fit.anteater.dto.response.CharacterShort;
 import cz.cvut.fit.anteater.dto.response.SkillOutput;
+import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Spell;
 import jakarta.validation.Valid;
@@ -29,9 +30,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = Constants.FRONTEND_URL)
 @RestController
-@RequestMapping("api/characters")
+@RequestMapping(Constants.BASE_API_URL + "characters")
 public class CharacterController {
 	private CharacterService characterService;
 
@@ -49,7 +50,7 @@ public class CharacterController {
 		return characterService.getCompleteCharacter(id);
 	}
 
-	@PostMapping()
+	@PostMapping
 	public CharacterComplete createCharacter(@RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() != null) throw new IllegalArgumentException("ID must be null");

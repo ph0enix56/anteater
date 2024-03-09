@@ -30,7 +30,7 @@ public abstract class SourcableBaseService<T extends SourceableEntity> {
 
 	public Iterable<T> search(String name, List<String> sourceIds, Integer page, Integer size) {
 		Pageable pageable;
-		if (page == null && size == null) return sourcableRepo.searchFull(name, sourceIds);
+		if (page == null && size == null) pageable = Pageable.unpaged();
 		else if (page == null) pageable = PageRequest.of(0, size);
 		else if (size == null) pageable = PageRequest.of(page, 10);
 		else pageable = PageRequest.of(page, size);
