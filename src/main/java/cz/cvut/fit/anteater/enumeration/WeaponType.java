@@ -5,12 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ArmorType {
-	unarmored("Unarmored"),
-	light("Light Armor"),
-	medium("Medium Armor"),
-	heavy("Heavy Armor"),
-	shield("Shields");
+public enum WeaponType {
+	martial("Martial Weapons"),
+	simple("Simple Weapons");
 
 	private String name;
 }

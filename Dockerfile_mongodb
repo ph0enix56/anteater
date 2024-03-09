@@ -1,0 +1,6 @@
+# Get MongoDB image
+FROM mongo
+
+# Copy db scripts to a folder that is executed when the container
+# is first started, so that the database has initial data
+COPY ./db /docker-entrypoint-initdb.d

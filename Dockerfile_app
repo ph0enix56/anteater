@@ -1,0 +1,16 @@
+# Get JDK 17 image
+FROM eclipse-temurin:17-jdk-jammy
+
+# Copy app files to the container
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+# Build the JAR file
+RUN ./gradlew build
+
+# Run the app with exposed port 8080
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "build/libs/anteater.jar"]

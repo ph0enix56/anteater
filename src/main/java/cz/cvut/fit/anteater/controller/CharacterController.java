@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import cz.cvut.fit.anteater.model.dto.AttackOutput;
 import cz.cvut.fit.anteater.model.dto.CharacterComplete;
-import cz.cvut.fit.anteater.model.dto.CharacterInfo;
 import cz.cvut.fit.anteater.model.dto.CharacterInput;
-import cz.cvut.fit.anteater.model.entity.DndCharacter;
+import cz.cvut.fit.anteater.model.dto.CharacterShort;
+import cz.cvut.fit.anteater.model.dto.IdWrapper;
+import cz.cvut.fit.anteater.model.dto.SkillInput;
+import cz.cvut.fit.anteater.model.dto.SkillOutput;
+import cz.cvut.fit.anteater.model.entity.Armor;
+import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.service.CharacterService;
 import jakarta.validation.Valid;
 
@@ -35,36 +40,31 @@ public class CharacterController {
 	}
 
 	@GetMapping
-	public List<CharacterInfo> getCharacterInfos() {
-		return characterService.getCharacterInfos();
+	public List<CharacterShort> getCompleteAll() {
+		return characterService.getAllCharacters();
 	}
 
 	@GetMapping("/{id}")
-	public CharacterComplete getCharacterInfo(@PathVariable String id) {
-		return CharacterComplete.builder()
-			.id(id)
-			.info(characterService.getCharacterInfo(id))
-			.stats(characterService.getCharacterStats(id))
-			.features(characterService.getCharacterFeatures(id, false))
-			.build();
+	public CharacterComplete getCompleteById(@PathVariable String id) {
+		return characterService.getCompleteCharacter(id);
 	}
 
 	@PostMapping()
-	public DndCharacter createCharacter(@RequestBody @Valid CharacterInput entity) {
+	public CharacterComplete createCharacter(@RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() != null) throw new IllegalArgumentException("ID must be null");
-			return characterService.saveCharacter(entity, false);
+			return characterService.saveCharacter(entity, true);
 		} catch (IllegalArgumentException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 	}
 
 	@PutMapping("/{id}")
-	public DndCharacter updateCharacter(@PathVariable String id, @RequestBody @Valid CharacterInput entity) {
+	public CharacterComplete updateCharacter(@PathVariable String id, @RequestBody @Valid CharacterInput entity) {
 		try {
 			if (entity.getId() == null) throw new IllegalArgumentException("ID cannot be null");
 			if (!Objects.equals(id, entity.getId())) throw new IllegalArgumentException("ID in path and body must match");
-			return characterService.saveCharacter(entity, true);
+			return characterService.saveCharacter(entity, false);
 		} catch (IllegalArgumentException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		} catch (NoSuchElementException e) {
@@ -82,5 +82,30 @@ public class CharacterController {
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
+	}
+
+	@PutMapping("/{id}/skills")
+	public List<SkillOutput> editSkills(@PathVariable String id, @RequestBody @Valid List<SkillInput> skills) {
+		return characterService.editSkills(id, skills);
+	}
+
+	@PutMapping("/{id}/weapons")
+	public List<AttackOutput> editWeapons(@PathVariable String id, @RequestBody List<String> weaponIds) {
+		return characterService.editWeapons(id, weaponIds);
+	}
+
+	@PutMapping("/{id}/armor")
+	public Armor editArmor(@PathVariable String id, @RequestBody @Valid IdWrapper armorId) {
+		return characterService.editArmor(id, armorId.getId());
+	}
+
+	@PutMapping("/{id}/spells")
+	public List<Spell> editSpells(@PathVariable String id, @RequestBody List<String> spellIds) {
+		return characterService.editSpells(id, spellIds);
+	}
+
+	@PostMapping("/{id}/levelup")
+	public CharacterComplete levelUp(@PathVariable String id) {
+		return characterService.levelUp(id);
 	}
 }

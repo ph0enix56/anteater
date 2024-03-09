@@ -5,7 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SkillStats {
-	private Integer modifier;
-	private Boolean proficient;
+public class AttackOutput {
+	private String id;
+	private String name;
+	private Integer attackBonus;
+	private String damage;
 }

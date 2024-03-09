@@ -32,7 +32,7 @@ public class Race extends SourceableEntity {
 
 	@Field("abilities_plus_2")
 	private BonusList<Ability> abilityScoresPlus2;
-	
+
 	@Field("abilities_plus_1")
 	private BonusList<Ability> abilityScoresPlus1;
 
