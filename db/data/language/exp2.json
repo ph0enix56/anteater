@@ -1,0 +1,7 @@
+[
+	{ "name": "Klingon", "exotic": false },
+	{ "name": "Vulcan", "exotic": false },
+	{ "name": "Bajoran", "exotic": true },
+	{ "name": "Cardassian", "exotic": true },
+	{ "name": "Ferengi", "exotic": true }
+]

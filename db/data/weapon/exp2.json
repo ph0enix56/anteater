@@ -1,0 +1,20 @@
+[
+	{
+		"name": "Another Weapon",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["heavy", "two_handed"],
+		"damage": { "amount": 1, "sides": 12 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Ranged Masterpiece",
+		"type": "martial",
+		"ranged": true,
+		"range": 150,
+		"properties": ["two_handed", "heavy"],
+		"damage": { "amount": 4, "sides": 6 },
+		"damageType": "piercing"
+	}
+]

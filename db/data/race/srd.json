@@ -1,0 +1,93 @@
+[
+	{
+		"name": "Human",
+		"description": "In the reckonings of most worlds, humans are the youngest of the common races, late to arrive on the world scene and short-lived in comparison to dwarves, elves, and dragons.",
+		"features": [],
+		"speed": 30,
+		"sizes": ["small", "medium"],
+		"languages": {
+			"amount": 2,
+			"defaults": [ { "ref": "language", "query": {"name": "Common"} } ]
+		},
+		"abilities_plus_2": {
+			"amount": 0,
+			"defaults": []
+		},
+		"abilities_plus_1": {
+			"amount": 6,
+			"defaults": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+		},
+		"skills": {
+			"amount": 0,
+			"defaults": []
+		}
+	},
+	{
+		"name": "Half-Elf",
+		"description": "Walking in two worlds but truly belonging to neither, half-elves combine what some say are the best qualities of their elf and human parents: human curiosity, inventiveness, and ambition tempered by the refined senses, love of nature, and artistic tastes of the elves. Some half-elves live among humans, set apart by their emotional and physical differences, watching friends and loved ones age while time barely touches them. Others live with the elves, growing to adulthood while their peers continue to live as children, growing restless in the timeless elven realms.",
+		"features": [{ "title": "Darkvision", "text": "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.", "levelMinimum": 1 },
+				{ "title": "Fey Ancestry", "text": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.", "levelMinimum": 1 }],
+		"speed": 30,
+		"sizes": ["medium"],
+		"languages": {
+			"amount": 2,
+			"defaults": [{"ref": "language", "query": { "name": "Common" }}, {"ref": "language", "query": { "name": "Elvish" }}]
+		},
+		"abilities_plus_2": {
+			"amount": 1,
+			"defaults": ["charisma"]
+		},
+		"abilities_plus_1": {
+			"amount": 2,
+			"defaults": []
+		},
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		}
+	},
+	{
+		"name": "Gnome (Forest)",
+		"description": "A constant hum of busy activity pervades the warrens and neighborhoods where gnomes form their close-knit communities. Louder sounds punctuate the hum: a crunch of grinding gears here, a minor explosion there, a yelp of surprise or triumph, and especially bursts of laughter. Gnomes take delight in life, enjoying every moment of invention, exploration, investigation, creation, and play.",
+		"features": [
+			{
+				"title": "Darkvision",
+				"levelMinimum": 1,
+				"text": "Accustomed to life underground, you can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+			},
+			{
+				"title": "Gnome Cunning",
+				"levelMinimum": 1,
+				"text": "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."
+			},
+			{
+				"title": "Natural Illusionist",
+				"levelMinimum": 1,
+				"text": "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it."
+			},
+			{
+				"title": "Speak with Small Beasts",
+				"levelMinimum": 1,
+				"text": "Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets."
+			}
+		],
+		"speed": 25,
+		"sizes": ["small"],
+		"languages": {
+			"amount": 1,
+			"defaults": [ {"ref": "language", "query": { "name": "Common" }} ]
+		},
+		"abilities_plus_2": {
+			"amount": 1,
+			"defaults": ["dexterity"]
+		},
+		"abilities_plus_1": {
+			"amount": 1,
+			"defaults": ["intelligence"]
+		},
+		"skills": {
+			"amount": 0,
+			"defaults": []
+		}
+	}
+]

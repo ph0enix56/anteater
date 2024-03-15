@@ -1,0 +1,21 @@
+[
+	{ "name": "Common", "exotic": false },
+	{ "name": "Dwarvish", "exotic": false },
+	{ "name": "Elvish", "exotic": false },
+	{ "name": "Giant", "exotic": false },
+	{ "name": "Gnomish", "exotic": false },
+	{ "name": "Goblin", "exotic": false },
+	{ "name": "Halfling", "exotic": false },
+	{ "name": "Orc", "exotic": false },
+	{ "name": "Abyssal", "exotic": true },
+	{ "name": "Aquan", "exotic": true },
+	{ "name": "Auran", "exotic": true },
+	{ "name": "Celestial", "exotic": true },
+	{ "name": "Draconic", "exotic": true },
+	{ "name": "Druidic", "exotic": true },
+	{ "name": "Ignan", "exotic": true },
+	{ "name": "Infernal", "exotic": true },
+	{ "name": "Sylvan", "exotic": true },
+	{ "name": "Terran", "exotic": true },
+	{ "name": "Undercommon", "exotic": true }
+]

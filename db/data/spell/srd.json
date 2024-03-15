@@ -1,0 +1,148 @@
+[
+	{
+		"name": "Acid Splash",
+		"level": 0,
+		"school": "conjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "60 feet",
+		"duration": "Instantaneous",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Wizard" } },
+			{ "ref": "class", "query": { "name": "Warlock" } }
+		],
+		"description": "You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam nisi. Tady jdu hodně dlouhý text, aby se to někde zlomilo. Abych měl jistotu, tak ještě něco přidám: 7 Spojitost funkce 7.1 Definice a kritéria spojitosti Jak již bylo řečeno (vzpomeňte na Poznámku 5.6), hodnota limity funkce v bodě a ∈ R nezávisí na funkční hodnotě funkce f v tomto bodě (funkce v daném bodě ani nemusí být definována a přesto v něm může mít limitu). Zavádíme proto pojem „spojité funkce“, který se vztahem mezi limitou a funkční hodnotou funkce f v bodě zabývá. Definice 7.1 (Spojitost funkce v bodě / continuity at point): Nechť f je reálná funkce reálné proměnné a nechť bod a ∈ Df . Řekneme, že funkce f je spojitá v bodě a, právě když pro její limitu v bodě a platí lim x→a f (x) = f (a). Dále zavádíme dva další pojmy: • Funkce f je spojitá v bodě a zprava, právě když pro jednostrannou limitu lim x→a+ f (x) = f (a). • Funkce f je spojitá v bodě a zleva, právě když lim x→a− f (x) = f (a). Spojitost funkce je velmi důležitá pro praktické aplikace1. Intuitivně lze požadavek spo- jitosti funkce f v bodě a chápat takto: „f (x) je blízko f (a), pokud x je blízko a“. Přesně to totiž korektně říká Definice 7.1. Pozorování 7.1: Jako první pozorování uveďme, že pokud a /∈ Df , pak takováto funkce nemůže být z definice spojitá i kdyby lim x→a f (x) existovala. V definici spojitosti se totiž před- pokládá, že funkce je definována v bodě a. Jinak bychom vůbec nemohli mluvit o funkční hodnotě f (a). Různými způsoby „selhání“ spojitosti se budeme zabývat v podkapitole 7.5. Protože v Definici 7.1 uvažujeme a ∈ Df ⊂ R a tím pádem i f (a) ∈ R, dostáváme přeformulováním definice limity (viz Poznámku 5.5) následující ε – δ vyjádření spojitosti pro funkce definované na okolí bodu a: Poznámka 7.1: Funkce f mající v definičním oboru okolí bodu a je spojitá v bodě a ∈ Df , právě když pro každé ε > 0 existuje δ > 0 tak, že pro každé x ∈ R splňující |x − a| < δ platí |f (x) − f (a)| < ε. Jako první příklad spojité funkce zmiňme příklad libovolného polynomu. Příklad 7.1: V předchozí podkapitole jsme ukázali (viz Příklad 6.2), že pro libovolné reálná a a libovolný polynom P (x) platí lim x→a P (x) = P (a). 1Na druhou stranu, i nespojité funkce hrají v přírodě důležitou roli, například v popisu fázových přechodů. 90 7. Spojitost funkce Definice a kritéria spojitostix y −4 −3 −2 −1 1 2 3 40 1 Obrázek 7.1: Graf funkce f (x) = x − bxc z Příkladu 7.2. Každý polynom je proto spojitou funkcí v každém bodě a ∈ R. Všimněte si, že díky znalosti vlastností pojmu limity (konkrétně věty o limitě součtu a sou- činu) a pouze znalosti spojitosti funkce f (x) = x a konstantní funkce jsme odvodili spojitost libovolného polynomu. Vůbec jsme nepotřebovali explicitně použít definici spojitosti/limity. Dále se podívejme na komplikovanější příklad, který pěkně ilustruje všechny možné druhy spojitosti (zleva/zprava). Příklad 7.2: Zkoumejte spojitost funkce f (x) = x − bxc. Řešení. Přirozeným definičním oborem funkce f je Df = R. Funkce f je spojitá v každém bodě a ∈ R r Z. V bodech a ∈ Z je spojitá zprava, ale ne zleva. lim x→a+ f (x) = f (a) a lim x→a− f (x) = f (a) + 1. Graf této funkce je uveden na Obrázku 7.1. Doposud jsme pojem spojitosti měli zaveden pouze v jednom jediném bodě, tedy šlo o „lokální vlastnost funkce“. Nyní ho rozšíříme na celý interval. Definice 7.2 (Spojitá funkce (na intervalu) / continuous function): Funkce f je spojitá na intervalu J, právě když f |J (f zúženo na J) je spojitá v každém bodě intervalu J. Funkci f nazýváme spojitou, právě když je f spojitá v každém bodě svého definičního oboru. Poznámka 7.2: Speciálně tedy platí • spojitá na intervalu (a, b), právě když f je spojitá v každém bodě x ∈ (a, b). • spojitá na intervalu 〈a, b), právě když f je spojitá v každém bodě x ∈ (a, b) a v bodě a je spojitá zprava. • spojitá na intervalu (a, b〉, právě když f je spojitá v každém bodě x ∈ (a, b) a v bodě b je spojitá zleva. • spojitá na intervalu 〈a, b〉, právě když f je spojitá v každém bodě x ∈ (a, b), v bodě a je spojitá zprava a v bodě b je spojitá zleva. Příklad 7.3: Funkce f (x) = 1 x je… • …spojitá v každém bodě množiny R r {0} = (−∞, 0) ∪ (0, +∞) = Df . • …spojitá na intervalu (−∞, 0). • …spojitá na intervalu (0, +∞). • …spojitá. 91 7. Spojitost funkce Definice a kritéria spojitostix y = 1 x Obrázek 7.2: Graf funkce f (x) = 1 x z Příkladu 7.3. • …není spojitá v bodě a = 0. • …není spojitá na intervalu (−1, 1). Prozkoumejte graf této funkce na Obrázku 7.2. Kritéria spojitosti V dalším textu i dalších kapitolách se budeme už často věnovat funkcím, které jsou definované na intervalech. Tj. speciálně, pokud se budeme bavit o „spojitosti v bodě“, tak typicky naše funkce budou definovány na celém (oboustranném) okolí takovéhoto bodu. Následující tvrzení umožňují snadno rozhodnout o spojitosti funkcí v jistých bodech. Jsou bezprostředním důsledkem vlastností limity funkce, které jsme probírali v minulé kapitole. Věta 7.1 (O vztahu různých typů spojitostí): Funkce f definovaná na okolí bodu a ∈ Df je spojitá v bodě a ∈ Df , právě když je spojitá v bodě a zleva i zprava. Důkaz. Viz Větu 5.1. Příklad 7.4: Vzpomeňte si na funkci sgn definovanou v rovnici (12.1) . Pro každé nenulové a platí, že sgn je konstantní na jistém okolí bodu a a proto lim x→a sgn(x) = lim x→a± sgn(x) = sgn(a). Vrátíme-li se zpět k Příklad 5.11, pak víme, že lim x→0+ sgn(x) = 1 a lim x→0− sgn(x) = −1. Funkce sgn je proto spojitá v každém bodě a 6 = 0 a je nespojitá v bodě 0. V bodě 0 není spojitá ani zleva ani zprava, protože sgn(0) = 0 6 = ±1. Graf funkce sgn naleznete v Obrázku 7.7. Funkce často zadáváme jako součty, součiny, podíly a složení dalších funkcí. Následující věty umožňují v některých případech rozhodnout o spojitosti takovýchto funkcí v jistých bodech. 92 7. Spojitost funkce Metoda půlení intervalu Věta 7.2 (O spojitosti součtu, součinu a podílu funkcí): Součet a součin dvou funkcí f a g definovaných na okolí bodu a a spojitých v bodě a je funkce spojitá v bodě a. Pokud navíc g(a) 6 = 0, pak podíl f g je funkce spojitá v bodě a. Důkaz. Viz Větu 6.1. Věta 7.3 (O spojitosti složené funkce): Buďte g funkce definovaná na okolí bodu a a spojitá v bodě a a f funkce definovaná na okolí bodu g(a) a spojitá v bodě g(a). Potom složená funkce f ◦ g je spojitá v bodě a. Důkaz. Viz Větu 6.4. Povšimněte si, že druhá možnost ve čtvrtém předpokladu Věty 6.4 je pro spojité funkce automaticky splněna. Příklad 7.5: Funkce f (x) = x4 − x3 x2 − 4 je spojitá v každém bodě svého definičního oboru Df = R r {−2, 2}. Řešení. Skutečně, polynomy v čitateli a jmenovateli jsou spojité funkce v každém bodě R (vzpomeňte si na příklad 7.1). Jediné body, v kterých je polynom v jmenovateli nulový jsou −2 a 2. Podle Věty 7.2 je pak tedy funkce f spojitá v každém bodě množiny R r {−2, 2}. Poznamenejme, že v bodech −2 a 2 tato funkce není spojitá, tyto body ani nepatří do definičního oboru! Další příklady použití vět z této podkapitoly si ukážeme hned jak odvodíme spojitost i dalších elementárních funkcí (podkapitola 7.4). Pouze s polynomy příliš zajímavých příkladů vymyslet nelze. Nejprve je ale vhodné ještě prozkoumat obecné vlastnosti a dů",
+		"atHigherLevels": "This spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6)."
+	},
+	{
+		"name": "Mage Hand",
+		"level": 0,
+		"school": "conjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "60 feet",
+		"duration": "Instantaneous",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Warlock" } }
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Prestidigitation",
+		"level": 0,
+		"school": "conjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "60 feet",
+		"duration": "Instantaneous",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Wizard" } }
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Aid",
+		"level": 2,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny strip of white cloth"
+		},
+		"castingTime": "1 action",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Wizard" } },
+			{ "ref": "class", "query": { "name": "Warlock" } }
+		],
+		"description": "Your spell bolsters your allies with toughness and resolve. Choose up to three creatures within range. Each target's hit point maximum and current hit points increase by 5 for the duration.",
+		"atHigherLevels": "When you cast this spell using a spell slot of 3rd level or higher, a target's hit points increase by an additional 5 for each slot level above 2nd."
+	},
+	{
+		"name": "Alarm",
+		"level": 1,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Wizard" } },
+			{ "ref": "class", "query": { "name": "Warlock" } }
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Shield",
+		"level": 1,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Wizard" } },
+			{ "ref": "class", "query": { "name": "Warlock" } }
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},	
+	{
+		"name": "Magic Missile",
+		"level": 1,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Wizard" } }
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	},
+	{
+		"name": "Fireball",
+		"level": 3,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a tiny bell and a piece of fine silver wire"
+		},
+		"castingTime": "1 minute",
+		"range": "30 feet",
+		"duration": "8 hours",
+		"dndClassIds": [
+			{ "ref": "class", "query": { "name": "Wizard" } },
+			{ "ref": "class", "query": { "name": "Warlock" } }
+		],
+		"description": "...",
+		"atHigherLevels": "..."
+	}
+]

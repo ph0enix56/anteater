@@ -3,6 +3,7 @@ package cz.cvut.fit.anteater.model.entity;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
@@ -18,6 +19,7 @@ import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
+@Document(collection = "class")
 public class DndClass extends SourceableEntity {
 
 	private String description;
@@ -37,16 +39,15 @@ public class DndClass extends SourceableEntity {
 	@Field("tools")
 	private BonusList<Tool> toolProficiencies;
 
-	@Field("armor_types")
+	@Field("armorTypes")
 	private Set<ArmorType> armorProficiencyTypes;
 
 	@Field("armor")
 	private List<Armor> armorProficiencies;
 
-	@Field("default_armor")
 	private Armor defaultArmor;
 
-	@Field("weapon_types")
+	@Field("weaponTypes")
 	private Set<WeaponType> weaponProficiencyTypes;
 
 	@Field("weapons")

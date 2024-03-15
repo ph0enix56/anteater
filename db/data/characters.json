@@ -1,0 +1,192 @@
+[
+	{
+		"characterName": "Test Character",
+		"playerName": "Filip",
+		"cardPhotoUrl": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
+		"sheetPhotoUrl": "https://cdnb.artstation.com/p/assets/images/images/057/787/149/large/hyo-seung-jin-3.jpg",
+		"sources": [ {"ref": "source", "query": { "_id": "srd" }}, {"ref": "source", "query": { "_id": "exp1" }} ],
+		"classId": { "ref": "class", "query": { "name": "Warlock" } },
+		"subclass": "The Archfey",
+		"raceId": { "ref": "race", "query": { "name": "Half-Elf" } },
+		"size": "medium",
+		"backgroundId": { "ref": "background", "query": { "name": "Acolyte" } },
+		"level": 5,
+		"abilities": {
+			"strength": { "score": 16, "upByOne": false, "upByTwo": true },
+			"dexterity": { "score": 9, "upByOne": true, "upByTwo": false },
+			"constitution": { "score": 12, "upByOne": false, "upByTwo": false },
+			"intelligence": { "score": 11, "upByOne": false, "upByTwo": false },
+			"wisdom": { "score": 12, "upByOne": false, "upByTwo": false },
+			"charisma": { "score": 17, "upByOne": true, "upByTwo": false }
+		},
+		"skills": ["athletics", "perception", "religion", "survival"],
+		"tools": [
+			{
+				"item": { "ref": "tool", "query": { "name": "Thieves' tools" } },
+				"from": "background"
+			},
+			{
+				"item": { "ref": "tool", "query": { "name": "Playing card set" } },
+				"from": "dndClass"
+			}
+		],
+		"languages": [
+			{
+				"item": { "ref": "language", "query": { "name": "Common" } },
+				"from": "race"
+			},
+			{
+				"item": { "ref": "language", "query": { "name": "Elvish" } },
+				"from": "race"
+			}
+		],
+		"armor": { "ref": "armor", "query": { "name": "Chain Mail" } },
+		"weapons": [
+			{ "ref": "weapon", "query": { "name": "Anklebiter" } },
+			{ "ref": "weapon", "query": { "name": "Javelin" } }
+		],
+		"spells": [
+			{ "ref": "spell", "query": { "name": "Acid Splash" } },
+			{ "ref": "spell", "query": { "name": "Mage Hand" } },
+			{ "ref": "spell", "query": { "name": "Shield" } }
+		]
+	},
+	{
+		"characterName": "Cool elfka",
+		"playerName": "Nekdo",
+		"cardPhotoUrl": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
+		"sheetPhotoUrl": "https://i.etsystatic.com/40173929/r/il/5f64a8/4498858790/il_fullxfull.4498858790_8b00.jpg",
+		"sources": [ {"ref": "source", "query": { "_id": "srd" }}, {"ref": "source", "query": { "_id": "exp1" }}, {"ref": "source", "query": { "_id": "exp2" }} ],
+		"classId": { "ref": "class", "query": { "name": "Rogue (altered)" } },
+		"raceId": { "ref": "race", "query": { "name": "Human" } },
+		"backgroundId": { "ref": "background", "query": { "name": "Charlatan" } },
+		"size": "medium",
+		"subclass": "Thief",
+		"level": 11,
+		"abilities": {
+			"strength": { "score": 10, "upByOne": false, "upByTwo": false },
+			"dexterity": { "score": 18, "upByOne": false, "upByTwo": true },
+			"constitution": { "score": 14, "upByOne": false, "upByTwo": false },
+			"intelligence": { "score": 16, "upByOne": false, "upByTwo": false },
+			"wisdom": { "score": 12, "upByOne": false, "upByTwo": false },
+			"charisma": { "score": 10, "upByOne": false, "upByTwo": false }
+		},
+		"skills": ["acrobatics", "deception", "insight", "perception", "sleight_of_hand", "stealth"],
+		"tools": [
+			{
+				"item": { "ref": "tool", "query": { "name": "Bagpipes" } },
+				"from": "background"
+			}
+		],
+		"languages": [
+			{
+				"item": { "ref": "language", "query": { "name": "Common" } },
+				"from": "race"
+			},
+			{
+				"item": { "ref": "language", "query": { "name": "Elvish" } },
+				"from": "background"
+			}
+		],
+		"armor": { "ref": "armor", "query": { "name": "Test Armor" } },
+		"weapons" : [
+			{ "ref": "weapon", "query": { "name": "Dagger" } },
+			{ "ref": "weapon", "query": { "name": "Longsword" } },
+			{ "ref": "weapon", "query": { "name": "Flail" } },
+			{ "ref": "weapon", "query": { "name": "Shortbow" } }
+		]
+	},
+	{
+		"characterName": "Gnomey",
+		"playerName": "Nekdo",
+		"cardPhotoUrl": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
+		"sheetPhotoUrl": "https://storage.googleapis.com/pai-images/eb810c78614f4d748669134b6859a06c.jpeg",
+		"sources": [{"ref": "source", "query": { "_id": "srd" }}],
+		"classId": { "ref": "class", "query": { "name": "Wizard" } },
+		"raceId": { "ref": "race", "query": { "name": "Gnome (Forest)" } },
+		"backgroundId": { "ref": "background", "query": { "name": "Charlatan" } },
+		"size": "small",
+		"subclass": "Abjuration",
+		"level": 14,
+		"abilities": {
+			"strength": { "score": 8, "upByOne": false, "upByTwo": false },
+			"dexterity": { "score": 14, "upByOne": false, "upByTwo": false },
+			"constitution": { "score": 12, "upByOne": false, "upByTwo": false },
+			"intelligence": { "score": 16, "upByOne": false, "upByTwo": true },
+			"wisdom": { "score": 10, "upByOne": false, "upByTwo": false },
+			"charisma": { "score": 10, "upByOne": false, "upByTwo": false }
+		},
+		"skills": ["arcana", "deception", "investigation", "sleight_of_hand", "stealth"],
+		"tools": [],
+		"languages": [
+			{
+				"item": { "ref": "language", "query": { "name": "Common" } },
+				"from": "race"
+			},
+			{
+				"item": { "ref": "language", "query": { "name": "Halfling" } },
+				"from": "race"
+			},
+			{
+				"item": { "ref": "language", "query": { "name": "Draconic" } },
+				"from": "background"
+			},
+			{
+				"item": { "ref": "language", "query": { "name": "Undercommon" } },
+				"from": "background"
+			}
+		],
+		"armor": { "ref": "armor", "query": { "name": "Leather Armor" } },
+		"weapons" : [
+			{ "ref": "weapon", "query": { "name": "Dagger" } },
+			{ "ref": "weapon", "query": { "name": "Glaive" } }
+		],
+		"spells": [
+			{ "ref": "spell", "query": { "name": "Prestidigitation" } },
+			{ "ref": "spell", "query": { "name": "Aid" } },
+			{ "ref": "spell", "query": { "name": "Alarm" } },
+			{ "ref": "spell", "query": { "name": "Shield" } },
+			{ "ref": "spell", "query": { "name": "Magic Missile" } },
+			{ "ref": "spell", "query": { "name": "Fireball" } }
+		]
+	},
+	{
+		"characterName": "Bob",
+		"playerName": "Tester",
+		"cardPhotoUrl": "https://cdnb.artstation.com/p/assets/images/images/005/395/785/large/anthony-l-m-barbarian-massacre-anthony-lm-ss.jpg",
+		"sheetPhotoUrl": "https://cdnb.artstation.com/p/assets/images/images/005/395/785/large/anthony-l-m-barbarian-massacre-anthony-lm-ss.jpg",
+		"sources": [{"ref": "source", "query": { "_id": "srd" }}],
+		"classId": { "ref": "class", "query": { "name": "Barbarian" } },
+		"raceId": { "ref": "race", "query": { "name": "Human" } },
+		"backgroundId": { "ref": "background", "query": { "name": "Charlatan" } },
+		"size": "medium",
+		"subclass": "Storm Herald",
+		"level": 7,
+		"abilities": {
+			"strength": { "score": 18, "upByOne": false, "upByTwo": true },
+			"dexterity": { "score": 14, "upByOne": false, "upByTwo": false },
+			"constitution": { "score": 16, "upByOne": false, "upByTwo": false },
+			"intelligence": { "score": 10, "upByOne": false, "upByTwo": false },
+			"wisdom": { "score": 12, "upByOne": false, "upByTwo": false },
+			"charisma": { "score": 10, "upByOne": false, "upByTwo": false }
+		},
+		"skills": ["athletics", "deception", "insight", "perception", "sleight_of_hand", "stealth"],
+		"tools": [],
+		"languages": [
+			{
+				"item": { "ref": "language", "query": { "name": "Common" } },
+				"from": "race"
+			},
+			{
+				"item": { "ref": "language", "query": { "name": "Orc" } },
+				"from": "background"
+			}
+		],
+		"armor": null,
+		"weapons" : [
+			{ "ref": "weapon", "query": { "name": "Greataxe" } },
+			{ "ref": "weapon", "query": { "name": "Javelin" } },
+			{ "ref": "weapon", "query": { "name": "Longbow" } }
+		]
+	}
+]

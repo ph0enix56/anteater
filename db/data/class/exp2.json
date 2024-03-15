@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Rogue (altered)",
+		"description": "Signaling for her companions to wait, a halfling creeps forward through the dungeon hall. She presses an ear to the door, then pulls out a set of tools and picks the lock in the blink of an eye.",
+		"hitDice": { "amount": 1, "sides": 8 },
+		"subclasses": ["Thief", "Assassin", "Arcane Trickster", "Mastermind", "Swashbuckler"],
+		"skills": {
+			"amount": 4,
+			"defaults": []
+		},
+		"saves": ["dexterity", "intelligence"],
+		"tools": {
+			"amount": 1,
+			"defaults": [{ "ref": "tool", "query": { "name": "Thieves' Tools" }}]
+		},
+		"armorTypes": ["unarmored", "light"],
+		"armor": [],
+		"weaponTypes": ["simple"],
+		"weapons": [
+			{ "ref": "weapon", "query": { "name": "Rapier" } },
+			{ "ref": "weapon", "query": { "name": "Longsword" } }
+		],
+		"features": [
+			{
+				"title": "Expertise",
+				"levelMinimum": 1,
+				"text": "At 1st level, choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with thieves' tools. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies."
+			},
+			{
+				"title": "Sneak Attack",
+				"levelMinimum": 1,
+				"text": "Beginning at 1st level, you know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack if you have advantage on the attack roll. The attack must use a finesse or a ranged weapon. ..."
+			},
+			{
+				"title": "Evasion",
+				"levelMinimum": 7,
+				"text": "Beginning at 7th level, you can nimbly dodge out of the way of certain area effects, such as a red dragon's fiery breath or an ice storm spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail."
+			},
+			{
+				"title": "Slippery Mind",
+				"levelMinimum": 15,
+				"text": "By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws."
+			}
+		]
+	}
+]

@@ -1,0 +1,38 @@
+[
+	{
+		"name": "Anklebiter",
+		"type": "simple",
+		"ranged": false,
+		"range": 5,
+		"properties": ["light"],
+		"damage": { "amount": 1, "sides": 4 },
+		"damageType": "bludgeoning"
+	},
+	{
+		"name": "Walking Stick",
+		"type": "simple",
+		"ranged": false,
+		"range": 5,
+		"properties": ["light"],
+		"damage": { "amount": 1, "sides": 4 },
+		"damageType": "bludgeoning"
+	},
+	{
+		"name": "Comically Large Sword",
+		"type": "martial",
+		"ranged": false,
+		"range": 10,
+		"properties": ["heavy", "two_handed", "reach"],
+		"damage": { "amount": 2, "sides": 8 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Crossbow of Annoyance",
+		"type": "simple",
+		"ranged": true,
+		"range": 80,
+		"properties": ["two_handed", "loading"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "piercing"
+	}
+]

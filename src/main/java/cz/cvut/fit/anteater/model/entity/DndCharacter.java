@@ -26,37 +26,34 @@ public class DndCharacter {
 	@Id
 	private String id;
 
-	@Field("character_name")
 	private String characterName;
 
-	@Field("player_name")
 	private String playerName;
 
-	@Field("card_photo_url")
 	private String cardPhotoUrl;
 
-	@Field("sheet_photo_url")
 	private String sheetPhotoUrl;
 
 	private List<Source> sources;
 
-	@Field("class")
+	@Field("classId")
 	@DocumentReference
 	private DndClass dndClass;
 
 	private String subclass;
 
+	@Field("raceId")
 	@DocumentReference
 	private Race race;
 
 	private Size size;
 
+	@Field("backgroundId")
 	@DocumentReference
 	private Background background;
 
 	private Integer level;
 
-	@Field("ability_scores")
 	private Map<Ability, AbilityInput> abilities;
 
 	private Set<Skill> skills;

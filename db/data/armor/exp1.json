@@ -1,0 +1,24 @@
+[
+	{
+		"name": "Armor of Testing",
+		"type": "medium",
+		"baseArmorClass": 15,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 2 }
+		],
+		"description": "Become shrouded in the armor of testing"
+	},
+	{
+		"name": "Test Armor",
+		"type": "light",
+		"baseArmorClass": 12,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 }
+		],
+		"description": "Light and testy armor"
+	}
+]

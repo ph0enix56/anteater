@@ -1,0 +1,177 @@
+[
+	{
+		"name": "Barbarian",
+		"description": "A tall human tribesman strides through a blizzard, draped in fur and hefting his axe. He laughs as he charges toward the frost giant who dared poach his people's elk herd.",
+		"hitDice": { "amount": 1, "sides": 12 },
+		"subclasses": ["Berserker", "Totem Warrior", "Ancestral Guardian", "Storm Herald", "Zealot"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": ["strength", "constitution"],
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"armorTypes": ["unarmored", "light", "medium", "shield"],
+		"armor": [],
+		"defaultArmor": {
+			"name": "Unarmored Defense",
+			"type": "unarmored",
+			"baseArmorClass": 10,
+			"strengthRequirement": 0,
+			"stealthDisadvantage": false,
+			"bonuses": [
+				{ "ability": "dexterity", "max": 10 },
+				{ "ability": "constitution", "max": 10 }
+			],
+			"description": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+		},
+		"weaponTypes": ["simple", "martial"],
+		"weapons": [],
+		"features": [
+			{
+				"title": "Rage",
+				"levelMinimum": 1,
+				"text": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. While raging, you gain the following benefits if you aren't wearing heavy armor: [Paragraphed text would follow here.]"
+			},
+			{
+				"title": "Unarmored Defense",
+				"levelMinimum": 1,
+				"text": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+			},
+			{
+				"title": "Reckless Attack",
+				"levelMinimum": 2,
+				"text": "Starting at 2nd level, you can throw aside all concern for defense to attack with fierce desperation. When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn."
+			},
+			{
+				"title": "Extra Attack",
+				"levelMinimum": 5,
+				"text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn."
+			},
+			{
+				"title": "Feral Instinct",
+				"levelMinimum": 7,
+				"text": "By 7th level, your instincts are so honed that you have advantage on initiative rolls. [Paragraph break here - TODO.] Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn."
+			},
+			{
+				"title": "Primal Champion",
+				"levelMinimum": 20,
+				"text": "At 20th level, you embody the power of the wilds. Your Strength and Constitution scores increase by 4. Your maximum for those scores is now 24."
+			}
+		]
+	},
+	{
+		"name": "Wizard",
+		"description": "A human in claret-colored robes stands in a room dimly lit by a flickering candle. He holds his hands out, palms forward, fingers splayed, and then hurls a lance of fire at the creatures stalking him.",
+		"hitDice": { "amount": 1, "sides": 6 },
+		"subclasses": ["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": ["intelligence", "wisdom"],
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"armorTypes": ["unarmored"],
+		"armor": [],
+		"weaponTypes": [],
+		"weapons": [{ "ref": "weapon", "query": { "name": "Dagger" } }],
+		"features": [
+			{
+				"title": "Spellcasting",
+				"levelMinimum": 1,
+				"text": "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power."
+			},
+			{
+				"title": "Arcane Recovery",
+				"levelMinimum": 1,
+				"text": "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your wizard level (rounded up), and none of the slots can be 6th level or higher."
+			},
+			{
+				"title": "Spell Mastery",
+				"levelMinimum": 18,
+				"text": "At 18th level, you have achieved such mastery over certain spells that you can cast them at will. Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal. By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels."
+			}
+		],
+		"spellcasting": {
+			"ability": "intelligence",
+			"slots": [
+				[2, 0, 0, 0, 0, 0, 0, 0, 0],
+				[3, 0, 0, 0, 0, 0, 0, 0, 0],
+				[4, 2, 0, 0, 0, 0, 0, 0, 0],
+				[4, 3, 0, 0, 0, 0, 0, 0, 0],
+				[4, 3, 2, 0, 0, 0, 0, 0, 0],
+				[4, 3, 3, 0, 0, 0, 0, 0, 0],
+				[4, 3, 3, 1, 0, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 1, 0, 0, 0],
+				[4, 3, 3, 2, 1, 1, 1, 0, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1]
+			]
+		}
+	},
+	{
+		"name": "Warlock",
+		"description": "A wielder of magic that is derived from a bargain with an extraplanar entity",
+		"hitDice": { "amount": 1, "sides": 8 },
+		"subclasses": ["The Archfey", "The Fiend", "The Great Old One", "The Celestial", "The Hexblade"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": ["wisdom", "charisma"],
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"armorTypes": ["unarmored", "light"],
+		"armor": [],
+		"weaponTypes": ["simple"],
+		"weapons": [],
+		"features": [
+			{
+				"title": "Otherworldly Patron",
+				"levelMinimum": 1,
+				"text": "At 1st level, you have struck a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One, each of which is detailed at the end of the class description"
+			}
+		],
+		"spellcasting": {
+			"ability": "charisma",
+			"slots": [
+				[1, 0, 0, 0, 0, 0, 0, 0, 0],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 2, 0, 0, 0, 0, 0, 0, 0],
+				[0, 2, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 2, 0, 0, 0, 0, 0, 0],
+				[0, 0, 2, 0, 0, 0, 0, 0, 0],
+				[0, 0, 3, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 3, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0]
+			]
+		}
+	}
+]

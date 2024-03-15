@@ -1,0 +1,5 @@
+[
+	{ "name": "Very useful tool", "type": "artisan" },
+	{ "name": "Handy instrument", "type": "instrument" },
+	{ "name": "Reliable vehicle", "type": "vehicle" }
+]
