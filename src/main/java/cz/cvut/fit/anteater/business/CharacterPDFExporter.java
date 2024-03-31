@@ -8,13 +8,14 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 
 import cz.cvut.fit.anteater.dto.response.AbilityOutput;
+import cz.cvut.fit.anteater.dto.response.AbilityPdfOutput;
 import cz.cvut.fit.anteater.dto.response.AttackOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterComplete;
+import cz.cvut.fit.anteater.dto.response.CharacterPdfOutput;
 import cz.cvut.fit.anteater.dto.response.ProficiencyList;
 import cz.cvut.fit.anteater.dto.response.SkillOutput;
-import cz.cvut.fit.anteater.dto.response.SpellcastingOutput;
+import cz.cvut.fit.anteater.dto.response.SkillPdfOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
-import cz.cvut.fit.anteater.model.value.Spellcasting;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 
 public class CharacterPDFExporter {
@@ -22,13 +23,13 @@ public class CharacterPDFExporter {
 		StringBuilder sb = new StringBuilder().append("Armor: ");
 		String armorProfs = String.join(", ", profs.getArmor());
 		sb.append(armorProfs);
-		sb.append("\nWeapons: ");
+		sb.append("\n\nWeapons: ");
 		String weaponProfs = String.join(", ", profs.getWeapons());
 		sb.append(weaponProfs);
-		sb.append("\nTools: ");
+		sb.append("\n\nTools: ");
 		String toolProfs = String.join(", ", profs.getTools());
 		sb.append(toolProfs);
-		sb.append("\nLanguages: ");
+		sb.append("\n\nLanguages: ");
 		String langProfs = String.join(", ", profs.getLanguages());
 		sb.append(langProfs);
 		return sb.toString();
@@ -45,7 +46,12 @@ public class CharacterPDFExporter {
 		return sb.toString();
 	}
 
-	public void exportToPDF(CharacterComplete ch, String path) {
+	private String asModifier(Integer i) {
+		if (i >= 0) return "+" + i;
+		return i.toString();
+	}
+
+	public void exportToPDF(CharacterPdfOutput ch, String path) {
 		try (PDDocument doc = Loader.loadPDF(new File(path))) {
 			PDAcroForm form = doc.getDocumentCatalog().getAcroForm();
 			form.getField("characterName").setValue(ch.getInfo().getCharacterName());
@@ -53,51 +59,51 @@ public class CharacterPDFExporter {
 			form.getField("background").setValue(ch.getInfo().getBackground().getName());
 			form.getField("playerName").setValue(ch.getInfo().getPlayerName());
 			form.getField("race").setValue(ch.getInfo().getRace().getName());
-			for (AbilityOutput a : ch.getAbilities()) {
-				form.getField(a.getLabel() + "Mod").setValue(a.getModifier().toString());
-				form.getField(a.getLabel() + "Score").setValue(a.getScore().toString());
+			for (AbilityPdfOutput a : ch.getAbilities()) {
+				form.getField(a.getAbbreviation() + "Mod").setValue(asModifier(a.getModifier()));
+				form.getField(a.getAbbreviation() + "Score").setValue(a.getScore().toString());
 			}
-			for (SkillOutput a : ch.getSavingThrows()) {
-				form.getField(a.getLabel().toString() + "SaveMod").setValue(a.getModifier().toString());
-				form.getField(a.getLabel().toString() + "SaveProf").setValue(a.getProficient() ? "Yes" : "Off");
+			for (SkillPdfOutput a : ch.getSavingThrows()) {
+				form.getField(a.getAbbreviation() + "SaveMod").setValue(asModifier(a.getModifier()));
+				form.getField(a.getAbbreviation() + "SaveProf").setValue(a.getProficient() ? "Yes" : "Off");
 			}
-			for (SkillOutput a : ch.getSkills()) {
-				form.getField(a.getLabel().toString() + "Mod").setValue(a.getModifier().toString());
-				form.getField(a.getLabel().toString() + "Prof").setValue(a.getProficient() ? "Yes" : "Off");
+			for (SkillPdfOutput a : ch.getSkills()) {
+				form.getField(a.getAbbreviation() + "Mod").setValue(asModifier(a.getModifier()));
+				form.getField(a.getAbbreviation() + "Prof").setValue(a.getProficient() ? "Yes" : "Off");
 			}
+			form.getField("proficiencyBonus").setValue(asModifier(ch.getStats().getProficiencyBonus()));
 			form.getField("armorClass").setValue(ch.getStats().getArmorClass().toString());
-			form.getField("initiative").setValue(ch.getStats().getInitiative().toString());
+			form.getField("initiative").setValue(asModifier(ch.getStats().getInitiative()));
 			form.getField("speed").setValue(ch.getStats().getSpeed().toString());
 			form.getField("hpMax").setValue(ch.getStats().getHitPoints().toString());
-			form.getField("hpCurrent").setValue(ch.getStats().getHitPoints().toString());
-			form.getField("hdTotal").setValue(ch.getStats().getHitDice().toString());
-			form.getField("hdCurrent").setValue(ch.getStats().getHitDice().toString());
+			form.getField("hdMax").setValue(ch.getStats().getHitDice().getNotation());
+
 			List<AttackOutput> attacks = ch.getAttacks();
-			for (int i = 0; i < 3; i++) {
-				form.getField("attack" + i + "Name").setValue(i < attacks.size() ? attacks.get(i).getName() : "");
-				form.getField("attack" + i + "Bonus").setValue(i < attacks.size() ? attacks.get(i).getAttackBonus().toString() : "");
-				form.getField("attack" + i + "Damage").setValue(i < attacks.size() ? attacks.get(i).getDamage() : "");
+			for (int i = 0; i < 4; i++) {
+				form.getField("atk" + (i + 1) + "name").setValue(i < attacks.size() ? attacks.get(i).getName() : "");
+				form.getField("atk" + (i + 1) + "bonus").setValue(i < attacks.size() ? asModifier(attacks.get(i).getAttackBonus()) : "");
+				form.getField("atk" + (i + 1) + "damage").setValue(i < attacks.size() ? attacks.get(i).getDamage() : "");
 			}
 
 			Armor armor = ch.getArmor();
 			if (armor != null) {
-				StringBuilder sb = new StringBuilder().append("Armor: ");
-				sb.append(ch.getArmor().getName());
+				StringBuilder sb = new StringBuilder().append(ch.getArmor().getName());
 				if (armor.getStealthDisadvantage()) sb.append(" (Stealth Disadv.)");
-				form.getField("equipment").setValue(sb.toString());
+				form.getField("armor").setValue(sb.toString());
 			}
 
 			form.getField("proficiencies").setValue(serializeProficiencies(ch.getProficiencies()));
 			form.getField("features").setValue(serializeFeatures(ch.getFeatures()));
 
-			SpellcastingOutput sc = ch.getSpellcasting();
-			if (sc != null) {
-				form.getField("spellClass").setValue(ch.getInfo().getDndClass().getName());
-				form.getField("spellAbility").setValue(sc.getAbilityAbbreviation());
-				form.getField("spellSaveDc").setValue(sc.getSaveDc().toString());
-				form.getField("spellAttackBonus").setValue(sc.getModifier().toString());
+			//SpellcastingOutput sc = ch.getSpellcasting();
+			//if (sc != null) {
+			//	form.getField("spellClass").setValue(ch.getInfo().getDndClass().getName());
+			//	form.getField("spellAbility").setValue(sc.getAbilityAbbreviation());
+			//	form.getField("spellSaveDc").setValue(sc.getSaveDc().toString());
+			//	form.getField("spellAttackBonus").setValue(sc.getModifier().toString());
 				
-			}
+			//}
+			doc.save("assets/filled3.pdf");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

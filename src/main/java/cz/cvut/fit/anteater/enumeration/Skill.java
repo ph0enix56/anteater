@@ -26,4 +26,6 @@ public enum Skill {
 	survival("Survival");
 
 	private String name;
+
+	public String getAbbreviation() { return name.substring(0, 4); }
 }

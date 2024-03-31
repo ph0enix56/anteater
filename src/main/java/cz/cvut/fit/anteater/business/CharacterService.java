@@ -15,6 +15,7 @@ import cz.cvut.fit.anteater.dto.request.CharacterInput;
 import cz.cvut.fit.anteater.dto.request.SkillInput;
 import cz.cvut.fit.anteater.dto.response.AttackOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterComplete;
+import cz.cvut.fit.anteater.dto.response.CharacterPdfOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterShort;
 import cz.cvut.fit.anteater.dto.response.SkillOutput;
 import cz.cvut.fit.anteater.enumeration.Ability;
@@ -79,6 +80,12 @@ public class CharacterService {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 		return mapper.toComplete(c);
+	}
+
+	public CharacterPdfOutput getCharacterForPDF(String id) {
+		if (id == null) throw new IllegalArgumentException("ID cannot be null");
+		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
+		return mapper.toPdfOutput(c);
 	}
 
 	public CharacterComplete saveCharacter(CharacterInput in, Boolean isCreate) {
