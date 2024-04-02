@@ -6,18 +6,17 @@ import java.util.List;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.springframework.stereotype.Component;
 
-import cz.cvut.fit.anteater.dto.response.AbilityOutput;
 import cz.cvut.fit.anteater.dto.response.AbilityPdfOutput;
 import cz.cvut.fit.anteater.dto.response.AttackOutput;
-import cz.cvut.fit.anteater.dto.response.CharacterComplete;
 import cz.cvut.fit.anteater.dto.response.CharacterPdfOutput;
 import cz.cvut.fit.anteater.dto.response.ProficiencyList;
-import cz.cvut.fit.anteater.dto.response.SkillOutput;
 import cz.cvut.fit.anteater.dto.response.SkillPdfOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 
+@Component
 public class CharacterPDFExporter {
 	private String serializeProficiencies(ProficiencyList profs) {
 		StringBuilder sb = new StringBuilder().append("Armor: ");
@@ -51,8 +50,8 @@ public class CharacterPDFExporter {
 		return i.toString();
 	}
 
-	public void exportToPDF(CharacterPdfOutput ch, String path) {
-		try (PDDocument doc = Loader.loadPDF(new File(path))) {
+	public void exportToPDF(CharacterPdfOutput ch, String outputPath, File pdfTemplate) {
+		try (PDDocument doc = Loader.loadPDF(pdfTemplate)) {
 			PDAcroForm form = doc.getDocumentCatalog().getAcroForm();
 			form.getField("characterName").setValue(ch.getInfo().getCharacterName());
 			form.getField("classAndLevel").setValue(ch.getInfo().getDndClass().getName() + " " + ch.getInfo().getLevel());
@@ -63,13 +62,13 @@ public class CharacterPDFExporter {
 				form.getField(a.getAbbreviation() + "Mod").setValue(asModifier(a.getModifier()));
 				form.getField(a.getAbbreviation() + "Score").setValue(a.getScore().toString());
 			}
-			for (SkillPdfOutput a : ch.getSavingThrows()) {
-				form.getField(a.getAbbreviation() + "SaveMod").setValue(asModifier(a.getModifier()));
-				form.getField(a.getAbbreviation() + "SaveProf").setValue(a.getProficient() ? "Yes" : "Off");
+			for (SkillPdfOutput s : ch.getSavingThrows()) {
+				form.getField(s.getAbbreviation() + "SaveMod").setValue(asModifier(s.getModifier()));
+				form.getField(s.getAbbreviation() + "SaveProf").setValue(s.getProficient() ? "Yes" : "Off");
 			}
-			for (SkillPdfOutput a : ch.getSkills()) {
-				form.getField(a.getAbbreviation() + "Mod").setValue(asModifier(a.getModifier()));
-				form.getField(a.getAbbreviation() + "Prof").setValue(a.getProficient() ? "Yes" : "Off");
+			for (SkillPdfOutput s : ch.getSkills()) {
+				form.getField(s.getAbbreviation() + "Mod").setValue(asModifier(s.getModifier()));
+				form.getField(s.getAbbreviation() + "Prof").setValue(s.getProficient() ? "Yes" : "Off");
 			}
 			form.getField("proficiencyBonus").setValue(asModifier(ch.getStats().getProficiencyBonus()));
 			form.getField("armorClass").setValue(ch.getStats().getArmorClass().toString());
@@ -95,17 +94,10 @@ public class CharacterPDFExporter {
 			form.getField("proficiencies").setValue(serializeProficiencies(ch.getProficiencies()));
 			form.getField("features").setValue(serializeFeatures(ch.getFeatures()));
 
-			//SpellcastingOutput sc = ch.getSpellcasting();
-			//if (sc != null) {
-			//	form.getField("spellClass").setValue(ch.getInfo().getDndClass().getName());
-			//	form.getField("spellAbility").setValue(sc.getAbilityAbbreviation());
-			//	form.getField("spellSaveDc").setValue(sc.getSaveDc().toString());
-			//	form.getField("spellAttackBonus").setValue(sc.getModifier().toString());
-				
-			//}
-			doc.save("assets/filled3.pdf");
+			doc.save(outputPath);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException("Failed to export character to PDF", e);
 		}
 	}
 }

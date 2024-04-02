@@ -1,5 +1,7 @@
 package cz.cvut.fit.anteater.business;
 
+import java.net.MalformedURLException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import cz.cvut.fit.anteater.business.mapping.CharacterMapper;
@@ -15,12 +19,12 @@ import cz.cvut.fit.anteater.dto.request.CharacterInput;
 import cz.cvut.fit.anteater.dto.request.SkillInput;
 import cz.cvut.fit.anteater.dto.response.AttackOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterComplete;
-import cz.cvut.fit.anteater.dto.response.CharacterPdfOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterShort;
 import cz.cvut.fit.anteater.dto.response.SkillOutput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ProficiencySource;
 import cz.cvut.fit.anteater.enumeration.Skill;
+import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.Language;
@@ -52,13 +56,14 @@ public class CharacterService {
 	private SpellRepository spellRepo;
 	private ArmorRepository armorRepo;
 	private CharacterMapper mapper;
+	private CharacterPDFExporter pdfExporter;
 
 	public CharacterService(DndCharacterRepository repository, SourceRepository sourceRepository,
 			DndClassRepository classRepository,	RaceRepository raceRepository,
 			BackgroundRepository backgroundRepository, ToolRepository toolRepository,
 			LanguageRepository languageRepository, WeaponRepository weaponRepository,
 			SpellRepository spellRepository, ArmorRepository armorRepository,
-			CharacterMapper mapper) {
+			CharacterMapper mapper, CharacterPDFExporter pdfExporter) {
 		this.repo = repository;
 		this.sourceRepo = sourceRepository;
 		this.classRepo = classRepository;
@@ -70,6 +75,7 @@ public class CharacterService {
 		this.spellRepo = spellRepository;
 		this.armorRepo = armorRepository;
 		this.mapper = mapper;
+		this.pdfExporter = pdfExporter;
 	}
 
 	public List<CharacterShort> getAllCharacters() {
@@ -82,10 +88,16 @@ public class CharacterService {
 		return mapper.toComplete(c);
 	}
 
-	public CharacterPdfOutput getCharacterForPDF(String id) {
+	public Resource getPdf(String id) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
-		return mapper.toPdfOutput(c);
+		String outputPath = Constants.PDF_EXPORT_DIRECTORY + c.getId() + ".pdf";
+		pdfExporter.exportToPDF(mapper.toPdfOutput(c), outputPath, Constants.PDF_TEMPLATE_FILE);
+		try {
+			return new UrlResource(Paths.get(outputPath).toUri());
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("Failed to load PDF file");
+		}
 	}
 
 	public CharacterComplete saveCharacter(CharacterInput in, Boolean isCreate) {

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,5 +110,13 @@ public class CharacterController {
 	@PostMapping("/{id}/levelup")
 	public CharacterComplete levelUp(@PathVariable String id) {
 		return characterService.levelUp(id);
+	}
+
+	@GetMapping("/{id}/pdf")
+	public ResponseEntity<Resource> getPdf(@PathVariable String id) {
+		Resource pdf = characterService.getPdf(id);
+		return ResponseEntity.ok()
+			.header("Content-Disposition", "attachment; filename=\"" + pdf.getFilename() + "\"")
+			.body(pdf);
 	}
 }
