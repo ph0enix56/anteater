@@ -65,3 +65,6 @@ out/
 
 ### App outputs ###
 output/
+
+### Node.js script modules ###
+db/node_modules/

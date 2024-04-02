@@ -1,7 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const MongoClient = require('mongodb').MongoClient;
 
-const dndDb = db.getSiblingDB('dnd_dev');
+const url = 'mongodb://mongodb:27017/dnd';
+const dbName = 'dnd';
+const client = new MongoClient(url);
+
 const contentTypes = [
 	'tool',
 	'language',
@@ -13,57 +17,66 @@ const contentTypes = [
 	'spell',
 ];
 
-function resolveReferences(document, parentKey = null) {
+async function resolveReferences(document, parentKey = null, db) {
 	for (const key in document) {
 		if (document[key] && typeof document[key] === 'object') {
 			if (document[key].ref && document[key].query) {
-				console.log(key);
 				if (key.endsWith('Id') || (parentKey && parentKey.endsWith('Ids'))) {
-					document[key] = dndDb[document[key].ref].findOne(document[key].query, { _id: 1 })._id;
+					document[key] = (await db.collection(document[key].ref).findOne(document[key].query))._id;
 				} else {
-					document[key] = dndDb[document[key].ref].findOne(document[key].query);
+					document[key] = await db.collection(document[key].ref).findOne(document[key].query);
 				}
 			} else {
-				resolveReferences(document[key], key);
+				await resolveReferences(document[key], key, db);
 			}
 		}
 	}
 }
 
-function handleDataFromSource(data, sourceName, collection) {
+async function handleDataFromSource(data, sourceName, collection, db) {
 	for (document of data) {
 		document.source = {
 			ref: 'source',
 			query: { _id: sourceName }
 		};
-		resolveReferences(document);
+		await resolveReferences(document, null, db);
 	}
-	const result = dndDb[collection].insertMany(data);
+	await db.collection(collection).insertMany(data);
 }
 
-function handleCollection(collection) {
+async function handleCollection(collection, db) {
 	const dir = `./data/${collection}`;
 	const files = fs.readdirSync(dir);
 	for (const sourceFile of files) {
 		console.log(`Inserting documents of type ${collection} from ${sourceFile}`);
 		const data = JSON.parse(fs.readFileSync(path.join(dir, sourceFile)));
-		handleDataFromSource(data, sourceFile.split('.')[0], collection);
+		await handleDataFromSource(data, sourceFile.split('.')[0], collection, db);
 	}
 }
 
-function run() {
-	for (const collection of contentTypes) dndDb[collection].drop();
-	dndDb.source.drop();
-	dndDb.character.drop();
+async function run() {
+	try {
+		await client.connect();
+		console.log("Connected correctly to server");
+		const db = client.db(dbName);
 
-	const sourceData = JSON.parse(fs.readFileSync('./data/sources.json'));
-	dndDb.source.insertMany(sourceData);
+		for (const collection of contentTypes) await db.collection(collection).drop();
+		await db.collection('source').drop();
+		await db.collection('character').drop();
 
-	for (const collection of contentTypes) handleCollection(collection);
+		const sourceData = JSON.parse(fs.readFileSync('./data/sources.json'));
+		await db.collection('source').insertMany(sourceData);
 
-	const characterData = JSON.parse(fs.readFileSync('./data/characters.json'));
-	for (document of characterData) resolveReferences(document);
-	dndDb.character.insertMany(characterData);
+		for (const collection of contentTypes) await handleCollection(collection, db);
+
+		const characterData = JSON.parse(fs.readFileSync('./data/characters.json'));
+		for (document of characterData) await resolveReferences(document, null, db);
+		await db.collection('character').insertMany(characterData);
+	} catch (err) {
+		console.log(err.stack);
+	} finally {
+		await client.close();
+	}
 }
 
 run();
