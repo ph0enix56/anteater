@@ -23,4 +23,9 @@ public class RestExceptionHandler {
 	protected ResponseEntity<?> handleFailedBeanValidation(MethodArgumentNotValidException ex) {
 		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
+
+	@ExceptionHandler(RuntimeException.class)
+	protected ResponseEntity<?> handleRuntimeException(RuntimeException ex) {
+		return ResponseEntity.internalServerError().body(ex.getMessage());
+	}
 }

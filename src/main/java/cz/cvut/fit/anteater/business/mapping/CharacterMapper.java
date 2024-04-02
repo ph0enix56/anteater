@@ -8,6 +8,9 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import cz.cvut.fit.anteater.dto.pdf.AbilityPdfOutput;
+import cz.cvut.fit.anteater.dto.pdf.CharacterPdfOutput;
+import cz.cvut.fit.anteater.dto.pdf.SkillPdfOutput;
 import cz.cvut.fit.anteater.dto.response.AbilityOutput;
 import cz.cvut.fit.anteater.dto.response.AttackOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterComplete;
@@ -119,7 +122,7 @@ public class CharacterMapper {
 			.build();
 		}
 
-	public List<AbilityOutput> toAbilityOutput(DndCharacter c) {
+	public List<AbilityOutput> toAbilitiesOutput(DndCharacter c) {
 		List<AbilityOutput> result = new ArrayList<>();
 		var stats = getAbilityStats(c);
 		for (Ability ab : Constants.ABILITY_ORDER) {
@@ -140,13 +143,12 @@ public class CharacterMapper {
 		List<SkillOutput> result = new ArrayList<>();
 		for (Skill sk : Skill.values()) {
 			Ability ab = Constants.SKILL_TO_ABILITY_MAP.get(sk);
-			result.add(
-				new SkillOutput(
-					sk.toString(),
-					ab.toString(),
-					getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSkills().contains(sk), c.getLevel()),
-					c.getSkills().contains(sk),
-					sk.getName() + " (" + ab.getAbbreviation() + ")"));
+			result.add(new SkillOutput(
+				sk.toString(),
+				ab.toString(),
+				getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSkills().contains(sk), c.getLevel()),
+				c.getSkills().contains(sk),
+				sk.getName() + " (" + ab.getAbbreviation() + ")"));
 	}
 		return result;
 	}
@@ -155,13 +157,12 @@ public class CharacterMapper {
 		List<SkillOutput> result = new ArrayList<>();
 		Set<Ability> saves = c.getDndClass().getSavingThrowProficiencies();
 		for (Ability ab : Ability.values()) {
-			result.add(
-				new SkillOutput(
-					ab.toString(),
-					ab.toString(),
-					getSkillModifier(getAbilityStats(c).get(ab).mod, saves.contains(ab), c.getLevel()),
-					saves.contains(ab),
-					ab.getName()));
+			result.add(new SkillOutput(
+				ab.toString(),
+				ab.toString(),
+				getSkillModifier(getAbilityStats(c).get(ab).mod, saves.contains(ab), c.getLevel()),
+				saves.contains(ab),
+				ab.getName()));
 		}
 		return result;
 	}
@@ -244,7 +245,7 @@ public class CharacterMapper {
 			.info(toInfo(c))
 			.stats(toStats(c))
 			.sources(c.getSources())
-			.abilities(toAbilityOutput(c))
+			.abilities(toAbilitiesOutput(c))
 			.skills(toSkills(c))
 			.savingThrows(toSavingThrows(c))
 			.armor(c.getArmor())
@@ -253,6 +254,57 @@ public class CharacterMapper {
 			.proficiencies(toProficiencies(c))
 			.tools(c.getTools())
 			.languages(c.getLanguages())
+			.features(toFeatures(c, false))
+			.build();
+	}
+
+	public List<AbilityPdfOutput> toAbilitiesPdf(DndCharacter c) {
+		List<AbilityPdfOutput> result = new ArrayList<>();
+		var stats = getAbilityStats(c);
+		for (Ability ab : Constants.ABILITY_ORDER) {
+			result.add(new AbilityPdfOutput(
+				ab.getAbbreviation().toLowerCase(),
+				stats.get(ab).getScore(),
+				stats.get(ab).getMod()));
+		}
+		return result;		
+	}
+
+	public List<SkillPdfOutput> toSkillsPdf(DndCharacter c) {
+		List<SkillPdfOutput> result = new ArrayList<>();
+		for (Skill sk : Skill.values()) {
+			Ability ab = Constants.SKILL_TO_ABILITY_MAP.get(sk);
+			result.add(new SkillPdfOutput(
+				sk.getAbbreviation().toLowerCase(),
+				getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSkills().contains(sk), c.getLevel()),
+				c.getSkills().contains(sk)));
+		}
+		return result;
+	}
+
+	public List<SkillPdfOutput> toSavingThrowsPdf(DndCharacter c) {
+		List<SkillPdfOutput> result = new ArrayList<>();
+		Set<Ability> saves = c.getDndClass().getSavingThrowProficiencies();
+		for (Ability ab : Ability.values()) {
+			result.add(new SkillPdfOutput(
+				ab.getAbbreviation().toLowerCase(),
+				getSkillModifier(getAbilityStats(c).get(ab).mod, saves.contains(ab), c.getLevel()),
+				saves.contains(ab)));
+		}
+		return result;
+	}
+
+	public CharacterPdfOutput toPdfOutput(DndCharacter c) {
+		return CharacterPdfOutput.builder()
+			.info(toInfo(c))
+			.stats(toStats(c))
+			.abilities(toAbilitiesPdf(c))
+			.skills(toSkillsPdf(c))
+			.savingThrows(toSavingThrowsPdf(c))
+			.armor(c.getArmor())
+			.attacks(toAttacks(c))
+			.spellcasting(toSpellcastingOutput(c))
+			.proficiencies(toProficiencies(c))
 			.features(toFeatures(c, false))
 			.build();
 	}

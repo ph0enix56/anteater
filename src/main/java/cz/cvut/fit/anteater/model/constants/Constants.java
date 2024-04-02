@@ -1,5 +1,6 @@
 package cz.cvut.fit.anteater.model.constants;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import cz.cvut.fit.anteater.enumeration.Ability;
@@ -15,6 +16,12 @@ public class Constants {
 
 	/** URL of the frontend for allowing CORS. */
 	public static final String FRONTEND_URL = "http://localhost:3000";
+
+	/** PDF file with correspoding forms that will be used for PDF export. */
+	public static final File PDF_TEMPLATE_FILE = new File("assets/anteater_character_sheet_v1.pdf");
+
+	/** Path to directory where PDF files will be exported. */
+	public static final String PDF_EXPORT_DIRECTORY = "output/";
 
 	/** List of abilities in the order they are traditionally presented in the character sheet. */
 	public static final List<Ability> ABILITY_ORDER = List.of(
