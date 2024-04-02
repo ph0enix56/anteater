@@ -1,7 +1,12 @@
-package cz.cvut.fit.anteater.dto.response;
+package cz.cvut.fit.anteater.dto.pdf;
 
 import java.util.List;
 
+import cz.cvut.fit.anteater.dto.response.AttackOutput;
+import cz.cvut.fit.anteater.dto.response.CharacterInfo;
+import cz.cvut.fit.anteater.dto.response.CharacterStats;
+import cz.cvut.fit.anteater.dto.response.ProficiencyList;
+import cz.cvut.fit.anteater.dto.response.SpellcastingOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.Builder;

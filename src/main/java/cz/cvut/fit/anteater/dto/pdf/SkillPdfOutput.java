@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.dto.response;
+package cz.cvut.fit.anteater.dto.pdf;
 
 import lombok.Value;
 

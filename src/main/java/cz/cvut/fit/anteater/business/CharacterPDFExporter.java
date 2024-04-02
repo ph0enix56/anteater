@@ -8,11 +8,11 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.springframework.stereotype.Component;
 
-import cz.cvut.fit.anteater.dto.response.AbilityPdfOutput;
+import cz.cvut.fit.anteater.dto.pdf.AbilityPdfOutput;
+import cz.cvut.fit.anteater.dto.pdf.CharacterPdfOutput;
+import cz.cvut.fit.anteater.dto.pdf.SkillPdfOutput;
 import cz.cvut.fit.anteater.dto.response.AttackOutput;
-import cz.cvut.fit.anteater.dto.response.CharacterPdfOutput;
 import cz.cvut.fit.anteater.dto.response.ProficiencyList;
-import cz.cvut.fit.anteater.dto.response.SkillPdfOutput;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 

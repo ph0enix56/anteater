@@ -8,17 +8,17 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import cz.cvut.fit.anteater.dto.pdf.AbilityPdfOutput;
+import cz.cvut.fit.anteater.dto.pdf.CharacterPdfOutput;
+import cz.cvut.fit.anteater.dto.pdf.SkillPdfOutput;
 import cz.cvut.fit.anteater.dto.response.AbilityOutput;
-import cz.cvut.fit.anteater.dto.response.AbilityPdfOutput;
 import cz.cvut.fit.anteater.dto.response.AttackOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterComplete;
 import cz.cvut.fit.anteater.dto.response.CharacterInfo;
-import cz.cvut.fit.anteater.dto.response.CharacterPdfOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterShort;
 import cz.cvut.fit.anteater.dto.response.CharacterStats;
 import cz.cvut.fit.anteater.dto.response.ProficiencyList;
 import cz.cvut.fit.anteater.dto.response.SkillOutput;
-import cz.cvut.fit.anteater.dto.response.SkillPdfOutput;
 import cz.cvut.fit.anteater.dto.response.SourcableInfo;
 import cz.cvut.fit.anteater.dto.response.SpellcastingOutput;
 import cz.cvut.fit.anteater.enumeration.Ability;
