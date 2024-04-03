@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const MongoClient = require('mongodb').MongoClient;
+const { ObjectId, MongoClient } = require('mongodb');
 
 const baseDir = './data';
 const url = process.env.MONGODB_URI;
@@ -72,12 +72,74 @@ async function insert(db) {
 	console.log(`Inserted ${characterResult.insertedCount} characters`);
 }
 
+async function createReference(field, collection, db) {
+	if (field && field.name && field.source) {
+		field = {
+			ref: collection,
+			query: { name: field.name, source: field.source }
+		};
+	} else if (field instanceof ObjectId) {
+		const entity = await db.collection(collection).findOne({ _id: field });
+		field = {
+			ref: collection,
+			query: { name: entity.name, source: entity.source }
+		};
+	}
+	return field;
+}
+
+async function handleCharacterReferences(character, db) {
+	for (const key in character) {
+		if (key === 'classId' || key === 'raceId' || key === 'backgroundId') {
+			character[key] = await createReference(character[key], key.slice(0, -2), db);
+		} else if (key === 'armor') {
+			character[key] = await createReference(character[key], 'armor', db);
+		} else if (key === 'weapons') {
+			for (let i = 0; i < character[key].length; i++) {
+				character[key][i] = await createReference(character[key][i], 'weapon', db);
+			}
+		} else if (key === 'spells') {
+			for (let i = 0; i < character[key].length; i++) {
+				character[key][i] = await createReference(character[key][i], 'spell', db);
+			}
+		} else if (key === 'tools') {
+			for (let i = 0; i < character[key].length; i++) {
+				character[key][i].item = await createReference(character[key][i].item, 'tool', db);
+			}
+		} else if (key === 'languages') {
+			for (let i = 0; i < character[key].length; i++) {
+				character[key][i].item = await createReference(character[key][i].item, 'language', db);
+			}
+		} else if (key === 'sources') {
+			for (let i = 0; i < character[key].length; i++) {
+				character[key][i] = {
+					ref: 'source',
+					query: { _id: character[key][i]._id }
+				}
+			}
+		} else if (key === '_id') {
+			delete character[key];
+		}
+	}
+}
+
+async function backupCharacters(db) {
+	let characters = await db.collection('character').find().toArray();
+	for (let character of characters) {
+		await handleCharacterReferences(character, db);
+	}
+	if (characters.length === 0) return;
+	fs.writeFileSync(path.join(baseDir, 'characters.json'), JSON.stringify(characters, null, 2));
+	console.log(`Backed up ${characters.length} characters`);
+}
+
 async function run() {
 	try {
 		await client.connect();
 		console.log('Connected correctly to MongoDB');
 		const db = client.db(dbName);
 
+		await backupCharacters(db);
 		await insert(db);
 
 	} catch (err) {
