@@ -64,7 +64,8 @@ out/
 .vscode/
 
 ### App outputs ###
-output/
+output/**
+!output/.gitkeep
 
 ### Node.js script modules ###
 db/node_modules/

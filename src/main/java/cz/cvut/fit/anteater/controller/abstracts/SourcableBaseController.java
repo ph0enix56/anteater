@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cz.cvut.fit.anteater.business.abstracts.SourcableBaseService;
@@ -27,7 +28,7 @@ public abstract class SourcableBaseController<T extends SourceableEntity> {
 	}
 
 	@GetMapping("/{id}")
-	public T getById(@RequestParam String id) {
+	public T getById(@PathVariable String id) {
 		return sourcableService.findById(id);
 	}
 }
