@@ -43,7 +43,7 @@ public class CharacterController {
 	}
 
 	@GetMapping
-	public List<CharacterShort> getCompleteAll() {
+	public List<CharacterShort> getAll() {
 		return characterService.getAllCharacters();
 	}
 
