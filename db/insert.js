@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://mongodb:27017/dnd';
+const baseDir = './data';
+const url = process.env.MONGODB_URI;
 const dbName = 'dnd';
 const client = new MongoClient(url);
 
@@ -41,37 +42,44 @@ async function handleDataFromSource(data, sourceName, collection, db) {
 		};
 		await resolveReferences(document, null, db);
 	}
-	await db.collection(collection).insertMany(data);
+	const result = await db.collection(collection).insertMany(data);
+	console.log(`Inserted ${result.insertedCount} documents of type ${collection} from ${sourceName}`);
 }
 
 async function handleCollection(collection, db) {
-	const dir = `./data/${collection}`;
+	const dir = path.join(baseDir, collection);
 	const files = fs.readdirSync(dir);
 	for (const sourceFile of files) {
-		console.log(`Inserting documents of type ${collection} from ${sourceFile}`);
 		const data = JSON.parse(fs.readFileSync(path.join(dir, sourceFile)));
 		await handleDataFromSource(data, sourceFile.split('.')[0], collection, db);
 	}
 }
 
+async function insert(db) {
+	for (const collection of contentTypes) await db.collection(collection).drop();
+	await db.collection('source').drop();
+	await db.collection('character').drop();
+
+	const sourceData = JSON.parse(fs.readFileSync(path.join(baseDir, 'sources.json')));
+	const sourceResult = await db.collection('source').insertMany(sourceData);
+	console.log(`Inserted ${sourceResult.insertedCount} sources`);
+
+	for (const collection of contentTypes) await handleCollection(collection, db);
+
+	const characterData = JSON.parse(fs.readFileSync(path.join(baseDir, 'characters.json')));
+	for (document of characterData) await resolveReferences(document, null, db);
+	const characterResult = await db.collection('character').insertMany(characterData);
+	console.log(`Inserted ${characterResult.insertedCount} characters`);
+}
+
 async function run() {
 	try {
 		await client.connect();
-		console.log("Connected correctly to server");
+		console.log('Connected correctly to MongoDB');
 		const db = client.db(dbName);
 
-		for (const collection of contentTypes) await db.collection(collection).drop();
-		await db.collection('source').drop();
-		await db.collection('character').drop();
+		await insert(db);
 
-		const sourceData = JSON.parse(fs.readFileSync('./data/sources.json'));
-		await db.collection('source').insertMany(sourceData);
-
-		for (const collection of contentTypes) await handleCollection(collection, db);
-
-		const characterData = JSON.parse(fs.readFileSync('./data/characters.json'));
-		for (document of characterData) await resolveReferences(document, null, db);
-		await db.collection('character').insertMany(characterData);
 	} catch (err) {
 		console.log(err.stack);
 	} finally {

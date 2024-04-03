@@ -10,6 +10,10 @@ services:
         build:
             context: .
             dockerfile: Dockerfile_script
+            args:
+                DATA_PATH: ${DATA_PATH}
+        env_file:
+            - .env
         depends_on:
             - mongodb
     app:
@@ -17,9 +21,9 @@ services:
             context: .
             dockerfile: Dockerfile_app
         # TODO: Spring Boot can't read the env variable, it needs to be set in application.properties
-        # TODO: all attempts to fix this here or in Dockerfile failed :(
-        environment:
-            - MONGODB_URI=mongodb://mongodb:27017/dnd_dev
+        # TODO: to the value of the env variable, too much time was wasted trying to get it to work
+        env_file:
+            - .env
         ports:
             - 8080:8080
         depends_on:

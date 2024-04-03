@@ -4,6 +4,9 @@ FROM node
 # Set the working directory
 WORKDIR /script
 
+# Define the DATA_PATH build-time variable
+ARG DATA_PATH
+
 # Copy package.json and package-lock.json
 COPY db/package*.json .
 
@@ -12,6 +15,9 @@ RUN npm install
 
 # Copy the rest of the db scripts to the container
 COPY db/ .
+
+# Copy the user data to the container
+COPY $DATA_PATH ./data
 
 # Run the insert script
 CMD ["node", "insert.js"]
