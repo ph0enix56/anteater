@@ -114,49 +114,49 @@ public class CharacterService {
 			.size(in.getRace().getSize())
 			.background(backgroundRepo.findById(in.getBackground().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid background id")));
 
-			List<Proficiency<Tool>> toolProf = new ArrayList<>();
-			for (String tid : in.getBackground().getToolIds()) {
-				Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
-				toolProf.add(new Proficiency<Tool>(t, ProficiencySource.background));
-			}
-			for (String tid : in.getDndClass().getToolIds()) {
-				Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
-				toolProf.add(new Proficiency<Tool>(t, ProficiencySource.dndClass));
-			}
-			builder.tools(toolProf);
+		List<Proficiency<Tool>> toolProf = new ArrayList<>();
+		for (String tid : in.getBackground().getToolIds()) {
+			Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
+			toolProf.add(new Proficiency<Tool>(t, ProficiencySource.background));
+		}
+		for (String tid : in.getDndClass().getToolIds()) {
+			Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
+			toolProf.add(new Proficiency<Tool>(t, ProficiencySource.dndClass));
+		}
+		builder.tools(toolProf);
 
-			List<Proficiency<Language>> langProf = new ArrayList<>();
-			for (String lid : in.getBackground().getLanguageIds()) {
-				Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
-				langProf.add(new Proficiency<Language>(l, ProficiencySource.background));
-			}
-			for (String lid : in.getRace().getLanguageIds()) {
-				Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
-				langProf.add(new Proficiency<Language>(l, ProficiencySource.race));
-			}
-			builder.languages(langProf);
+		List<Proficiency<Language>> langProf = new ArrayList<>();
+		for (String lid : in.getBackground().getLanguageIds()) {
+			Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
+			langProf.add(new Proficiency<Language>(l, ProficiencySource.background));
+		}
+		for (String lid : in.getRace().getLanguageIds()) {
+			Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
+			langProf.add(new Proficiency<Language>(l, ProficiencySource.race));
+		}
+		builder.languages(langProf);
 
-			Map<Ability, AbilityInput> abilities = new HashMap<>();
-			for (AbilityInput ai : in.getAbilityScores()) abilities.put(ai.getLabel(), ai);
-			builder.abilities(abilities);
+		Map<Ability, AbilityInput> abilities = new HashMap<>();
+		for (AbilityInput ai : in.getAbilityScores()) abilities.put(ai.getLabel(), ai);
+		builder.abilities(abilities);
 
-			if (isCreate) {
-				builder.level(1)
-				.skills(new HashSet<>())
-				.armor(null)
-				.weapons(new ArrayList<>())
-				.spells(new ArrayList<>());
-				return mapper.toComplete(repo.save(builder.build()));
-			} else {
-				DndCharacter c = repo.findById(in.getId()).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
-				builder.id(in.getId())
-				.level(c.getLevel())
-				.skills(c.getSkills())
-				.armor(c.getArmor())
-				.weapons(c.getWeapons())
-				.spells(c.getSpells());
-				return mapper.toComplete(repo.save(builder.build()));
-			}
+		if (isCreate) {
+			builder.level(1)
+			.skills(new HashSet<>())
+			.armor(null)
+			.weapons(new ArrayList<>())
+			.spells(new ArrayList<>());
+			return mapper.toComplete(repo.save(builder.build()));
+		} else {
+			DndCharacter c = repo.findById(in.getId()).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
+			builder.id(in.getId())
+			.level(c.getLevel())
+			.skills(c.getSkills())
+			.armor(c.getArmor())
+			.weapons(c.getWeapons())
+			.spells(c.getSpells());
+			return mapper.toComplete(repo.save(builder.build()));
+		}
 	}
 
 	public void deleteCharacter(String id) {
@@ -196,6 +196,7 @@ public class CharacterService {
 	public List<Spell> editSpells(String id, List<String> spellIds) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		if (c.getDndClass().getSpellcasting() == null) throw new IllegalArgumentException("Character's class cannot cast spells");
 		List<Spell> newSpells = new ArrayList<>();
 		for (String sid : spellIds) {
 			if (sid == null) throw new IllegalArgumentException("Spell ID cannot be null");
