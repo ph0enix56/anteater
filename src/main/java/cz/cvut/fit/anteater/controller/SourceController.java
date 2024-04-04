@@ -15,6 +15,8 @@ import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Source;
 import cz.cvut.fit.anteater.repository.SourceRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 /**
  * REST controller for handling requests related to {@link Source} entities.
@@ -33,8 +35,10 @@ public class SourceController {
 	}
 
 	@Operation(summary = "Get source by ID", description = "Get a source by its ID.")
+	@ApiResponse(responseCode = "200", description = "Source found and returned.")
+	@ApiResponse(responseCode = "404", description = "Source with given ID not found.")
 	@GetMapping("/{id}")
-	public Source findById(@PathVariable String id) {
+	public Source findById(@PathVariable @Parameter(description = "ID of source to return") String id) {
 		try {
 			if (id == null) throw new IllegalArgumentException("ID must not be null");
 			return repository.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
@@ -43,6 +47,8 @@ public class SourceController {
 		}
 	}
 
+	@Operation(summary = "Get all sources", description = "Get all sources.")
+	@ApiResponse(responseCode = "200", description = "All sources found and returned.")
 	@GetMapping
 	public List<Source> findAll() {
 		try {
