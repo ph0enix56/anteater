@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import cz.cvut.fit.anteater.enumeration.Skill;
-import cz.cvut.fit.anteater.model.value.BonusList;
+import cz.cvut.fit.anteater.model.value.BonusSet;
 import cz.cvut.fit.anteater.model.value.TextFeature;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -19,17 +19,17 @@ public class Background extends SourceableEntity {
 	private List<TextFeature> features;
 
 	@Field("skills")
-	private BonusList<Skill> skillProficiencies;
+	private BonusSet<Skill> skillProficiencies;
 
 	@Field("languages")
-	private BonusList<Language> languageProficiencies;
+	private BonusSet<Language> languageProficiencies;
 
 	@Field("tools")
-	private BonusList<Tool> toolProficiencies;
+	private BonusSet<Tool> toolProficiencies;
 
 	public Background(String id, String name, Source source, String description, List<TextFeature> features,
-			BonusList<Skill> skillProficiencies, BonusList<Language> languageProficiencies,
-			BonusList<Tool> toolProficiencies) {
+			BonusSet<Skill> skillProficiencies, BonusSet<Language> languageProficiencies,
+			BonusSet<Tool> toolProficiencies) {
 		super(id, name, source);
 		this.description = description;
 		this.features = features;

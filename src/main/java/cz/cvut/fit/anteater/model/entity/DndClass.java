@@ -10,7 +10,7 @@ import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.enumeration.WeaponType;
-import cz.cvut.fit.anteater.model.value.BonusList;
+import cz.cvut.fit.anteater.model.value.BonusSet;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.Spellcasting;
 import cz.cvut.fit.anteater.model.value.TextFeature;
@@ -31,13 +31,13 @@ public class DndClass extends SourceableEntity {
 	private List<String> subclasses;
 
 	@Field("skills")
-	private BonusList<Skill> skillProficiencies;
+	private BonusSet<Skill> skillProficiencies;
 
 	@Field("saves")
 	private Set<Ability> savingThrowProficiencies;
 
 	@Field("tools")
-	private BonusList<Tool> toolProficiencies;
+	private BonusSet<Tool> toolProficiencies;
 
 	@Field("armorTypes")
 	private Set<ArmorType> armorProficiencyTypes;
@@ -56,8 +56,8 @@ public class DndClass extends SourceableEntity {
 	private Spellcasting spellcasting;
 
 	public DndClass(String id, String name, Source source, String description, Dice hitDice, List<TextFeature> features,
-			List<String> subclasses, BonusList<Skill> skillProficiencies, Set<Ability> savingThrowProficiencies,
-			BonusList<Tool> toolProficiencies, Set<ArmorType> armorProficiencyTypes, List<Armor> armorProficiencies,
+			List<String> subclasses, BonusSet<Skill> skillProficiencies, Set<Ability> savingThrowProficiencies,
+			BonusSet<Tool> toolProficiencies, Set<ArmorType> armorProficiencyTypes, List<Armor> armorProficiencies,
 			Armor defaultArmor, Set<WeaponType> weaponProficiencyTypes, List<Weapon> weaponProficiencies,
 			Spellcasting spellcasting) {
 		super(id, name, source);

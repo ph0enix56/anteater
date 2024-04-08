@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Handler for translating exceptions thrown from REST controllers into
+ * appropriate HTTP responses.
+ */
 @ControllerAdvice
 public class RestExceptionHandler {
 
