@@ -45,10 +45,11 @@ public abstract class SourcableBaseRepository<T extends SourceableEntity> {
 		if (sourceIds != null && !sourceIds.isEmpty()) {
 			query.addCriteria(Criteria.where("source.id").in(sourceIds));
 		}
+		long total = mongoTemplate.count(query, entityClass);
 		query.with(pageable);
 
 		List<T> content = mongoTemplate.find(query, entityClass);
-		return new PageImpl<>(content, pageable, content.size());
+		return new PageImpl<>(content, pageable, total);
 	}
 
 	public T save(@NonNull T entity) {
