@@ -153,15 +153,15 @@ public class CharacterController {
 
 	@Operation(summary = "Edit the armor of a character",
 		description = "Edit the armor of a character by providing a new armor ID the character is equipped with. " +
-		"The new armor is saved and returned. The character's new armor class can be obtained by getting the " +
-		"character information again.")
+		"The new armor is saved and returned. If an empty string is given, the character will be unarmored. " + 
+		"The character's new armor class can be obtained by getting the character information again.")
 	@ApiResponse(responseCode = "200", description = "Armor edited and returned.")
 	@ApiResponse(responseCode = "400", description = "Invalid input data.")
 	@PutMapping("/{id}/armor")
 	public Armor editArmor(
 			@PathVariable @Parameter(description = "The ID of the character to edit") String id,
-			@RequestBody @Valid @Parameter(description = "The armor ID to set, wrapped in an object with one property " +
-			"to create a valid JSON") IdWrapper armorId) {
+			@RequestBody @Valid @Parameter(description = "The armor ID to set wrapped in an object with " + 
+			"an 'id' field.") IdWrapper armorId) {
 		return characterService.editArmor(id, armorId.getId());
 	}
 

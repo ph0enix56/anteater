@@ -197,9 +197,9 @@ public class CharacterService {
 
 	public Armor editArmor(String id, String armorId) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		if (armorId == null) throw new IllegalArgumentException("Armor ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
-		Armor a = armorRepo.findById(armorId).orElseThrow(() -> new NoSuchElementException("Armor with given ID not found"));
+		Armor a = armorId.isEmpty() ? null :
+			armorRepo.findById(armorId).orElseThrow(() -> new NoSuchElementException("Armor with given ID not found"));
 		return repo.save(c.toBuilder().armor(a).build()).getArmor();
 	}
 
