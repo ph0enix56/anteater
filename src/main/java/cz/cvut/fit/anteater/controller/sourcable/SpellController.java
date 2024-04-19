@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cz.cvut.fit.anteater.business.sourcable.SpellService;
+import cz.cvut.fit.anteater.constants.Constants;
 import cz.cvut.fit.anteater.controller.abstracts.SourcableBaseController;
-import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Spell;
 
 @CrossOrigin(origins = Constants.FRONTEND_URL)

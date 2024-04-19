@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import cz.cvut.fit.anteater.constants.Constants;
 import cz.cvut.fit.anteater.dto.pdf.AbilityPdfOutput;
 import cz.cvut.fit.anteater.dto.pdf.CharacterPdfOutput;
 import cz.cvut.fit.anteater.dto.pdf.SkillPdfOutput;
@@ -26,7 +27,6 @@ import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.enumeration.WeaponProperty;
 import cz.cvut.fit.anteater.enumeration.WeaponType;
-import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;

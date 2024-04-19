@@ -12,6 +12,7 @@ public class RaceInput {
 	@NotNull
 	private String id;
 
+	@NotNull
 	private Size size;
 
 	@NotNull

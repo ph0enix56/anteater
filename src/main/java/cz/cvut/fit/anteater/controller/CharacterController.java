@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import cz.cvut.fit.anteater.business.CharacterService;
+import cz.cvut.fit.anteater.constants.Constants;
 import cz.cvut.fit.anteater.dto.request.CharacterInput;
 import cz.cvut.fit.anteater.dto.request.IdWrapper;
 import cz.cvut.fit.anteater.dto.request.SkillInput;
@@ -23,7 +24,6 @@ import cz.cvut.fit.anteater.dto.response.AttackOutput;
 import cz.cvut.fit.anteater.dto.response.CharacterComplete;
 import cz.cvut.fit.anteater.dto.response.CharacterShort;
 import cz.cvut.fit.anteater.dto.response.SkillOutput;
-import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Spell;
 import io.swagger.v3.oas.annotations.Operation;

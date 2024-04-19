@@ -1,4 +1,4 @@
-package cz.cvut.fit.anteater.model.constants;
+package cz.cvut.fit.anteater.constants;
 
 import java.io.File;
 import java.util.List;

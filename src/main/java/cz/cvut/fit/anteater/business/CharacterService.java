@@ -8,12 +8,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.function.Function;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import cz.cvut.fit.anteater.business.mapping.CharacterMapper;
+import cz.cvut.fit.anteater.constants.Constants;
 import cz.cvut.fit.anteater.dto.request.AbilityInput;
 import cz.cvut.fit.anteater.dto.request.CharacterInput;
 import cz.cvut.fit.anteater.dto.request.SkillInput;
@@ -24,13 +27,14 @@ import cz.cvut.fit.anteater.dto.response.SkillOutput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ProficiencySource;
 import cz.cvut.fit.anteater.enumeration.Skill;
-import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Background;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
 import cz.cvut.fit.anteater.model.entity.DndClass;
 import cz.cvut.fit.anteater.model.entity.Language;
 import cz.cvut.fit.anteater.model.entity.Race;
+import cz.cvut.fit.anteater.model.entity.Source;
+import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.model.entity.Tool;
 import cz.cvut.fit.anteater.model.entity.Weapon;
@@ -103,56 +107,67 @@ public class CharacterService {
 		}
 	}
 
+	private void validateProficiencyAmount(List<String> ids, int max, String message) {
+		if (ids.size() > max) throw new IllegalArgumentException(message);
+	}
+
+	private <T extends SourceableEntity> List<Proficiency<T>> buildProficiencies(List<String> ids,
+			Function<String, T> finder, ProficiencySource source) {
+		List<Proficiency<T>> proficiencies = new ArrayList<>();
+		for (String id : ids) proficiencies.add(new Proficiency<>(finder.apply(id), source));
+		return proficiencies;
+	}
+
+	// if the character has no armor or the armor is not available, return no armor
+	// otherwise keep the current armor
+	private Armor handleArmorEdit(DndCharacter c, List<String> sourceIds) {
+		if (c.getArmor().getSource() == null) return null;
+		boolean isAvailable = sourceIds.isEmpty() || sourceIds.contains(c.getArmor().getSource().getId());
+		return isAvailable ? c.getArmor() : null;
+	}
+
 	public CharacterComplete saveCharacter(CharacterInput in, Boolean isCreate) {
 		if (in == null) throw new IllegalArgumentException("Entity cannot be null");
-		DndClass dndClass = classRepo.findById(in.getDndClass().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid class id"));
-		Race race = raceRepo.findById(in.getRace().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid race id"));
-		Background background = backgroundRepo.findById(in.getBackground().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid background id"));
+		List<String> sourceIds = in.getInfo().getSourceIds();
+
+		// validate class, race, background and if subclass and size are valid for the selected
+		DndClass dndClass = classRepo.findWithinSources(in.getDndClass().getId(), sourceIds)
+			.orElseThrow(() -> new IllegalArgumentException("Class not found within character sources"));
+		Race race = raceRepo.findWithinSources(in.getRace().getId(), sourceIds)
+			.orElseThrow(() -> new IllegalArgumentException("Race not found within character sources"));
+		Background background = backgroundRepo.findWithinSources(in.getBackground().getId(), sourceIds)
+			.orElseThrow(() -> new IllegalArgumentException("Background not found within character sources"));
+		if (race.getSizeOptions().contains(in.getRace().getSize()) == false) throw new IllegalArgumentException("Invalid size selected");
+		if (dndClass.getSubclasses().contains(in.getDndClass().getSubclass()) == false) throw new IllegalArgumentException("Invalid subclass selected");
+
 		var builder = DndCharacter.builder()
-			.characterName(in.getInfo().getCharacterName())
-			.playerName(in.getInfo().getPlayerName())
-			.cardPhotoUrl(in.getInfo().getCardPhotoUrl())
-			.sheetPhotoUrl(in.getInfo().getSheetPhotoUrl())
-			.sources(in.getInfo().getSourceIds().stream().map(id -> sourceRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid source id"))).toList())
+			// set default values if none are provided
+			.characterName(Optional.ofNullable(in.getInfo().getCharacterName()).orElse("Unnamed Character"))
+			.playerName(Optional.ofNullable(in.getInfo().getPlayerName()).orElse("No Player Name"))
+			.cardPhotoUrl(Optional.ofNullable(in.getInfo().getCardPhotoUrl()).orElse(""))
+			.sheetPhotoUrl(Optional.ofNullable(in.getInfo().getSheetPhotoUrl()).orElse(""))
+			.sources(sourceIds.stream().map(id -> sourceRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid source id"))).toList())
 			.dndClass(dndClass)
 			.subclass(in.getDndClass().getSubclass())
 			.race(race)
 			.size(in.getRace().getSize())
 			.background(background);
 
-		if (in.getBackground().getToolIds().size() > background.getToolProficiencies().getAmount()) {
-			throw new IllegalArgumentException("Too many background tool proficiencies");
-		}
-		if (in.getDndClass().getToolIds().size() > dndClass.getToolProficiencies().getAmount()) {
-			throw new IllegalArgumentException("Too many class tool proficiencies");
-		}
-		if (in.getBackground().getLanguageIds().size() > background.getLanguageProficiencies().getAmount()) {
-			throw new IllegalArgumentException("Too many background language proficiencies");
-		}
-		if (in.getRace().getLanguageIds().size() > race.getLanguageProficiencies().getAmount()) {
-			throw new IllegalArgumentException("Too many race language proficiencies");
-		}
+		validateProficiencyAmount(in.getBackground().getToolIds(), background.getToolProficiencies().getAmount(), "Too many background tool proficiencies");
+		validateProficiencyAmount(in.getBackground().getLanguageIds(), background.getLanguageProficiencies().getAmount(), "Too many background language proficiencies");
+		validateProficiencyAmount(in.getDndClass().getToolIds(), dndClass.getToolProficiencies().getAmount(), "Too many class tool proficiencies");
+		validateProficiencyAmount(in.getRace().getLanguageIds(), race.getLanguageProficiencies().getAmount(), "Too many race language proficiencies");
 
-		List<Proficiency<Tool>> toolProf = new ArrayList<>();
-		for (String tid : in.getBackground().getToolIds()) {
-			Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
-			toolProf.add(new Proficiency<Tool>(t, ProficiencySource.background));
-		}
-		for (String tid : in.getDndClass().getToolIds()) {
-			Tool t = toolRepo.findById(tid).orElseThrow(() -> new IllegalArgumentException("Invalid tool id"));
-			toolProf.add(new Proficiency<Tool>(t, ProficiencySource.dndClass));
-		}
+		List<Proficiency<Tool>> toolProf = buildProficiencies(in.getBackground().getToolIds(), id -> toolRepo.findWithinSources(id, sourceIds)
+			.orElseThrow(() -> new IllegalArgumentException("Tool (from background) not found within character sources")), ProficiencySource.background);
+		toolProf.addAll(buildProficiencies(in.getDndClass().getToolIds(), id -> toolRepo.findWithinSources(id, sourceIds)
+			.orElseThrow(() -> new IllegalArgumentException("Tool (from class) not found within character sources")), ProficiencySource.dndClass));
 		builder.tools(toolProf);
-
-		List<Proficiency<Language>> langProf = new ArrayList<>();
-		for (String lid : in.getBackground().getLanguageIds()) {
-			Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
-			langProf.add(new Proficiency<Language>(l, ProficiencySource.background));
-		}
-		for (String lid : in.getRace().getLanguageIds()) {
-			Language l = languageRepo.findById(lid).orElseThrow(() -> new IllegalArgumentException("Invalid language id"));
-			langProf.add(new Proficiency<Language>(l, ProficiencySource.race));
-		}
+	
+		List<Proficiency<Language>> langProf = buildProficiencies(in.getBackground().getLanguageIds(), id -> languageRepo.findWithinSources(id, sourceIds)
+			.orElseThrow(() -> new IllegalArgumentException("Language (from background) not found within character sources")), ProficiencySource.background);
+		langProf.addAll(buildProficiencies(in.getRace().getLanguageIds(), id -> languageRepo.findWithinSources(id, sourceIds)
+			.orElseThrow(() -> new IllegalArgumentException("Language (from race) not found within character sources")), ProficiencySource.race));
 		builder.languages(langProf);
 
 		Map<Ability, AbilityInput> abilities = new HashMap<>();
@@ -172,10 +187,14 @@ public class CharacterService {
 			.level(c.getLevel())
 			// reset skill proficiencies to default if class has changed to avoid having too many
 			.skills(c.getDndClass() == dndClass ? c.getSkills() : dndClass.getSkillProficiencies().getDefaults())
-			.armor(c.getArmor())
-			.weapons(c.getWeapons())
-			// reset spell list if class has changed to avoid having incompatible spells
-			.spells(c.getDndClass() == dndClass ? c.getSpells() : new ArrayList<>());
+			// unequip armor if it's no longer available
+			.armor(handleArmorEdit(c, sourceIds))
+			// remove weapons that are no longer available
+			.weapons(c.getWeapons().stream().filter(w -> sourceIds.isEmpty() || sourceIds.contains(w.getSource().getId())).toList())
+			// reset spell list if class has changed, otherwise remove spells that are no longer available
+			.spells(c.getDndClass() == dndClass ?
+				c.getSpells().stream().filter(s -> sourceIds.contains(s.getSource().getId())).toList() :
+				new ArrayList<>());
 			return mapper.toComplete(repo.save(builder.build()));
 		}
 	}
@@ -199,7 +218,8 @@ public class CharacterService {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		Armor a = armorId.isEmpty() ? null :
-			armorRepo.findById(armorId).orElseThrow(() -> new NoSuchElementException("Armor with given ID not found"));
+			armorRepo.findWithinSources(armorId, c.getSources().stream().map(Source::getId).toList())
+				.orElseThrow(() -> new NoSuchElementException("Armor not found within character sources"));
 		return repo.save(c.toBuilder().armor(a).build()).getArmor();
 	}
 
@@ -207,9 +227,11 @@ public class CharacterService {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		List<Weapon> newWeapons = new ArrayList<>();
+		List<String> sourceIds = c.getSources().stream().map(Source::getId).toList();
 		for (String wid : weaponIds) {
 			if (wid == null) throw new IllegalArgumentException("Weapon ID cannot be null");
-			Weapon w = weaponRepo.findById(wid).orElseThrow(() -> new NoSuchElementException("Weapon with given ID not found"));
+			Weapon w = weaponRepo.findWithinSources(wid, sourceIds)
+				.orElseThrow(() -> new NoSuchElementException("Weapon not found within character sources"));
 			newWeapons.add(w);
 		}
 		return mapper.toAttacks(repo.save(c.toBuilder().weapons(newWeapons).build()));
@@ -220,9 +242,11 @@ public class CharacterService {
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		if (c.getDndClass().getSpellcasting() == null) throw new IllegalArgumentException("Character's class cannot cast spells");
 		List<Spell> newSpells = new ArrayList<>();
+		List<String> sourceIds = c.getSources().stream().map(Source::getId).toList();
 		for (String sid : spellIds) {
 			if (sid == null) throw new IllegalArgumentException("Spell ID cannot be null");
-			Spell sp = spellRepo.findById(sid).orElseThrow(() -> new NoSuchElementException("Spell with given ID not found"));
+			Spell sp = spellRepo.findWithinSources(sid, sourceIds)
+				.orElseThrow(() -> new NoSuchElementException("Spell not found within character sources"));
 			newSpells.add(sp);
 		}
 		return repo.save(c.toBuilder().spells(newSpells).build()).getSpells();

@@ -11,6 +11,7 @@ public class ClassInput {
 	@NotNull
 	private String id;
 
+	@NotNull
 	private String subclass;
 
 	@NotNull

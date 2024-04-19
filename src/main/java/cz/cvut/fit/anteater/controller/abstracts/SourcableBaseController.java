@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cz.cvut.fit.anteater.business.abstracts.SourcableBaseService;
-import cz.cvut.fit.anteater.model.constants.Constants;
+import cz.cvut.fit.anteater.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

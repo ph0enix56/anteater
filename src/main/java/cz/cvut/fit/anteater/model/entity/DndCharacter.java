@@ -9,11 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import cz.cvut.fit.anteater.constants.Constants;
 import cz.cvut.fit.anteater.dto.request.AbilityInput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.Size;
 import cz.cvut.fit.anteater.enumeration.Skill;
-import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.value.Proficiency;
 import lombok.Builder;
 import lombok.Value;

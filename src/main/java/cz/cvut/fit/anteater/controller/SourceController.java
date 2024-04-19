@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import cz.cvut.fit.anteater.model.constants.Constants;
+import cz.cvut.fit.anteater.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Source;
 import cz.cvut.fit.anteater.repository.SourceRepository;
 import io.swagger.v3.oas.annotations.Operation;

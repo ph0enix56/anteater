@@ -35,6 +35,12 @@ public abstract class SourcableBaseRepository<T extends SourceableEntity> {
 		return Optional.ofNullable(mongoTemplate.findById(id, entityClass));
 	}
 
+	public Optional<T> findWithinSources(@NonNull String id, @NonNull List<String> sourceIds) {
+		Query query = new Query(Criteria.where("id").is(id));
+		if (!sourceIds.isEmpty()) query.addCriteria(Criteria.where("source.id").in(sourceIds));
+		return Optional.ofNullable(mongoTemplate.findOne(query, entityClass));
+	}
+
 	public boolean existsById(@NonNull String id) {
 		return mongoTemplate.exists(new Query(Criteria.where("id").is(id)), entityClass);
 	}
