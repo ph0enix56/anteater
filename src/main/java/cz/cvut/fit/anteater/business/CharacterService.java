@@ -26,8 +26,11 @@ import cz.cvut.fit.anteater.enumeration.ProficiencySource;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.constants.Constants;
 import cz.cvut.fit.anteater.model.entity.Armor;
+import cz.cvut.fit.anteater.model.entity.Background;
 import cz.cvut.fit.anteater.model.entity.DndCharacter;
+import cz.cvut.fit.anteater.model.entity.DndClass;
 import cz.cvut.fit.anteater.model.entity.Language;
+import cz.cvut.fit.anteater.model.entity.Race;
 import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.model.entity.Tool;
 import cz.cvut.fit.anteater.model.entity.Weapon;
@@ -102,17 +105,33 @@ public class CharacterService {
 
 	public CharacterComplete saveCharacter(CharacterInput in, Boolean isCreate) {
 		if (in == null) throw new IllegalArgumentException("Entity cannot be null");
+		DndClass dndClass = classRepo.findById(in.getDndClass().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid class id"));
+		Race race = raceRepo.findById(in.getRace().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid race id"));
+		Background background = backgroundRepo.findById(in.getBackground().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid background id"));
 		var builder = DndCharacter.builder()
 			.characterName(in.getInfo().getCharacterName())
 			.playerName(in.getInfo().getPlayerName())
 			.cardPhotoUrl(in.getInfo().getCardPhotoUrl())
 			.sheetPhotoUrl(in.getInfo().getSheetPhotoUrl())
 			.sources(in.getInfo().getSourceIds().stream().map(id -> sourceRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid source id"))).toList())
-			.dndClass(classRepo.findById(in.getDndClass().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid class id")))
+			.dndClass(dndClass)
 			.subclass(in.getDndClass().getSubclass())
-			.race(raceRepo.findById(in.getRace().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid race id")))
+			.race(race)
 			.size(in.getRace().getSize())
-			.background(backgroundRepo.findById(in.getBackground().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid background id")));
+			.background(background);
+
+		if (in.getBackground().getToolIds().size() > background.getToolProficiencies().getAmount()) {
+			throw new IllegalArgumentException("Too many background tool proficiencies");
+		}
+		if (in.getDndClass().getToolIds().size() > dndClass.getToolProficiencies().getAmount()) {
+			throw new IllegalArgumentException("Too many class tool proficiencies");
+		}
+		if (in.getBackground().getLanguageIds().size() > background.getLanguageProficiencies().getAmount()) {
+			throw new IllegalArgumentException("Too many background language proficiencies");
+		}
+		if (in.getRace().getLanguageIds().size() > race.getLanguageProficiencies().getAmount()) {
+			throw new IllegalArgumentException("Too many race language proficiencies");
+		}
 
 		List<Proficiency<Tool>> toolProf = new ArrayList<>();
 		for (String tid : in.getBackground().getToolIds()) {
@@ -142,7 +161,7 @@ public class CharacterService {
 
 		if (isCreate) {
 			builder.level(1)
-			.skills(new HashSet<>())
+			.skills(dndClass.getSkillProficiencies().getDefaults())
 			.armor(null)
 			.weapons(new ArrayList<>())
 			.spells(new ArrayList<>());
@@ -151,10 +170,12 @@ public class CharacterService {
 			DndCharacter c = repo.findById(in.getId()).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 			builder.id(in.getId())
 			.level(c.getLevel())
-			.skills(c.getSkills())
+			// reset skill proficiencies to default if class has changed to avoid having too many
+			.skills(c.getDndClass() == dndClass ? c.getSkills() : dndClass.getSkillProficiencies().getDefaults())
 			.armor(c.getArmor())
 			.weapons(c.getWeapons())
-			.spells(c.getSpells());
+			// reset spell list if class has changed to avoid having incompatible spells
+			.spells(c.getDndClass() == dndClass ? c.getSpells() : new ArrayList<>());
 			return mapper.toComplete(repo.save(builder.build()));
 		}
 	}
@@ -170,6 +191,7 @@ public class CharacterService {
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		HashSet<Skill> newSkills = new HashSet<>();
 		for (SkillInput si : skills) if (si.getProficient()) newSkills.add(si.getName());
+		if (newSkills.size() > c.getDndClass().getSkillProficiencies().getAmount()) throw new IllegalArgumentException("Too many skill proficiencies");
 		return mapper.toSkills(repo.save(c.toBuilder().skills(newSkills).build()));
 	}
 
