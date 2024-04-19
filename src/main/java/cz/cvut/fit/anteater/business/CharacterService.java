@@ -176,7 +176,7 @@ public class CharacterService {
 
 		if (isCreate) {
 			builder.level(1)
-			.skills(dndClass.getSkillProficiencies().getDefaults())
+			.skills(background.getSkillProficiencies().getDefaults())
 			.armor(null)
 			.weapons(new ArrayList<>())
 			.spells(new ArrayList<>());
@@ -185,8 +185,7 @@ public class CharacterService {
 			DndCharacter c = repo.findById(in.getId()).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 			builder.id(in.getId())
 			.level(c.getLevel())
-			// reset skill proficiencies to default if class has changed to avoid having too many
-			.skills(c.getDndClass() == dndClass ? c.getSkills() : dndClass.getSkillProficiencies().getDefaults())
+			.skills(c.getSkills())
 			// unequip armor if it's no longer available
 			.armor(handleArmorEdit(c, sourceIds))
 			// remove weapons that are no longer available
@@ -210,7 +209,6 @@ public class CharacterService {
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		HashSet<Skill> newSkills = new HashSet<>();
 		for (SkillInput si : skills) if (si.getProficient()) newSkills.add(si.getName());
-		if (newSkills.size() > c.getDndClass().getSkillProficiencies().getAmount()) throw new IllegalArgumentException("Too many skill proficiencies");
 		return mapper.toSkills(repo.save(c.toBuilder().skills(newSkills).build()));
 	}
 
