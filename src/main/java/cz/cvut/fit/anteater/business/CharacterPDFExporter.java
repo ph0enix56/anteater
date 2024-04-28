@@ -50,9 +50,19 @@ public class CharacterPDFExporter {
 		return i.toString();
 	}
 
-	public void exportToPDF(CharacterPdfOutput ch, String outputPath, File pdfTemplate) {
+	/**
+	 * Exports the character to a form-fillable PDF file. The character's information is filled into the fields of
+	 * the PDF template form, and the resulting copy of the filled form is saved to the specified output path.
+	 * 
+	 * @param ch character to export
+	 * @param outputPath path to the output PDF file (including the file name)
+	 * @param pdfTemplate PDF template form to fill out (see thesis text for structure details)
+	 * @param attackCount number of attacks to export to the PDF
+	 */
+	public void exportToPDF(CharacterPdfOutput ch, String outputPath, File pdfTemplate, Integer attackCount) {
 		try (PDDocument doc = Loader.loadPDF(pdfTemplate)) {
 			PDAcroForm form = doc.getDocumentCatalog().getAcroForm();
+
 			form.getField("characterName").setValue(ch.getInfo().getCharacterName());
 			form.getField("classAndLevel").setValue(ch.getInfo().getDndClass().getName() + " " + ch.getInfo().getLevel());
 			form.getField("background").setValue(ch.getInfo().getBackground().getName());
@@ -70,20 +80,19 @@ public class CharacterPDFExporter {
 				form.getField(s.getAbbreviation() + "Mod").setValue(asModifier(s.getModifier()));
 				form.getField(s.getAbbreviation() + "Prof").setValue(s.getProficient() ? "Yes" : "Off");
 			}
+
 			form.getField("proficiencyBonus").setValue(asModifier(ch.getStats().getProficiencyBonus()));
 			form.getField("armorClass").setValue(ch.getStats().getArmorClass().toString());
 			form.getField("initiative").setValue(asModifier(ch.getStats().getInitiative()));
 			form.getField("speed").setValue(ch.getStats().getSpeed().toString());
 			form.getField("hpMax").setValue(ch.getStats().getHitPoints().toString());
 			form.getField("hdMax").setValue(ch.getStats().getHitDice().getNotation());
-
 			List<AttackOutput> attacks = ch.getAttacks();
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < attackCount; i++) {
 				form.getField("atk" + (i + 1) + "name").setValue(i < attacks.size() ? attacks.get(i).getName() : "");
 				form.getField("atk" + (i + 1) + "bonus").setValue(i < attacks.size() ? asModifier(attacks.get(i).getAttackBonus()) : "");
 				form.getField("atk" + (i + 1) + "damage").setValue(i < attacks.size() ? attacks.get(i).getDamage() : "");
 			}
-
 			Armor armor = ch.getArmor();
 			if (armor != null) {
 				StringBuilder sb = new StringBuilder().append(ch.getArmor().getName());
@@ -93,7 +102,7 @@ public class CharacterPDFExporter {
 
 			form.getField("proficiencies").setValue(serializeProficiencies(ch.getProficiencies()));
 			form.getField("features").setValue(serializeFeatures(ch.getFeatures()));
-
+		
 			doc.save(outputPath);
 		} catch (Exception e) {
 			e.printStackTrace();

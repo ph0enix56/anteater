@@ -99,7 +99,7 @@ public class CharacterService {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
 		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 		String outputPath = Constants.PDF_EXPORT_DIRECTORY + c.getId() + ".pdf";
-		pdfExporter.exportToPDF(mapper.toPdfOutput(c), outputPath, Constants.PDF_TEMPLATE_FILE);
+		pdfExporter.exportToPDF(mapper.toPdfOutput(c), outputPath, Constants.PDF_TEMPLATE_FILE, Constants.PDF_ATTACK_COUNT);
 		try {
 			return new UrlResource(Paths.get(outputPath).toUri());
 		} catch (MalformedURLException e) {

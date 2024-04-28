@@ -18,7 +18,10 @@ public class Constants {
 	public static final String FRONTEND_URL = "http://localhost:3000";
 
 	/** PDF file with correspoding forms that will be used for PDF export. */
-	public static final File PDF_TEMPLATE_FILE = new File("assets/anteater_character_sheet_v1.pdf");
+	public static final File PDF_TEMPLATE_FILE = new File("src/main/resources/anteater_character_sheet_v1.pdf");
+
+	/** Number of attacks to be exported to the PDF. */
+	public static final Integer PDF_ATTACK_COUNT = 3;
 
 	/** Path to directory where PDF files will be exported. */
 	public static final String PDF_EXPORT_DIRECTORY = "output/";
