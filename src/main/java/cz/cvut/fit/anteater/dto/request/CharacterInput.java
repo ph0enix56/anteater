@@ -23,7 +23,7 @@ public class CharacterInput {
 	@NotNull
 	@Valid
 	@JsonProperty("class")
-	private ClassInput dndClass;
+	private DndClassInput dndClass;
 
 	@NotNull
 	@Valid

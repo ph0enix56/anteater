@@ -21,7 +21,7 @@ import lombok.Value;
 @Value
 @Builder(toBuilder = true)
 @Document(collection = "character")
-public class DndCharacter {
+public class Character {
 
 	@Id
 	private String id;

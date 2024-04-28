@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class ClassInput {
+public class DndClassInput {
 	
 	@NotNull
 	private String id;

@@ -28,7 +28,7 @@ import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.enumeration.WeaponProperty;
 import cz.cvut.fit.anteater.enumeration.WeaponType;
 import cz.cvut.fit.anteater.model.entity.Armor;
-import cz.cvut.fit.anteater.model.entity.DndCharacter;
+import cz.cvut.fit.anteater.model.entity.Character;
 import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.value.Dice;
@@ -43,7 +43,7 @@ public class CharacterMapper {
 		return new SourcableInfo(src.getId(), src.getName());
 	}
 
-	public CharacterInfo toInfo(DndCharacter c) {
+	public CharacterInfo toInfo(Character c) {
 		return CharacterInfo.builder()
 			.characterName(c.getCharacterName())
 			.playerName(c.getPlayerName())
@@ -58,7 +58,7 @@ public class CharacterMapper {
 			.build();
 	}
 
-	public CharacterShort toShort(DndCharacter c) {
+	public CharacterShort toShort(Character c) {
 		return new CharacterShort(c.getId(), toInfo(c));
 	}
 
@@ -69,7 +69,7 @@ public class CharacterMapper {
 		private Integer mod;
 	}
 
-	public Map<Ability, AbilityStats> getAbilityStats(DndCharacter c) {
+	public Map<Ability, AbilityStats> getAbilityStats(Character c) {
 		Map<Ability, AbilityStats> result = new HashMap<>();
 		for (var i : c.getAbilities().entrySet()) {
 			Integer bonus = (i.getValue().getUpByOne() ? 1 : 0) + (i.getValue().getUpByTwo() ? 2 : 0);
@@ -110,7 +110,7 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public CharacterStats toStats(DndCharacter c) {
+	public CharacterStats toStats(Character c) {
 		var abilities = getAbilityStats(c);
 		return CharacterStats.builder()
 			.proficiencyBonus(getProficiencyBonus(c.getLevel()))
@@ -122,7 +122,7 @@ public class CharacterMapper {
 			.build();
 		}
 
-	public List<AbilityOutput> toAbilitiesOutput(DndCharacter c) {
+	public List<AbilityOutput> toAbilitiesOutput(Character c) {
 		List<AbilityOutput> result = new ArrayList<>();
 		var stats = getAbilityStats(c);
 		for (Ability ab : Constants.ABILITY_ORDER) {
@@ -139,7 +139,7 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public List<SkillOutput> toSkills(DndCharacter c) {
+	public List<SkillOutput> toSkills(Character c) {
 		List<SkillOutput> result = new ArrayList<>();
 		for (Skill sk : Skill.values()) {
 			Ability ab = Constants.SKILL_TO_ABILITY_MAP.get(sk);
@@ -153,7 +153,7 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public List<SkillOutput> toSavingThrows(DndCharacter c) {
+	public List<SkillOutput> toSavingThrows(Character c) {
 		List<SkillOutput> result = new ArrayList<>();
 		Set<Ability> saves = c.getDndClass().getSavingThrowProficiencies();
 		for (Ability ab : Ability.values()) {
@@ -167,7 +167,7 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public List<AttackOutput> toAttacks(DndCharacter c) {
+	public List<AttackOutput> toAttacks(Character c) {
 		List<AttackOutput> result = new ArrayList<>();
 		for (var i : c.getWeapons()) {
 			Boolean proficient = c.getDndClass().getWeaponProficiencyTypes().contains(i.getType())
@@ -190,7 +190,7 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public SpellcastingOutput toSpellcastingOutput(DndCharacter c) {
+	public SpellcastingOutput toSpellcastingOutput(Character c) {
 		if (c.getDndClass().getSpellcasting() == null) return null;
 
 		var abilities = getAbilityStats(c);
@@ -211,7 +211,7 @@ public class CharacterMapper {
 			.build();
 	}
 
-	public ProficiencyList toProficiencies(DndCharacter c) {
+	public ProficiencyList toProficiencies(Character c) {
 		List<String> armor = new ArrayList<>();
 		c.getDndClass().getArmorProficiencyTypes().stream().map(ArmorType::getName).forEach(armor::add);
 		c.getDndClass().getArmorProficiencies().stream().map(Armor::getName).forEach(armor::add);
@@ -230,7 +230,7 @@ public class CharacterMapper {
 			.build();
 	}
 
-	public List<TextFeature> toFeatures(DndCharacter c, Boolean allLevels) {
+	public List<TextFeature> toFeatures(Character c, Boolean allLevels) {
 		List<TextFeature> features = new ArrayList<>();
 		features.addAll(c.getBackground().getFeatures());
 		features.addAll(c.getRace().getFeatures());
@@ -239,7 +239,7 @@ public class CharacterMapper {
 		return features;
 	}
 
-	public CharacterComplete toComplete(DndCharacter c) {
+	public CharacterComplete toComplete(Character c) {
 		return CharacterComplete.builder()
 			.id(c.getId())
 			.info(toInfo(c))
@@ -258,7 +258,7 @@ public class CharacterMapper {
 			.build();
 	}
 
-	public List<AbilityPdfOutput> toAbilitiesPdf(DndCharacter c) {
+	public List<AbilityPdfOutput> toAbilitiesPdf(Character c) {
 		List<AbilityPdfOutput> result = new ArrayList<>();
 		var stats = getAbilityStats(c);
 		for (Ability ab : Constants.ABILITY_ORDER) {
@@ -270,7 +270,7 @@ public class CharacterMapper {
 		return result;		
 	}
 
-	public List<SkillPdfOutput> toSkillsPdf(DndCharacter c) {
+	public List<SkillPdfOutput> toSkillsPdf(Character c) {
 		List<SkillPdfOutput> result = new ArrayList<>();
 		for (Skill sk : Skill.values()) {
 			Ability ab = Constants.SKILL_TO_ABILITY_MAP.get(sk);
@@ -282,7 +282,7 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public List<SkillPdfOutput> toSavingThrowsPdf(DndCharacter c) {
+	public List<SkillPdfOutput> toSavingThrowsPdf(Character c) {
 		List<SkillPdfOutput> result = new ArrayList<>();
 		Set<Ability> saves = c.getDndClass().getSavingThrowProficiencies();
 		for (Ability ab : Ability.values()) {
@@ -294,7 +294,7 @@ public class CharacterMapper {
 		return result;
 	}
 
-	public CharacterPdfOutput toPdfOutput(DndCharacter c) {
+	public CharacterPdfOutput toPdfOutput(Character c) {
 		return CharacterPdfOutput.builder()
 			.info(toInfo(c))
 			.stats(toStats(c))

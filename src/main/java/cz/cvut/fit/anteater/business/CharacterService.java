@@ -29,7 +29,7 @@ import cz.cvut.fit.anteater.enumeration.ProficiencySource;
 import cz.cvut.fit.anteater.enumeration.Skill;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Background;
-import cz.cvut.fit.anteater.model.entity.DndCharacter;
+import cz.cvut.fit.anteater.model.entity.Character;
 import cz.cvut.fit.anteater.model.entity.DndClass;
 import cz.cvut.fit.anteater.model.entity.Language;
 import cz.cvut.fit.anteater.model.entity.Race;
@@ -39,7 +39,7 @@ import cz.cvut.fit.anteater.model.entity.Spell;
 import cz.cvut.fit.anteater.model.entity.Tool;
 import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.value.Proficiency;
-import cz.cvut.fit.anteater.repository.DndCharacterRepository;
+import cz.cvut.fit.anteater.repository.CharacterRepository;
 import cz.cvut.fit.anteater.repository.SourceRepository;
 import cz.cvut.fit.anteater.repository.sourcable.ArmorRepository;
 import cz.cvut.fit.anteater.repository.sourcable.BackgroundRepository;
@@ -52,7 +52,7 @@ import cz.cvut.fit.anteater.repository.sourcable.WeaponRepository;
 
 @Service
 public class CharacterService {
-	private DndCharacterRepository repo;
+	private CharacterRepository repo;
 	private SourceRepository sourceRepo;
 	private DndClassRepository classRepo;
 	private RaceRepository raceRepo;
@@ -65,7 +65,7 @@ public class CharacterService {
 	private CharacterMapper mapper;
 	private CharacterPDFExporter pdfExporter;
 
-	public CharacterService(DndCharacterRepository repository, SourceRepository sourceRepository,
+	public CharacterService(CharacterRepository repository, SourceRepository sourceRepository,
 			DndClassRepository classRepository,	RaceRepository raceRepository,
 			BackgroundRepository backgroundRepository, ToolRepository toolRepository,
 			LanguageRepository languageRepository, WeaponRepository weaponRepository,
@@ -91,13 +91,13 @@ public class CharacterService {
 
 	public CharacterComplete getCompleteCharacter(String id) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
+		Character c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 		return mapper.toComplete(c);
 	}
 
 	public Resource getPdf(String id) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
+		Character c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 		String outputPath = Constants.PDF_EXPORT_DIRECTORY + c.getId() + ".pdf";
 		pdfExporter.exportToPDF(mapper.toPdfOutput(c), outputPath, Constants.PDF_TEMPLATE_FILE, Constants.PDF_ATTACK_COUNT);
 		try {
@@ -120,7 +120,7 @@ public class CharacterService {
 
 	// if the character has no armor or the armor is not available, return no armor
 	// otherwise keep the current armor
-	private Armor handleArmorEdit(DndCharacter c, List<String> sourceIds) {
+	private Armor handleArmorEdit(Character c, List<String> sourceIds) {
 		if (c.getArmor().getSource() == null) return null;
 		boolean isAvailable = sourceIds.isEmpty() || sourceIds.contains(c.getArmor().getSource().getId());
 		return isAvailable ? c.getArmor() : null;
@@ -140,7 +140,7 @@ public class CharacterService {
 		if (race.getSizeOptions().contains(in.getRace().getSize()) == false) throw new IllegalArgumentException("Invalid size selected");
 		if (dndClass.getSubclasses().contains(in.getDndClass().getSubclass()) == false) throw new IllegalArgumentException("Invalid subclass selected");
 
-		var builder = DndCharacter.builder()
+		var builder = Character.builder()
 			// set default values if none are provided
 			.characterName(Optional.ofNullable(in.getInfo().getCharacterName()).orElse("Unnamed Character"))
 			.playerName(Optional.ofNullable(in.getInfo().getPlayerName()).orElse("No Player Name"))
@@ -182,7 +182,7 @@ public class CharacterService {
 			.spells(new ArrayList<>());
 			return mapper.toComplete(repo.save(builder.build()));
 		} else {
-			DndCharacter c = repo.findById(in.getId()).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
+			Character c = repo.findById(in.getId()).orElseThrow(() -> new NoSuchElementException("Entity with given ID not found"));
 			builder.id(in.getId())
 			.level(c.getLevel())
 			.skills(c.getSkills())
@@ -206,7 +206,7 @@ public class CharacterService {
 
 	public List<SkillOutput> editSkills(String id, List<SkillInput> skills) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		Character c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		HashSet<Skill> newSkills = new HashSet<>();
 		for (SkillInput si : skills) if (si.getProficient()) newSkills.add(si.getName());
 		return mapper.toSkills(repo.save(c.toBuilder().skills(newSkills).build()));
@@ -214,7 +214,7 @@ public class CharacterService {
 
 	public Armor editArmor(String id, String armorId) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		Character c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		Armor a = armorId.isEmpty() ? null :
 			armorRepo.findWithinSources(armorId, c.getSources().stream().map(Source::getId).toList())
 				.orElseThrow(() -> new NoSuchElementException("Armor not found within character sources"));
@@ -223,7 +223,7 @@ public class CharacterService {
 
 	public List<AttackOutput> editWeapons(String id, List<String> weaponIds) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		Character c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		List<Weapon> newWeapons = new ArrayList<>();
 		List<String> sourceIds = c.getSources().stream().map(Source::getId).toList();
 		for (String wid : weaponIds) {
@@ -237,7 +237,7 @@ public class CharacterService {
 
 	public List<Spell> editSpells(String id, List<String> spellIds) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		Character c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		if (c.getDndClass().getSpellcasting() == null) throw new IllegalArgumentException("Character's class cannot cast spells");
 		List<Spell> newSpells = new ArrayList<>();
 		List<String> sourceIds = c.getSources().stream().map(Source::getId).toList();
@@ -252,7 +252,7 @@ public class CharacterService {
 
 	public CharacterComplete levelUp(String id) {
 		if (id == null) throw new IllegalArgumentException("ID cannot be null");
-		DndCharacter c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
+		Character c = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Character with given ID not found"));
 		if (c.getLevel() == 20) throw new IllegalArgumentException("Character is already at max level");
 		return mapper.toComplete(repo.save(c.toBuilder().level(c.getLevel() + 1).build()));
 	}
