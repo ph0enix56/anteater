@@ -13,12 +13,12 @@
 			]
 		},
 		"tools": {
-			"amount": 0,
-			"defaults": []
+			"amount": 1,
+			"defaults": [{ "ref": "tool", "query": {"name": "Disguise kit"} }]
 		},
 		"languages": {
 			"amount": 2,
-			"defaults": []
+			"defaults": [{ "ref": "language", "query": {"name": "Common"} }]
 		}
 	},
 	{
@@ -36,7 +36,7 @@
 		},
 		"tools": {
 			"amount": 1,
-			"defaults": [ { "ref": "tool", "query": {"name": "Thieves' Tools"} } ]
+			"defaults": [ { "ref": "tool", "query": {"name": "Thieves' tools"} } ]
 		},
 		"languages": {
 			"amount": 1,

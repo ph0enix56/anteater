@@ -24,10 +24,6 @@
 			{
 				"item": { "ref": "tool", "query": { "name": "Thieves' tools" } },
 				"from": "background"
-			},
-			{
-				"item": { "ref": "tool", "query": { "name": "Playing card set" } },
-				"from": "dndClass"
 			}
 		],
 		"languages": [
@@ -122,14 +118,6 @@
 			{
 				"item": { "ref": "language", "query": { "name": "Common" } },
 				"from": "race"
-			},
-			{
-				"item": { "ref": "language", "query": { "name": "Halfling" } },
-				"from": "race"
-			},
-			{
-				"item": { "ref": "language", "query": { "name": "Draconic" } },
-				"from": "background"
 			},
 			{
 				"item": { "ref": "language", "query": { "name": "Undercommon" } },

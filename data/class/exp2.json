@@ -11,14 +11,14 @@
 		"saves": ["dexterity", "intelligence"],
 		"tools": {
 			"amount": 1,
-			"defaults": [{ "ref": "tool", "query": { "name": "Thieves' Tools" }}]
+			"defaults": [{ "ref": "tool", "query": { "name": "Very useful tool" }}]
 		},
 		"armorTypes": ["unarmored", "light"],
 		"armor": [],
 		"weaponTypes": ["simple"],
 		"weapons": [
-			{ "ref": "weapon", "query": { "name": "Rapier" } },
-			{ "ref": "weapon", "query": { "name": "Longsword" } }
+			{ "ref": "weapon", "query": { "name": "Ranged Masterpiece" } },
+			{ "ref": "weapon", "query": { "name": "Another Weapon" } }
 		],
 		"features": [
 			{

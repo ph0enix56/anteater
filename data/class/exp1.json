@@ -12,8 +12,8 @@
 		"tools": {
 			"amount": 3,
 			"defaults": [
-				{ "ref": "tool", "query": {"name": "Alchemist's supplies"}},
-				{ "ref": "tool", "query": {"name": "Brewer's supplies"}}
+				{ "ref": "tool", "query": {"name": "Screwdriver"}},
+				{ "ref": "tool", "query": {"name": "Drill"}}
 			]
 		},
 		"armorTypes": ["unarmored", "light", "medium", "shield"],

@@ -1,12 +1,5 @@
 [
-	{ "name": "Testing tool 1", "type": "other" },
-	{ "name": "Testing tool 2", "type": "other" },
-	{ "name": "Testing tool 3", "type": "other" },
-	{ "name": "Testing tool 4", "type": "other" },
-	{ "name": "Testing tool 5", "type": "other" },
-	{ "name": "Testing tool 6", "type": "other" },
-	{ "name": "Testing tool 7", "type": "other" },
-	{ "name": "Testing tool 8", "type": "other" },
-	{ "name": "Testing tool 9", "type": "other" },
-	{ "name": "Testing tool 10", "type": "other" }
+	{ "name": "Screwdriver", "type": "artisan" },
+	{ "name": "Drill", "type": "artisan" },
+	{ "name": "Chainsaw", "type": "artisan"}
 ]

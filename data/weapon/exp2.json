@@ -16,5 +16,14 @@
 		"properties": ["two_handed", "heavy"],
 		"damage": { "amount": 4, "sides": 6 },
 		"damageType": "piercing"
+	},
+	{
+		"name": "Sample Weapon",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["finesse"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "piercing"
 	}
 ]
