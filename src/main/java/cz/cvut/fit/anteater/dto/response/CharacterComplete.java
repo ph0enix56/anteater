@@ -28,6 +28,8 @@ public class CharacterComplete {
 
 	private List<SkillOutput> savingThrows;
 
+	private Boolean armorEquipped;
+
 	private Armor armor;
 
 	private List<AttackOutput> attacks;

@@ -248,6 +248,7 @@ public class CharacterMapper {
 			.abilities(toAbilitiesOutput(c))
 			.skills(toSkills(c))
 			.savingThrows(toSavingThrows(c))
+			.armorEquipped(c.getArmor().getId() != null)
 			.armor(c.getArmor())
 			.attacks(toAttacks(c))
 			.spellcasting(toSpellcastingOutput(c))
