@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { ObjectId, MongoClient } = require('mongodb');
 
-const baseDir = './data';
+const baseDir = '/data';
 const url = process.env.MONGODB_URI;
 const dbName = 'dnd';
 const client = new MongoClient(url);
@@ -35,12 +35,18 @@ async function resolveReferences(document, parentKey = null, db) {
 }
 
 async function handleDataFromSource(data, sourceName, collection, db) {
+	const imports = [];
 	for (document of data) {
 		document.source = {
 			ref: 'source',
 			query: { _id: sourceName }
 		};
-		await resolveReferences(document, null, db);
+		try {
+			await resolveReferences(document, null, db);
+			imports.push(document);
+        } catch (error) {
+            console.error(`Failed to import document from source ${sourceName}`);
+        }
 	}
 	const result = await db.collection(collection).insertMany(data);
 	console.log(`Inserted ${result.insertedCount} documents of type ${collection} from ${sourceName}`);

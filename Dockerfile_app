@@ -7,7 +7,6 @@ COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
-COPY assets assets
 COPY output output
 
 # Build the JAR file

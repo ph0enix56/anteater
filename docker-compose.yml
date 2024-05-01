@@ -6,22 +6,20 @@ services:
             - 27017:27017
         volumes:
             - mongodb_data:/data/db
-    script:
+    import:
         build:
             context: .
-            dockerfile: Dockerfile_script
-            args:
-                DATA_PATH: ${DATA_PATH}
+            dockerfile: Dockerfile_import
         env_file:
             - .env
+        volumes:
+            - import_data:/data
         depends_on:
             - mongodb
     app:
         build:
             context: .
             dockerfile: Dockerfile_app
-        # TODO: Spring Boot can't read the env variable, it needs to be set in application.properties
-        # TODO: to the value of the env variable, too much time was wasted trying to get it to work
         env_file:
             - .env
         ports:
@@ -30,3 +28,9 @@ services:
             - mongodb
 volumes:
     mongodb_data:
+    import_data:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: ${DATA_PATH}
