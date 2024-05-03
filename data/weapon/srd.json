@@ -85,8 +85,17 @@
 		"type": "martial",
 		"ranged": false,
 		"range": 5,
-		"properties": ["versatile"],
+		"properties": [],
 		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Battleaxe (two-handed)",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["two_handed"],
+		"damage": { "amount": 1, "sides": 10 },
 		"damageType": "slashing"
 	},
 	{
@@ -148,8 +157,17 @@
 		"type": "martial",
 		"ranged": false,
 		"range": 5,
-		"properties": ["versatile"],
+		"properties": [],
 		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Longsword (two-handed)",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["two_handed"],
+		"damage": { "amount": 1, "sides": 10 },
 		"damageType": "slashing"
 	},
 	{

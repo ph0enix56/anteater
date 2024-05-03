@@ -1,6 +1,6 @@
 {
 	"type": "object",
-	"required": ["description", "hitDice", "features", "subclasses", "skills", "saves", "tools", "armorTypes", "armor", "defaultArmor", "weaponTypes", "weapons", "spellcasting", "_id", "name", "source"],
+	"required": ["description", "hitDice", "features", "subclasses", "skills", "saves", "tools", "armorTypes", "armor", "weaponTypes", "weapons", "_id", "name", "source"],
 	"properties": {
 		"description": {
 			"type": "string"
@@ -223,7 +223,7 @@
 		},
 		"defaultArmor": {
 			"type": "object",
-			"required": ["type", "baseArmorClass", "strengthRequirement", "stealthDisadvantage", "bonuses", "description", "_id", "name", "source"],
+			"required": ["type", "baseArmorClass", "strengthRequirement", "stealthDisadvantage", "bonuses", "description", "name"],
 			"properties": {
 				"type": {
 					"type": "string",

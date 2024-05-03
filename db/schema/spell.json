@@ -1,6 +1,6 @@
 {
 	"type": "object",
-	"required": ["level", "school", "components", "castingTime", "range", "duration", "dndClassIds", "description", "atHigherLevels", "_id", "name", "source"],
+	"required": ["level", "school", "components", "castingTime", "range", "duration", "description", "atHigherLevels", "_id", "name", "source"],
 	"properties": {
 		"level": {
 			"bsonType": "int"
@@ -40,12 +40,6 @@
 		},
 		"duration": {
 			"type": "string"
-		},
-		"dndClassIds": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
 		},
 		"description": {
 			"type": "string"

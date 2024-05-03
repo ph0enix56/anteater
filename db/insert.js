@@ -10,14 +10,14 @@ const client = new MongoClient(MONGO_URI);
 const db = client.db(DB_NAME);
 
 const contentTypes = [
-	//'tool',
-	//'language',
-	//'weapon',
-	//'armor',
+	'tool',
+	'language',
+	'weapon',
+	'armor',
+	'spell',
 	'background',
-	//'race',
-	//'class',
-	//'spell',
+	'race',
+	'class',
 ];
 
 /**
@@ -35,7 +35,7 @@ async function resolveReferences(document, source) {
 				const refObj = document[key];
 				const query = { name: refObj.query.name, source: source };
 				let result = await db.collection(refObj.ref).findOne(query);
-				if (!result) throw new Error(`Failed to resolve reference to ${refObj.ref} with query ${JSON.stringify(query)}`);
+				if (!result) throw new Error(`Error resolving reference to ${refObj.ref} with query ${JSON.stringify(query)}, skipping item`);
 				// convert the _id string to an ObjectId to avoid schema validation errors
 				if (result._id && typeof result._id === 'string') {
 					console.log(`_id before conversion: ${result._id}, type: ${typeof result._id}`);
@@ -69,12 +69,11 @@ async function insertAllFromSource(data, sourceId, collection) {
 	}
 	try {
 		if (toImport.length === 0) return;
-		const result = await db.collection(collection).insertMany(toImport, {ordered: false});
-		console.log(`Inserted ${result.insertedCount} documents of type ${collection} from ${sourceId}`);
+		await db.collection(collection).insertMany(toImport, {ordered: false});
 	} catch (error) {
-		console.error(error.message);
+		console.error(`Error while importing ${collection} from ${sourceId}: ${error.message}`);
 		if (error.result) {
-			console.log(`Inserted ${error.result.insertedCount} documents of type ${collection} from ${sourceId}`);
+			console.log(`Could import only ${error.result.insertedCount}/${toImport.length} ${collection} items from ${sourceId}`);
 		}
 	}
 }
@@ -84,6 +83,7 @@ async function insertAllFromSource(data, sourceId, collection) {
  * e.g. all documents from all files in the 'armor' subdirectory will be inserted into the 'armor' collection
  */
 async function insertContentType(contentType) {
+	console.log(`Importing ${contentType} items...`);
 	const dir = path.join(DATA_DIR, contentType);
 	const files = fs.readdirSync(dir);
 	for (const sourceFile of files) {
@@ -92,36 +92,35 @@ async function insertContentType(contentType) {
 	}
 }
 
+async function insertSources() {
+	console.log('Importing sources...');
+	const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'sources.json')));
+	try {
+		await db.collection('source').insertMany(data);
+	} catch (error) {
+		console.error(`Error while importing sources: ${error.message}`);
+		if (error.result) {
+			console.log(`Could import only ${error.result.insertedCount}/${data.length} sources`);
+		}
+	}
+}
+
 async function insert() {
+	// drop and create source collection
+	await db.collection('source').drop();
+	const schema = JSON.parse(fs.readFileSync('schema/source.json'));
+	await db.createCollection('source', {validator: {$jsonSchema: schema}});
+
 	// drop all collections of defined content types
 	for (const collection of contentTypes) await db.collection(collection).drop();
 	// create collections for all content types with schema validation
 	for (const collection of contentTypes) {
-		const schema = JSON.parse(fs.readFileSync(path.join('./schema', `${collection}.json`)));
-		await db.createCollection(collection, {	validator: {$jsonSchema: schema} });
+		const schema = JSON.parse(fs.readFileSync(path.join('schema', `${collection}.json`)));
+		await db.createCollection(collection, {validator: {$jsonSchema: schema}});
 	}
 
-	//await db.collection('source').drop();
-	//await db.collection('character').drop();
-
-	//const sourceData = JSON.parse(fs.readFileSync(path.join(baseDir, 'sources.json')));
-	//const sourceResult = await db.collection('source').insertMany(sourceData);
-	//console.log(`Inserted ${sourceResult.insertedCount} sources`);
-
+	await insertSources();
 	for (const collection of contentTypes) await insertContentType(collection);
-
-	//const characterData = JSON.parse(fs.readFileSync(path.join(baseDir, 'characters.json')));
-	//const toImport = [];
-	//for (document of characterData) {
-	//	try {
-	//		await resolveReferences(document, null, db);
-	//		toImport.push(document);
-	//	} catch (error) {
-	//		console.error(`Failed to import character ${document.characterName}`);
-	//	}
-	//}
-	//const characterResult = await db.collection('character').insertMany(toImport);
-	//console.log(`Inserted ${characterResult.insertedCount} characters`);
 }
 
 async function createReference(field, collection) {
@@ -140,34 +139,15 @@ async function createReference(field, collection) {
 	return field;
 }
 
-async function handleCharacterReferences(character) {
+async function addCharacterReferences(character) {
 	for (const key in character) {
 		if (key === 'classId' || key === 'raceId' || key === 'backgroundId') {
-			character[key] = await createReference(character[key], key.slice(0, -2), db);
+			character[key] = await createReference(character[key], key.slice(0, -2));
 		} else if (key === 'armor') {
-			character[key] = await createReference(character[key], 'armor', db);
-		} else if (key === 'weapons') {
+			character[key] = await createReference(character[key], key);
+		} else if (key === 'weapons' || key === 'spells' || key === 'tools' || key === 'languages') {
 			for (let i = 0; i < character[key].length; i++) {
-				character[key][i] = await createReference(character[key][i], 'weapon', db);
-			}
-		} else if (key === 'spells') {
-			for (let i = 0; i < character[key].length; i++) {
-				character[key][i] = await createReference(character[key][i], 'spell', db);
-			}
-		} else if (key === 'tools') {
-			for (let i = 0; i < character[key].length; i++) {
-				character[key][i].item = await createReference(character[key][i].item, 'tool', db);
-			}
-		} else if (key === 'languages') {
-			for (let i = 0; i < character[key].length; i++) {
-				character[key][i].item = await createReference(character[key][i].item, 'language', db);
-			}
-		} else if (key === 'sources') {
-			for (let i = 0; i < character[key].length; i++) {
-				character[key][i] = {
-					ref: 'source',
-					query: { _id: character[key][i]._id }
-				}
+				character[key][i] = await createReference(character[key][i], key.slice(0, -1));
 			}
 		} else if (key === '_id') {
 			delete character[key];
@@ -177,9 +157,7 @@ async function handleCharacterReferences(character) {
 
 async function backupCharacters() {
 	let characters = await db.collection('character').find().toArray();
-	for (let character of characters) {
-		await handleCharacterReferences(character, db);
-	}
+	for (let character of characters) await addCharacterReferences(character, db);
 	if (characters.length === 0) return;
 	fs.writeFileSync(path.join(DATA_DIR, 'characters.json'), JSON.stringify(characters, null, 2));
 	console.log(`Backed up ${characters.length} characters`);
@@ -188,7 +166,6 @@ async function backupCharacters() {
 async function run() {
 	try {
 		//await backupCharacters(db);
-		console.log("Inserting data...");
 		await insert(db);
 	} catch (err) {
 		console.log(err.stack);
