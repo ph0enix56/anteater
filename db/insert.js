@@ -27,25 +27,21 @@ const contentTypes = [
  * - the 'query' object must contain the 'name' of the document to reference
  * - the reference will be queried from the same 'source' as specified in the root of the document
  */
-async function resolveReferences(document, source) {
+async function resolveReferences(document, withinSource) {
 	for (const key in document) {
 		if (document[key] && typeof document[key] === 'object') {
 			// if the object is a reference, resolve it
 			if (document[key].ref && document[key].query) {
 				const refObj = document[key];
-				const query = { name: refObj.query.name, source: source };
+				const query = withinSource ?
+					{ name: refObj.query.name, source: withinSource } :
+					{ name: refObj.query.name, source: refObj.query.source }
 				let result = await db.collection(refObj.ref).findOne(query);
 				if (!result) throw new Error(`Error resolving reference to ${refObj.ref} with query ${JSON.stringify(query)}, skipping item`);
-				// convert the _id string to an ObjectId to avoid schema validation errors
-				if (result._id && typeof result._id === 'string') {
-					console.log(`_id before conversion: ${result._id}, type: ${typeof result._id}`);
-					result._id = ObjectId(result._id);
-					console.log(`_id after conversion: ${result._id}, type: ${typeof result._id}`);
-				}
 				document[key] = result;
 			} else {
 				// the object could have nested references, continue on that object
-				await resolveReferences(document[key], source);
+				await resolveReferences(document[key], withinSource);
 			}
 		}
 	}
@@ -165,7 +161,7 @@ async function backupCharacters() {
 
 async function run() {
 	try {
-		//await backupCharacters(db);
+		await backupCharacters(db);
 		await insert(db);
 	} catch (err) {
 		console.log(err.stack);

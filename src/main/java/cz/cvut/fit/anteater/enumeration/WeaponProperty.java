@@ -11,12 +11,10 @@ public enum WeaponProperty {
 	heavy("Heavy"),
 	light("Light"),
 	loading("Loading"),
-	range("Range"),
 	reach("Reach"),
 	special("Special"),
 	thrown("Thrown"),
-	two_handed("Two-Handed"),
-	versatile("Versatile");
+	two_handed("Two-Handed");
 
 	private String name;
 	@JsonValue public String getName() { return name; }
