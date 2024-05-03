@@ -1,0 +1,165 @@
+{
+	"type": "object",
+	"required": ["description", "features", "skills", "languages", "tools", "_id", "name", "source"],
+	"properties": {
+		"description": {
+			"type": "string"
+		},
+		"features": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": ["title", "text", "levelMinimum"],
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"levelMinimum": {
+						"bsonType": "int"
+					}
+				}
+			}
+		},
+		"skills": {
+			"type": "object",
+			"required": ["amount", "defaults"],
+			"properties": {
+				"amount": {
+					"bsonType": "int"
+				},
+				"defaults": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": [
+							"acrobatics",
+							"animal_handling",
+							"arcana",
+							"athletics",
+							"deception",
+							"history",
+							"insight",
+							"intimidation",
+							"investigation",
+							"medicine",
+							"nature",
+							"perception",
+							"performance",
+							"persuasion",
+							"religion",
+							"sleight_of_hand",
+							"stealth",
+							"survival"
+						]
+					}
+				}
+			}
+		},
+		"languages": {
+			"type": "object",
+			"required": ["amount", "defaults"],
+			"properties": {
+				"amount": {
+					"bsonType": "int"
+				},
+				"defaults": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": ["exotic", "_id", "name", "source"],
+						"properties": {
+							"exotic": {
+								"type": "boolean"
+							},
+							"_id": {
+								"bsonType": "objectId"
+							},
+							"name": {
+								"type": "string"
+							},
+							"source": {
+								"type": "object",
+								"required": ["_id", "name"],
+								"properties": {
+									"_id": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"tools": {
+			"type": "object",
+			"required": ["amount", "defaults"],
+			"properties": {
+				"amount": {
+					"bsonType": "int"
+				},
+				"defaults": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": ["type", "_id", "name", "source"],
+						"properties": {
+							"type": {
+								"type": "string",
+								"enum": [
+									"artisan",
+									"instrument",
+									"gaming",
+									"vehicle",
+									"other"
+								]
+							},
+							"_id": {
+								"bsonType": "objectId"
+							},
+							"name": {
+								"type": "string"
+							},
+							"source": {
+								"type": "object",
+								"required": ["_id", "name"],
+								"properties": {
+									"_id": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"_id": {
+			"bsonType": "objectId"
+		},
+		"name": {
+			"type": "string"
+		},
+		"source": {
+			"type": "object",
+			"required": ["_id", "name"],
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

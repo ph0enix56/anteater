@@ -1,0 +1,75 @@
+{
+	"type": "object",
+	"required": ["level", "school", "components", "castingTime", "range", "duration", "dndClassIds", "description", "atHigherLevels", "_id", "name", "source"],
+	"properties": {
+		"level": {
+			"bsonType": "int"
+		},
+		"school": {
+			"type": "string",
+			"enum": [
+				"abjuration",
+				"conjuration",
+				"divination",
+				"enchantment",
+				"evocation",
+				"illusion",
+				"necromancy",
+				"transmutation"
+			]
+		},
+		"components": {
+			"type": "object",
+			"properties": {
+				"verbal": {
+					"type": "boolean"
+				},
+				"somatic": {
+					"type": "boolean"
+				},
+				"material": {
+					"type": "string"
+				}
+			}
+		},
+		"castingTime": {
+			"type": "string"
+		},
+		"range": {
+			"type": "string"
+		},
+		"duration": {
+			"type": "string"
+		},
+		"dndClassIds": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"description": {
+			"type": "string"
+		},
+		"atHigherLevels": {
+			"type": "string"
+		},
+		"_id": {
+			"bsonType": "objectId"
+		},
+		"name": {
+			"type": "string"
+		},
+		"source": {
+			"type": "object",
+			"required": ["_id", "name"],
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

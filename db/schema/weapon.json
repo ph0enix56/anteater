@@ -1,0 +1,84 @@
+{
+	"type": "object",
+	"required": ["type", "ranged", "range", "properties", "damage", "damageType", "_id", "name", "source"],
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"martial",
+				"simple"
+			]
+		},
+		"ranged": {
+			"type": "boolean"
+		},
+		"range": {
+			"bsonType": "int"
+		},
+		"properties": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"ammunition",
+					"finesse",
+					"heavy",
+					"light",
+					"loading",
+					"reach",
+					"special",
+					"thrown",
+					"two_handed"
+				]
+			}
+		},
+		"damage": {
+			"type": "object",
+			"required": ["amount", "sides"],
+			"properties": {
+				"amount": {
+					"bsonType": "int"
+				},
+				"sides": {
+					"bsonType": "int"
+				}
+			}
+		},
+		"damageType": {
+			"type": "string",
+			"enum": [
+				"acid",
+				"bludgeoning",
+				"cold",
+				"fire",
+				"force",
+				"lightning",
+				"necrotic",
+				"piercing",
+				"poison",
+				"psychic",
+				"radiant",
+				"slashing",
+				"thunder"
+			]
+		},
+		"_id": {
+			"bsonType": "objectId"
+		},
+		"name": {
+			"type": "string"
+		},
+		"source": {
+			"type": "object",
+			"required": ["_id", "name"],
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"type": "object",
+	"required": ["type", "_id", "name", "source"],
+	"properties": {
+		"type": {
+			"type": "string",
+			"enum": [
+				"artisan",
+				"instrument",
+				"gaming",
+				"vehicle",
+				"other"
+			]
+		},
+		"_id": {
+			"bsonType": "objectId"
+		},
+		"name": {
+			"type": "string"
+		},
+		"source": {
+			"type": "object",
+			"required": ["_id", "name"],
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

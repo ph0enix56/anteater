@@ -10,10 +10,6 @@
 		"castingTime": "1 action",
 		"range": "60 feet",
 		"duration": "Instantaneous",
-		"dndClassIds": [
-			{ "ref": "class", "query": { "name": "Wizard" } },
-			{ "ref": "class", "query": { "name": "Warlock" } }
-		],
 		"description": "This is a test spell",
 		"atHigherLevels": "This is a test spell"
 	}
