@@ -138,7 +138,8 @@ public class CharacterService {
 		Background background = backgroundRepo.findWithinSources(in.getBackground().getId(), sourceIds)
 			.orElseThrow(() -> new IllegalArgumentException("Background not found within character sources"));
 		if (race.getSizeOptions().contains(in.getRace().getSize()) == false) throw new IllegalArgumentException("Invalid size selected");
-		if (dndClass.getSubclasses().contains(in.getDndClass().getSubclass()) == false) throw new IllegalArgumentException("Invalid subclass selected");
+		String subclass = in.getDndClass().getSubclass();
+		if (subclass != null && dndClass.getSubclasses().contains(subclass) == false) throw new IllegalArgumentException("Invalid subclass selected");
 
 		var builder = Character.builder()
 			// set default values if none are provided

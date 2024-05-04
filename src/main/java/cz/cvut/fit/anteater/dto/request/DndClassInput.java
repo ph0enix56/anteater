@@ -11,7 +11,6 @@ public class DndClassInput {
 	@NotNull
 	private String id;
 
-	@NotNull
 	private String subclass;
 
 	@NotNull
