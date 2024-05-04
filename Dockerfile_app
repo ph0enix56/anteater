@@ -1,6 +1,12 @@
 # Get JDK 17 image
 FROM eclipse-temurin:17-jdk-jammy
 
+# Declare the URI environment variable
+ARG MONGODB_URI
+
+# Set the URI as a Spring Boot environment variable
+ENV SPRING_DATA_MONGODB_URI=${MONGODB_URI}
+
 # Copy app files to the container
 COPY gradlew .
 COPY gradle gradle

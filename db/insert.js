@@ -4,7 +4,7 @@ const { ObjectId, MongoClient } = require('mongodb');
 
 const DATA_DIR = '../data';
 const MONGO_URI = process.env.MONGODB_URI;
-const DB_NAME = 'dnd_dev';
+const DB_NAME = 'dnd';
 
 const client = new MongoClient(MONGO_URI);
 const db = client.db(DB_NAME);
