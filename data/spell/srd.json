@@ -22,10 +22,9 @@
 			"somatic": true
 		},
 		"castingTime": "1 action",
-		"range": "60 feet",
-		"duration": "Instantaneous",
-		"description": "...",
-		"atHigherLevels": "..."
+		"range": "30 feet",
+		"duration": "1 minute",
+		"description": "A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration or until you dismiss it as an action. The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again. You can use your action to control the hand. You can use the hand to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour the contents out of a vial. You can move the hand up to 30 feet each time you use it. The hand can't attack, activate magic items, or carry more than 10 pounds."
 	},
 	{
 		"name": "Prestidigitation",
@@ -38,8 +37,49 @@
 		"castingTime": "1 action",
 		"range": "60 feet",
 		"duration": "Instantaneous",
-		"description": "...",
-		"atHigherLevels": "..."
+		"description": "..."
+	},
+	{
+		"name": "Bless",
+		"level": 1,
+		"school": "enchantment",
+		"components": {
+			"verbal": true,
+			"somatic": true,
+			"material": "a sprinkling of holy water"
+		},
+		"castingTime": "1 action",
+		"range": "30 feet",
+		"duration": "Concentration, up to 1 minute",
+		"description": "You bless up to three creatures of your choice within range. Whenever a target makes an attack roll or a saving throw before the spell ends, the target can roll a d4 and add the number rolled to the attack roll or saving throw.",
+		"atHigherLevels": "When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st."
+	},
+	{
+		"name": "Shield",
+		"level": 1,
+		"school": "abjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 reaction",
+		"range": "Self",
+		"duration": "1 round",
+		"description": "An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile."
+	},	
+	{
+		"name": "Magic Missile",
+		"level": 1,
+		"school": "evocation",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "120 feet",
+		"duration": "Instantaneous",
+		"description": "You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range. A dart deals 1d4 + 1 force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several.",
+		"atHigherLevels": "When you cast this spell using a spell slot of 2nd level or higher, the spell creates one more dart for each slot level above 1st."
 	},
 	{
 		"name": "Aid",
@@ -57,63 +97,18 @@
 		"atHigherLevels": "When you cast this spell using a spell slot of 3rd level or higher, a target's hit points increase by an additional 5 for each slot level above 2nd."
 	},
 	{
-		"name": "Alarm",
-		"level": 1,
-		"school": "abjuration",
-		"components": {
-			"verbal": true,
-			"somatic": true,
-			"material": "a tiny bell and a piece of fine silver wire"
-		},
-		"castingTime": "1 minute",
-		"range": "30 feet",
-		"duration": "8 hours",
-		"description": "...",
-		"atHigherLevels": "..."
-	},
-	{
-		"name": "Shield",
-		"level": 1,
-		"school": "abjuration",
-		"components": {
-			"verbal": true,
-			"somatic": true,
-			"material": "a tiny bell and a piece of fine silver wire"
-		},
-		"castingTime": "1 minute",
-		"range": "30 feet",
-		"duration": "8 hours",
-		"description": "...",
-		"atHigherLevels": "..."
-	},	
-	{
-		"name": "Magic Missile",
-		"level": 1,
-		"school": "abjuration",
-		"components": {
-			"verbal": true,
-			"somatic": true,
-			"material": "a tiny bell and a piece of fine silver wire"
-		},
-		"castingTime": "1 minute",
-		"range": "30 feet",
-		"duration": "8 hours",
-		"description": "...",
-		"atHigherLevels": "..."
-	},
-	{
 		"name": "Fireball",
 		"level": 3,
-		"school": "abjuration",
+		"school": "evocation",
 		"components": {
 			"verbal": true,
 			"somatic": true,
 			"material": "a tiny bell and a piece of fine silver wire"
 		},
-		"castingTime": "1 minute",
-		"range": "30 feet",
-		"duration": "8 hours",
-		"description": "...",
-		"atHigherLevels": "..."
+		"castingTime": "1 action",
+		"range": "150 feet",
+		"duration": "Instantaneous",
+		"description": "A bright streak flashes from your pointing finger to a point you choose within range and then blossoms with a low roar into an explosion of flame. Each creature in a 20-foot-radius sphere centered on that point must make a Dexterity saving throw. A target takes 8d6 fire damage on a failed save, or half as much damage on a successful one. The fire spreads around corners. It ignites flammable objects in the area that aren't being worn or carried.",
+		"atHigherLevels": "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d6 for each slot level above 3rd."
 	}
 ]

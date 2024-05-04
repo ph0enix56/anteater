@@ -1,25 +1,25 @@
 [
 	{
-		"name": "Elvish dude",
-		"description": "This is a test...",
+		"name": "Copy of Human",
+		"description": "Test description",
 		"features": [],
-		"speed": 25,
+		"speed": 30,
 		"sizes": ["small", "medium"],
 		"languages": {
-			"amount": 3,
-			"defaults": [ { "ref": "language", "query": {"name": "Vulcan"} } ]
+			"amount": 2,
+			"defaults": [{ "ref": "language", "name": "Language 3" }]
 		},
 		"abilities_plus_2": {
-			"amount": 2,
-			"defaults": ["constitution"]
-		},
-		"abilities_plus_1": {
-			"amount": 1,
-			"defaults": ["strength"]
-		},
-		"skills": {
 			"amount": 0,
 			"defaults": []
+		},
+		"abilities_plus_1": {
+			"amount": 6,
+			"defaults": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+		},
+		"skills": {
+			"amount": 1,
+			"defaults": ["perception"]
 		}
 	}
 ]

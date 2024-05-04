@@ -8,14 +8,11 @@
 	{ "name": "Halfling", "exotic": false },
 	{ "name": "Orc", "exotic": false },
 	{ "name": "Abyssal", "exotic": true },
-	{ "name": "Aquan", "exotic": true },
-	{ "name": "Auran", "exotic": true },
 	{ "name": "Celestial", "exotic": true },
 	{ "name": "Draconic", "exotic": true },
-	{ "name": "Druidic", "exotic": true },
-	{ "name": "Ignan", "exotic": true },
+	{ "name": "Deep Speech", "exotic": true },
 	{ "name": "Infernal", "exotic": true },
+	{ "name": "Primordial", "exotic": true },
 	{ "name": "Sylvan", "exotic": true },
-	{ "name": "Terran", "exotic": true },
 	{ "name": "Undercommon", "exotic": true }
 ]

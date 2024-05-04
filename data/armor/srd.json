@@ -19,7 +19,7 @@
 		"bonuses": [
 			{ "ability": "dexterity", "max": 2 }
 		],
-		"description": "Light and flexible armor"
+		"description": "Average armor"
 	},
 	{
 		"name": "Chain Mail",
@@ -37,6 +37,6 @@
 		"strengthRequirement": 15,
 		"stealthDisadvantage": true,
 		"bonuses": [],
-		"description": "Heavy and noisy armor"
+		"description": "Very heavy and very noisy armor"
 	}
 ]

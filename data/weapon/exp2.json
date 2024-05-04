@@ -1,21 +1,21 @@
 [
 	{
-		"name": "Another Weapon",
+		"name": "Sword of Flames",
 		"type": "martial",
 		"ranged": false,
 		"range": 5,
 		"properties": ["heavy", "two_handed"],
-		"damage": { "amount": 1, "sides": 12 },
-		"damageType": "slashing"
+		"damage": { "amount": 2, "sides": 12 },
+		"damageType": "fire"
 	},
 	{
-		"name": "Ranged Masterpiece",
+		"name": "Frost Bow",
 		"type": "martial",
 		"ranged": true,
 		"range": 150,
 		"properties": ["two_handed", "heavy"],
-		"damage": { "amount": 4, "sides": 6 },
-		"damageType": "piercing"
+		"damage": { "amount": 3, "sides": 6 },
+		"damageType": "cold"
 	},
 	{
 		"name": "Sample Weapon",

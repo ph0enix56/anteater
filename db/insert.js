@@ -31,13 +31,17 @@ async function resolveReferences(document, withinSource) {
 	for (const key in document) {
 		if (document[key] && typeof document[key] === 'object') {
 			// if the object is a reference, resolve it
-			if (document[key].ref && document[key].query) {
+			if (document[key].ref && document[key].name) {
 				const refObj = document[key];
 				const query = withinSource ?
-					{ name: refObj.query.name, source: withinSource } :
-					{ name: refObj.query.name, source: refObj.query.source }
+					{ name: refObj.name, source: withinSource } :
+					{ name: refObj.name, source: refObj.source }
 				let result = await db.collection(refObj.ref).findOne(query);
 				if (!result) throw new Error(`Error resolving reference to ${refObj.ref} with query ${JSON.stringify(query)}, skipping item`);
+				if (key.endsWith('Id')) {
+					// if the reference is an id, replace the object with the id
+					result = result._id;
+				}
 				document[key] = result;
 			} else {
 				// the object could have nested references, continue on that object
@@ -101,6 +105,18 @@ async function insertSources() {
 	}
 }
 
+async function insertCharacters() {
+	console.log('Importing characters...');
+	const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'characters.json')));
+	try {
+		for (character of data) await resolveReferences(character, null);
+		if (data.length === 0) return;
+		await db.collection('character').insertMany(data, {ordered: false});
+	} catch (error) {
+		console.error(`Error while importing characters: ${error.message}`);
+	}
+}
+
 async function insert() {
 	// drop and create source collection
 	await db.collection('source').drop();
@@ -115,21 +131,26 @@ async function insert() {
 		await db.createCollection(collection, {validator: {$jsonSchema: schema}});
 	}
 
+	await db.collection('character').drop();
+
 	await insertSources();
 	for (const collection of contentTypes) await insertContentType(collection);
+	await insertCharacters();
 }
 
 async function createReference(field, collection) {
 	if (field && field.name && field.source) {
 		field = {
 			ref: collection,
-			query: { name: field.name, source: field.source }
+			name: field.name,
+			source: field.source
 		};
 	} else if (field instanceof ObjectId) {
 		const entity = await db.collection(collection).findOne({ _id: field });
 		field = {
 			ref: collection,
-			query: { name: entity.name, source: entity.source }
+			name: entity.name,
+			source: entity.source
 		};
 	}
 	return field;
@@ -141,9 +162,13 @@ async function addCharacterReferences(character) {
 			character[key] = await createReference(character[key], key.slice(0, -2));
 		} else if (key === 'armor') {
 			character[key] = await createReference(character[key], key);
-		} else if (key === 'weapons' || key === 'spells' || key === 'tools' || key === 'languages') {
+		} else if (key === 'weapons' || key === 'spells') {
 			for (let i = 0; i < character[key].length; i++) {
 				character[key][i] = await createReference(character[key][i], key.slice(0, -1));
+			}
+		} else if (key === 'languages' || key === 'tools') {
+			for (let i = 0; i < character[key].length; i++) {
+				character[key][i].item = await createReference(character[key][i].item, key.slice(0, -1));
 			}
 		} else if (key === '_id') {
 			delete character[key];

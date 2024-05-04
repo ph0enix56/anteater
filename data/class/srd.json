@@ -1,9 +1,9 @@
 [
 	{
 		"name": "Barbarian",
-		"description": "A tall human tribesman strides through a blizzard, draped in fur and hefting his axe. He laughs as he charges toward the frost giant who dared poach his people's elk herd.",
+		"description": "A warrior able to enter a rage and fight aggresively.",
 		"hitDice": { "amount": 1, "sides": 12 },
-		"subclasses": ["Berserker", "Totem Warrior", "Ancestral Guardian", "Storm Herald", "Zealot"],
+		"subclasses": ["Berserker", "Sample Subclass", "Sample Subclass 2"],
 		"skills": {
 			"amount": 2,
 			"defaults": []
@@ -33,7 +33,7 @@
 			{
 				"title": "Rage",
 				"levelMinimum": 1,
-				"text": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. While raging, you gain the following benefits if you aren't wearing heavy armor: [Paragraphed text would follow here.]"
+				"text": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. While raging, you gain advantage on Strength checks and Strength saving throws, and you have resistance to bludgeoning, piercing, and slashing damage. When you make a melee weapon attack using Strength, you gain a +2 bonus to the damage roll (that increases as you gain levels as a barbarian)."
 			},
 			{
 				"title": "Unarmored Defense",
@@ -53,7 +53,7 @@
 			{
 				"title": "Feral Instinct",
 				"levelMinimum": 7,
-				"text": "By 7th level, your instincts are so honed that you have advantage on initiative rolls. [Paragraph break here - TODO.] Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn."
+				"text": "By 7th level, your instincts are so honed that you have advantage on initiative rolls. Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn."
 			},
 			{
 				"title": "Primal Champion",
@@ -64,9 +64,9 @@
 	},
 	{
 		"name": "Wizard",
-		"description": "A human in claret-colored robes stands in a room dimly lit by a flickering candle. He holds his hands out, palms forward, fingers splayed, and then hurls a lance of fire at the creatures stalking him.",
+		"description": "A spellcaster who learns magic through study and practice.",
 		"hitDice": { "amount": 1, "sides": 6 },
-		"subclasses": ["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"],
+		"subclasses": ["Evocation", "Red Wizard", "Blue Wizard", "Green Wizard", "White Wizard"],
 		"skills": {
 			"amount": 2,
 			"defaults": []
@@ -79,7 +79,10 @@
 		"armorTypes": ["unarmored"],
 		"armor": [],
 		"weaponTypes": [],
-		"weapons": [{ "ref": "weapon", "query": { "name": "Dagger" } }],
+		"weapons": [
+			{ "ref": "weapon", "name": "Dagger" },
+			{ "ref": "weapon", "name": "Light crossbow" }
+		],
 		"features": [
 			{
 				"title": "Spellcasting",
@@ -125,9 +128,9 @@
 	},
 	{
 		"name": "Warlock",
-		"description": "A wielder of magic that is derived from a bargain with an extraplanar entity",
+		"description": "A spellcaster who makes a pact with a powerful being.",
 		"hitDice": { "amount": 1, "sides": 8 },
-		"subclasses": ["The Archfey", "The Fiend", "The Great Old One", "The Celestial", "The Hexblade"],
+		"subclasses": ["Fiend", "Custom Subclass"],
 		"skills": {
 			"amount": 2,
 			"defaults": []
@@ -143,9 +146,19 @@
 		"weapons": [],
 		"features": [
 			{
-				"title": "Otherworldly Patron",
+				"title": "Pact Magic",
 				"levelMinimum": 1,
-				"text": "At 1st level, you have struck a bargain with an otherworldly being of your choice: the Archfey, the Fiend, or the Great Old One, each of which is detailed at the end of the class description"
+				"text": "Your arcane research and the magic bestowed on you by your patron have given you facility with spells."
+			},
+			{
+				"title": "Pact Boon",
+				"levelMinimum": 3,
+				"text": "At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service. You gain one of the following features of your choice."
+			},
+			{
+				"title": "Mystic Arcanum",
+				"levelMinimum": 11,
+				"text": "At 11th level, your patron bestows upon you a magical secret called an arcanum. Choose one 6th-level spell from the warlock spell list as this arcanum. You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again."
 			}
 		],
 		"spellcasting": {

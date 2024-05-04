@@ -1,6 +1,6 @@
 {
 	"type": "object",
-	"required": ["level", "school", "components", "castingTime", "range", "duration", "description", "atHigherLevels", "_id", "name", "source"],
+	"required": ["level", "school", "components", "castingTime", "range", "duration", "description", "_id", "name", "source"],
 	"properties": {
 		"level": {
 			"bsonType": "int"

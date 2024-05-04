@@ -5,8 +5,8 @@
 		"ranged": false,
 		"range": 5,
 		"properties": ["light"],
-		"damage": { "amount": 1, "sides": 4 },
-		"damageType": "bludgeoning"
+		"damage": { "amount": 2, "sides": 4 },
+		"damageType": "slashing"
 	},
 	{
 		"name": "Walking Stick",
@@ -24,7 +24,7 @@
 		"range": 10,
 		"properties": ["heavy", "two_handed", "reach"],
 		"damage": { "amount": 2, "sides": 8 },
-		"damageType": "slashing"
+		"damageType": "force"
 	},
 	{
 		"name": "Crossbow of Annoyance",

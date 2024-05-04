@@ -178,5 +178,14 @@
 		"properties": ["finesse"],
 		"damage": { "amount": 1, "sides": 8 },
 		"damageType": "piercing"
+	},
+	{
+		"name": "Light crossbow",
+		"type": "simple",
+		"ranged": true,
+		"range": 80,
+		"properties": ["loading", "two_handed"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "piercing"
 	}
 ]

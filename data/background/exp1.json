@@ -14,11 +14,11 @@
 		},
 		"tools": {
 			"amount": 1,
-			"defaults": [{ "ref": "tool", "query": {"name": "Drill"} }]
+			"defaults": [{ "ref": "tool", "name": "Drill" }]
 		},
 		"languages": {
 			"amount": 2,
-			"defaults": [{ "ref": "language", "query": {"name": "English"} }]
+			"defaults": [{ "ref": "language", "name": "English" }]
 		}
 	}
 ]

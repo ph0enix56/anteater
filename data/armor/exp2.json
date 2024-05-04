@@ -9,14 +9,14 @@
 		"description": "Impenetrable armor, tested to the limit"
 	},
 	{
-		"name": "Another Armor",
+		"name": "Another Armor (Cha based)",
 		"type": "medium",
 		"baseArmorClass": 14,
 		"strengthRequirement": 0,
 		"stealthDisadvantage": false,
 		"bonuses": [
-			{ "ability": "dexterity", "max": 10 }
+			{ "ability": "charisma", "max": 10 }
 		],
-		"description": "Medium and testy armor"
+		"description": "A different armor, based on charisma"
 	}
 ]

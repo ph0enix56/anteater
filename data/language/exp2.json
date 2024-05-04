@@ -1,7 +1,5 @@
 [
-	{ "name": "Klingon", "exotic": false },
-	{ "name": "Vulcan", "exotic": false },
-	{ "name": "Bajoran", "exotic": true },
-	{ "name": "Cardassian", "exotic": true },
-	{ "name": "Ferengi", "exotic": true }
+	{ "name": "Language 1", "exotic": false },
+	{ "name": "Language 2", "exotic": false },
+	{ "name": "Language 3", "exotic": false }
 ]

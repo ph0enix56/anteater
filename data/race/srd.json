@@ -1,13 +1,13 @@
 [
 	{
 		"name": "Human",
-		"description": "In the reckonings of most worlds, humans are the youngest of the common races, late to arrive on the world scene and short-lived in comparison to dwarves, elves, and dragons.",
+		"description": "It's hard to make generalizations about humans, but your human character has these traits.",
 		"features": [],
 		"speed": 30,
 		"sizes": ["small", "medium"],
 		"languages": {
 			"amount": 2,
-			"defaults": [ { "ref": "language", "query": {"name": "Common"} } ]
+			"defaults": [{ "ref": "language", "name": "Common" }]
 		},
 		"abilities_plus_2": {
 			"amount": 0,
@@ -24,14 +24,16 @@
 	},
 	{
 		"name": "Half-Elf",
-		"description": "Walking in two worlds but truly belonging to neither, half-elves combine what some say are the best qualities of their elf and human parents: human curiosity, inventiveness, and ambition tempered by the refined senses, love of nature, and artistic tastes of the elves. Some half-elves live among humans, set apart by their emotional and physical differences, watching friends and loved ones age while time barely touches them. Others live with the elves, growing to adulthood while their peers continue to live as children, growing restless in the timeless elven realms.",
-		"features": [{ "title": "Darkvision", "text": "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.", "levelMinimum": 1 },
-				{ "title": "Fey Ancestry", "text": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.", "levelMinimum": 1 }],
+		"description": "Your half-elf character has some qualities in common with elves and some that are unique to half-elves.",
+		"features": [
+			{"title": "Darkvision", "text": "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.", "levelMinimum": 1},
+			{"title": "Fey Ancestry", "text": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.", "levelMinimum": 1}
+		],
 		"speed": 30,
 		"sizes": ["medium"],
 		"languages": {
-			"amount": 2,
-			"defaults": [{"ref": "language", "query": { "name": "Common" }}, {"ref": "language", "query": { "name": "Elvish" }}]
+			"amount": 3,
+			"defaults": [{"ref": "language", "name": "Common" }, {"ref": "language", "name": "Elvish" }]
 		},
 		"abilities_plus_2": {
 			"amount": 1,
@@ -47,35 +49,19 @@
 		}
 	},
 	{
-		"name": "Gnome (Forest)",
-		"description": "A constant hum of busy activity pervades the warrens and neighborhoods where gnomes form their close-knit communities. Louder sounds punctuate the hum: a crunch of grinding gears here, a minor explosion there, a yelp of surprise or triumph, and especially bursts of laughter. Gnomes take delight in life, enjoying every moment of invention, exploration, investigation, creation, and play.",
+		"name": "Halfling (Lightfoot)",
+		"description": "Your halfling character has a number of traits in common with all other halflings.",
 		"features": [
-			{
-				"title": "Darkvision",
-				"levelMinimum": 1,
-				"text": "Accustomed to life underground, you can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
-			},
-			{
-				"title": "Gnome Cunning",
-				"levelMinimum": 1,
-				"text": "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."
-			},
-			{
-				"title": "Natural Illusionist",
-				"levelMinimum": 1,
-				"text": "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it."
-			},
-			{
-				"title": "Speak with Small Beasts",
-				"levelMinimum": 1,
-				"text": "Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets."
-			}
+			{"title": "Lucky", "text": "When you roll a 1 on the d20 for an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.", "levelMinimum": 1},
+			{"title": "Brave", "text": "You have advantage on saving throws against being frightened.", "levelMinimum": 1},
+			{"title": "Halfling Nimbleness", "text": "You can move through the space of any creature that is of a size larger than yours.", "levelMinimum": 1},
+			{"title": "Naturally Stealthy", "text": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.", "levelMinimum": 1}
 		],
 		"speed": 25,
 		"sizes": ["small"],
 		"languages": {
-			"amount": 1,
-			"defaults": [ {"ref": "language", "query": { "name": "Common" }} ]
+			"amount": 2,
+			"defaults": [{"ref": "language", "name": "Common" }, {"ref": "language", "name": "Halfling" }]
 		},
 		"abilities_plus_2": {
 			"amount": 1,
@@ -83,7 +69,7 @@
 		},
 		"abilities_plus_1": {
 			"amount": 1,
-			"defaults": ["intelligence"]
+			"defaults": ["charisma"]
 		},
 		"skills": {
 			"amount": 0,
