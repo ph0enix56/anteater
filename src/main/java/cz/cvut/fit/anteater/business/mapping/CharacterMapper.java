@@ -40,7 +40,7 @@ import lombok.Value;
 public class CharacterMapper {
 
 	public SourcableInfo toSrcInfo(SourceableEntity src) {
-		return new SourcableInfo(src.getId(), src.getName());
+		return new SourcableInfo(src.getId(), src.getName(), src.getSource().getId());
 	}
 
 	public CharacterInfo toInfo(Character c) {

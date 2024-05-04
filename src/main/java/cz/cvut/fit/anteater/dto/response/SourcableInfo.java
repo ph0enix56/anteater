@@ -7,5 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class SourcableInfo {
 	private String id;
-	private String name;	
+	private String name;
+	private String sourceId;
 }
