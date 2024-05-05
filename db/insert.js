@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { ObjectId, MongoClient } = require('mongodb');
 
-const DATA_DIR = '../data';
+const DATA_DIR = process.env.DATA_DIR || '../data';
+const SCHEMA_DIR = './schema';
 const MONGO_URI = process.env.MONGODB_URI;
 const DB_NAME = 'dnd';
 
@@ -33,11 +34,13 @@ async function resolveReferences(document, withinSource) {
 			// if the object is a reference, resolve it
 			if (document[key].ref && document[key].name) {
 				const refObj = document[key];
+				// if the source is specified as a parameter, use it, otherwise use the source in the ref
 				const query = withinSource ?
 					{ name: refObj.name, source: withinSource } :
 					{ name: refObj.name, source: refObj.source }
 				let result = await db.collection(refObj.ref).findOne(query);
-				if (!result) throw new Error(`Error resolving reference to ${refObj.ref} with query ${JSON.stringify(query)}, skipping item`);
+				if (!result) throw new Error(`Error resolving reference to ${refObj.ref} with ` +
+					`query ${JSON.stringify(query)}, skipping item`);
 				if (key.endsWith('Id')) {
 					// if the reference is an id, replace the object with the id
 					result = result._id;
@@ -67,53 +70,71 @@ async function insertAllFromSource(data, sourceId, collection) {
 			console.error(error.message);
 		}
 	}
-	try {
-		if (toImport.length === 0) return;
-		await db.collection(collection).insertMany(toImport, {ordered: false});
-	} catch (error) {
-		console.error(`Error while importing ${collection} from ${sourceId}: ${error.message}`);
-		if (error.result) {
-			console.log(`Could import only ${error.result.insertedCount}/${toImport.length} ${collection} items from ${sourceId}`);
-		}
-	}
+	if (toImport.length === 0) return;
+	await db.collection(collection).insertMany(toImport, {ordered: false});
 }
 
 /**
  * inserts all documents from all source files of a given content type to their respective collection
  * e.g. all documents from all files in the 'armor' subdirectory will be inserted into the 'armor' collection
  */
-async function insertContentType(contentType) {
+async function insertContentType(contentType, sourceIds) {
 	console.log(`Importing ${contentType} items...`);
 	const dir = path.join(DATA_DIR, contentType);
 	const files = fs.readdirSync(dir);
 	for (const sourceFile of files) {
-		let data = JSON.parse(fs.readFileSync(path.join(dir, sourceFile)));
-		await insertAllFromSource(data, sourceFile.split('.')[0], contentType);
+		// cleanName is the name without .json and must equal an id of a source
+		const cleanName = sourceFile.split('.')[0];
+		if (!sourceIds.includes(cleanName)) continue;
+		try {
+			let data = JSON.parse(fs.readFileSync(path.join(dir, sourceFile)));
+			await insertAllFromSource(data, cleanName, contentType);
+		} catch (error) {
+			if (error.result) {
+				console.log(`Could import only ${error.result.insertedCount}/${toImport.length} ` +
+					`${contentType} items from ${cleanName}`);
+			} else {
+				console.error(`Can't import ${contentType} items from ${cleanName}: ${error.message}`);
+			}
+		}
 	}
 }
 
 async function insertSources() {
 	console.log('Importing sources...');
-	const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'sources.json')));
 	try {
+		const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'sources.json')));
 		await db.collection('source').insertMany(data);
 	} catch (error) {
-		console.error(`Error while importing sources: ${error.message}`);
 		if (error.result) {
 			console.log(`Could import only ${error.result.insertedCount}/${data.length} sources`);
+		} else {
+			console.error(`Can't import sources: ${error.message}`);
 		}
 	}
 }
 
 async function insertCharacters() {
 	console.log('Importing characters...');
-	const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'characters.json')));
 	try {
-		for (character of data) await resolveReferences(character, null);
-		if (data.length === 0) return;
-		await db.collection('character').insertMany(data, {ordered: false});
+		const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'characters.json')));
+		const toImport = [];
+		for (character of data) {
+			try {
+				await resolveReferences(character, null);
+				toImport.push(character);
+			} catch (error) {
+				console.error(error.message);
+			}
+		}
+		if (toImport.length === 0) return;
+		await db.collection('character').insertMany(toImport, {ordered: false});
 	} catch (error) {
-		console.error(`Error while importing characters: ${error.message}`);
+		if (error.result) {
+			console.log(`Could import only ${error.result.insertedCount}/${toImport.length} characters`);
+		} else {
+			console.error(`Can't import characters: ${error.message}`);
+		}
 	}
 }
 
@@ -134,7 +155,8 @@ async function insert() {
 	await db.collection('character').drop();
 
 	await insertSources();
-	for (const collection of contentTypes) await insertContentType(collection);
+	const sourceIds = await db.collection('source').distinct('_id');
+	for (const collection of contentTypes) await insertContentType(collection, sourceIds);
 	await insertCharacters();
 }
 

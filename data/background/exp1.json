@@ -9,7 +9,7 @@
 			"amount": 2,
 			"defaults": [
 				"animal_handling",
-				"arcana"
+				"sleight_of_hand"
 			]
 		},
 		"tools": {

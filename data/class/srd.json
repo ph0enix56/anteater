@@ -3,7 +3,7 @@
 		"name": "Barbarian",
 		"description": "A warrior able to enter a rage and fight aggresively.",
 		"hitDice": { "amount": 1, "sides": 12 },
-		"subclasses": ["Berserker", "Sample Subclass", "Sample Subclass 2"],
+		"subclasses": ["Berserker"],
 		"skills": {
 			"amount": 2,
 			"defaults": []
@@ -66,7 +66,7 @@
 		"name": "Wizard",
 		"description": "A spellcaster who learns magic through study and practice.",
 		"hitDice": { "amount": 1, "sides": 6 },
-		"subclasses": ["Evocation", "Red Wizard", "Blue Wizard", "Green Wizard", "White Wizard"],
+		"subclasses": ["Evocation"],
 		"skills": {
 			"amount": 2,
 			"defaults": []
@@ -130,7 +130,7 @@
 		"name": "Warlock",
 		"description": "A spellcaster who makes a pact with a powerful being.",
 		"hitDice": { "amount": 1, "sides": 8 },
-		"subclasses": ["Fiend", "Custom Subclass"],
+		"subclasses": ["Fiend"],
 		"skills": {
 			"amount": 2,
 			"defaults": []
