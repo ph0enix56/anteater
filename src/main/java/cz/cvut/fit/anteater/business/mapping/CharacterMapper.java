@@ -1,9 +1,7 @@
 package cz.cvut.fit.anteater.business.mapping;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -25,7 +23,6 @@ import cz.cvut.fit.anteater.dto.response.SpellcastingOutput;
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ArmorType;
 import cz.cvut.fit.anteater.enumeration.Skill;
-import cz.cvut.fit.anteater.enumeration.WeaponProperty;
 import cz.cvut.fit.anteater.enumeration.WeaponType;
 import cz.cvut.fit.anteater.model.entity.Armor;
 import cz.cvut.fit.anteater.model.entity.Character;
@@ -33,8 +30,6 @@ import cz.cvut.fit.anteater.model.entity.SourceableEntity;
 import cz.cvut.fit.anteater.model.entity.Weapon;
 import cz.cvut.fit.anteater.model.value.Dice;
 import cz.cvut.fit.anteater.model.value.TextFeature;
-import lombok.AllArgsConstructor;
-import lombok.Value;
 
 @Component
 public class CharacterMapper {
@@ -62,69 +57,19 @@ public class CharacterMapper {
 		return new CharacterShort(c.getId(), toInfo(c));
 	}
 
-	@Value
-	@AllArgsConstructor
-	private class AbilityStats {
-		private Integer score;
-		private Integer mod;
-	}
-
-	public Map<Ability, AbilityStats> getAbilityStats(Character c) {
-		Map<Ability, AbilityStats> result = new HashMap<>();
-		for (var i : c.getAbilities().entrySet()) {
-			Integer bonus = (i.getValue().getUpByOne() ? 1 : 0) + (i.getValue().getUpByTwo() ? 2 : 0);
-			Integer finalScore = i.getValue().getScore() + bonus;
-			result.put(i.getKey(), new AbilityStats(finalScore, getAbilityModifier(finalScore)));
-		}
-		return result;
-	}
-
-	public Integer getProficiencyBonus(Integer level) {
-		return (level - 1) / 4 + 2;
-	}
-
-	public Integer getAbilityModifier(Integer abilityScore) {
-		return (abilityScore - 10) / 2;
-	}
-
-	public Integer getSkillModifier(Integer abilityModifier, Boolean proficient, Integer level) {
-		return proficient ? abilityModifier + getProficiencyBonus(level) : abilityModifier;
-	}
-
-	public Integer getSpeed(Integer baseSpeed, Armor armor, Integer strengthScore) {
-		if (strengthScore < armor.getStrengthRequirement()) return baseSpeed - Constants.ARMOR_SPEED_PENALTY;
-		return baseSpeed;
-	}
-
-	public Integer getHitPoints(Dice hitDice, Integer conModifier, Integer level) {
-		Integer initialHP = hitDice.getSides() + conModifier;
-		Integer perLevelHP = hitDice.getSides() / 2 + 1 + conModifier;
-		return initialHP + perLevelHP * (level - 1);
-	}
-
-	public Integer getArmorClass(Armor armor, Map<Ability, AbilityStats> abilities) {
-		Integer result = armor.getBaseArmorClass();
-		for (var i : armor.getBonuses()) {
-			result += Math.min(i.getMax(), abilities.get(i.getAbility()).mod);
-		}
-		return result;
-	}
-
 	public CharacterStats toStats(Character c) {
-		var abilities = getAbilityStats(c);
 		return CharacterStats.builder()
-			.proficiencyBonus(getProficiencyBonus(c.getLevel()))
-			.initiative(abilities.get(Ability.dexterity).getMod())
-			.speed(getSpeed(c.getRace().getSpeed(), c.getArmor(), abilities.get(Ability.strength).score))
+			.proficiencyBonus(c.getProficiencyBonus())
+			.initiative(c.getInitiative())
+			.speed(c.getSpeed())
 			.hitDice(new Dice(c.getLevel(), c.getDndClass().getHitDice().getSides()))
-			.hitPoints(getHitPoints(c.getDndClass().getHitDice(), abilities.get(Ability.constitution).getMod(), c.getLevel()))
-			.armorClass(getArmorClass(c.getArmor(), abilities))
+			.hitPoints(c.getHitPoints())
+			.armorClass(c.getArmorClass())
 			.build();
-		}
+	}
 
 	public List<AbilityOutput> toAbilitiesOutput(Character c) {
 		List<AbilityOutput> result = new ArrayList<>();
-		var stats = getAbilityStats(c);
 		for (Ability ab : Constants.ABILITY_ORDER) {
 			var input = c.getAbilities().get(ab);
 			result.add(new AbilityOutput(
@@ -132,8 +77,8 @@ public class CharacterMapper {
 				input.getScore(),
 				input.getUpByOne(),
 				input.getUpByTwo(),
-				stats.get(ab).getScore(),
-				stats.get(ab).getMod(),
+				c.getAbilityScore(ab),
+				c.getAbilityModifier(ab),
 				ab.getName()));
 		}
 		return result;
@@ -146,10 +91,10 @@ public class CharacterMapper {
 			result.add(new SkillOutput(
 				sk.toString(),
 				ab.toString(),
-				getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSkills().contains(sk), c.getLevel()),
+				c.getSkillModifier(sk),
 				c.getSkills().contains(sk),
 				sk.getName() + " (" + ab.getAbbreviation() + ")"));
-	}
+		}
 		return result;
 	}
 
@@ -160,7 +105,7 @@ public class CharacterMapper {
 			result.add(new SkillOutput(
 				ab.toString(),
 				ab.toString(),
-				getSkillModifier(getAbilityStats(c).get(ab).mod, saves.contains(ab), c.getLevel()),
+				c.getSaveModifier(ab),
 				saves.contains(ab),
 				ab.getName()));
 		}
@@ -170,21 +115,14 @@ public class CharacterMapper {
 	public List<AttackOutput> toAttacks(Character c) {
 		List<AttackOutput> result = new ArrayList<>();
 		for (var i : c.getWeapons()) {
-			Boolean proficient = c.getDndClass().getWeaponProficiencyTypes().contains(i.getType())
-				|| c.getDndClass().getWeaponProficiencies().contains(i);
-
-			Integer strMod = getAbilityStats(c).get(Ability.strength).mod;
-			Integer dexMod = getAbilityStats(c).get(Ability.dexterity).mod;
-			Integer attackMod = 0;
-			if (i.getProperties().contains(WeaponProperty.finesse)) attackMod = Math.max(strMod, dexMod);
-			else if (i.getRanged() == true) attackMod = dexMod;
-			else attackMod = strMod;
-			Integer attackBonus = getSkillModifier(attackMod, proficient, c.getLevel());
+			int attackBonus = c.getWeaponAttackBonus(i);
+			int damageMod = c.getWeaponDamageModifier(i);
 
 			StringBuilder dmgBuilder = new StringBuilder(i.getDamage().getNotation());
-			if (attackMod > 0) dmgBuilder.append(" + ").append(attackMod);
-			else if (attackMod < 0) dmgBuilder.append(" - ").append(-attackMod);
+			if (damageMod > 0) dmgBuilder.append(" + ").append(damageMod);
+			else if (damageMod < 0) dmgBuilder.append(" - ").append(-damageMod);
 			String damage = dmgBuilder.append(" ").append(i.getDamageType()).toString();
+
 			result.add(new AttackOutput(i.getId(), i.getName(), attackBonus, damage));
 		}
 		return result;
@@ -192,20 +130,18 @@ public class CharacterMapper {
 
 	public SpellcastingOutput toSpellcastingOutput(Character c) {
 		if (c.getDndClass().getSpellcasting() == null) return null;
-
-		var abilities = getAbilityStats(c);
 		Ability spellAbility = c.getDndClass().getSpellcasting().getAbility();
-		Integer modifier = abilities.get(spellAbility).mod;
-		Integer saveDc = 8 + modifier + getProficiencyBonus(c.getLevel());
+
 		List<SpellcastingOutput.SlotData> slotsRes = new ArrayList<>();
 		List<Integer> slots = c.getDndClass().getSpellcasting().getSlotsByLevel(c.getLevel());
 		for (int i = 0; i < slots.size(); i++) {
 			if (slots.get(i) > 0) slotsRes.add(new SpellcastingOutput.SlotData(i + 1, slots.get(i)));
 		}
+
 		return SpellcastingOutput.builder()
 			.abilityAbbreviation(spellAbility.getAbbreviation())
-			.modifier(modifier)
-			.saveDc(saveDc)
+			.modifier(c.getSpellAttackModifier())
+			.saveDc(c.getSpellSaveDC())
 			.slots(slotsRes)
 			.spells(c.getSpells())
 			.build();
@@ -261,12 +197,11 @@ public class CharacterMapper {
 
 	public List<AbilityPdfOutput> toAbilitiesPdf(Character c) {
 		List<AbilityPdfOutput> result = new ArrayList<>();
-		var stats = getAbilityStats(c);
 		for (Ability ab : Constants.ABILITY_ORDER) {
 			result.add(new AbilityPdfOutput(
 				ab.getAbbreviation().toLowerCase(),
-				stats.get(ab).getScore(),
-				stats.get(ab).getMod()));
+				c.getAbilityScore(ab),
+				c.getAbilityModifier(ab)));
 		}
 		return result;		
 	}
@@ -274,10 +209,9 @@ public class CharacterMapper {
 	public List<SkillPdfOutput> toSkillsPdf(Character c) {
 		List<SkillPdfOutput> result = new ArrayList<>();
 		for (Skill sk : Skill.values()) {
-			Ability ab = Constants.SKILL_TO_ABILITY_MAP.get(sk);
 			result.add(new SkillPdfOutput(
 				sk.getAbbreviation().toLowerCase(),
-				getSkillModifier(getAbilityStats(c).get(ab).mod, c.getSkills().contains(sk), c.getLevel()),
+				c.getSkillModifier(sk),
 				c.getSkills().contains(sk)));
 		}
 		return result;
@@ -289,7 +223,7 @@ public class CharacterMapper {
 		for (Ability ab : Ability.values()) {
 			result.add(new SkillPdfOutput(
 				ab.getAbbreviation().toLowerCase(),
-				getSkillModifier(getAbilityStats(c).get(ab).mod, saves.contains(ab), c.getLevel()),
+				c.getSaveModifier(ab),
 				saves.contains(ab)));
 		}
 		return result;
