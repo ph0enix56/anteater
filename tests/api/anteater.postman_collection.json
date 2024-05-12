@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d16b4eb3-e704-45dd-92bc-25ce65d1751e",
+		"_postman_id": "737d4a5c-1b3e-45ab-9536-4cc9e93a0484",
 		"name": "Anteater API tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34039199"
+		"_exporter_id": "24149201"
 	},
 	"item": [
 		{
@@ -363,7 +363,7 @@
 							"    },",
 							"    \"class\": {",
 							"        \"id\": classId,",
-							"        \"subclass\": \"\",",
+							"        \"subclass\": null,",
 							"        \"toolIds\": []",
 							"    },",
 							"    \"background\": {",
@@ -826,7 +826,7 @@
 							"    },",
 							"    \"class\": {",
 							"        \"id\": classId,",
-							"        \"subclass\": \"\",",
+							"        \"subclass\": null,",
 							"        \"toolIds\": []",
 							"    },",
 							"    \"background\": {",
@@ -915,7 +915,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 400\", function () {",
-							"    pm.response.to.have.status(404);",
+							"    pm.response.to.have.status(400);",
 							"});",
 							"",
 							"",
