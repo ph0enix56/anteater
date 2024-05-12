@@ -4,16 +4,20 @@ import java.util.List;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
 import cz.cvut.fit.anteater.enumeration.ArmorType;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Value;
 
-@Data
-@SuperBuilder
-@NoArgsConstructor
+@Value
 @EqualsAndHashCode(callSuper = true)
 public class Armor extends SourceableEntity {
+
+	@Value
+	public static class AbilityBonus {
+
+		private Ability ability;
+
+		private Integer max;
+	}
 
 	private ArmorType type;
 
@@ -23,14 +27,18 @@ public class Armor extends SourceableEntity {
 
 	private Boolean stealthDisadvantage;
 
-	@Data
-	public class AbilityBonus {
-		private Ability ability;
-
-		private Integer max;
-	}
-
 	private List<AbilityBonus> bonuses;
 
-	private String description;	
+	private String description;
+
+	public Armor(String id, String name, Source source, ArmorType type, Integer baseArmorClass,
+			Integer strengthRequirement, Boolean stealthDisadvantage, List<AbilityBonus> bonuses, String description) {
+		super(id, name, source);
+		this.type = type;
+		this.baseArmorClass = baseArmorClass;
+		this.strengthRequirement = strengthRequirement;
+		this.stealthDisadvantage = stealthDisadvantage;
+		this.bonuses = bonuses;
+		this.description = description;
+	}
 }

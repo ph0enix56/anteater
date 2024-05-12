@@ -1,0 +1,5 @@
+[
+	{ "name": "Screwdriver", "type": "artisan" },
+	{ "name": "Drill", "type": "artisan" },
+	{ "name": "Chainsaw", "type": "artisan" }
+]

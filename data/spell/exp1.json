@@ -1,0 +1,16 @@
+[
+	{
+		"name": "Test Spell",
+		"level": 0,
+		"school": "conjuration",
+		"components": {
+			"verbal": true,
+			"somatic": true
+		},
+		"castingTime": "1 action",
+		"range": "60 feet",
+		"duration": "Instantaneous",
+		"description": "This is a test spell",
+		"atHigherLevels": "This is a test spell"
+	}
+]

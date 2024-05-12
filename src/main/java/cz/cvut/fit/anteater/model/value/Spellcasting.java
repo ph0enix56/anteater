@@ -3,11 +3,9 @@ package cz.cvut.fit.anteater.model.value;
 import java.util.List;
 
 import cz.cvut.fit.anteater.enumeration.Ability;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
-@Data
-@Builder
+@Value
 public class Spellcasting {
 
 	private Ability ability;

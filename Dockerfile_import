@@ -1,0 +1,17 @@
+# Get Node image
+FROM node
+
+# Set the working directory
+WORKDIR /script
+
+# Copy package.json and package-lock.json
+COPY db/package*.json .
+
+# Install the npm packages
+RUN npm install
+
+# Copy the rest of the db scripts to the container
+COPY db/ .
+
+# Run the insert script
+CMD ["node", "insert.js"]

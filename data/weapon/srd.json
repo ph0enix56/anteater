@@ -1,0 +1,191 @@
+[
+	{
+		"name": "Club",
+		"type": "simple",
+		"ranged": false,
+		"range": 5,
+		"properties": ["light"],
+		"damage": { "amount": 1, "sides": 4 },
+		"damageType": "bludgeoning"
+	},
+	{
+		"name": "Dagger",
+		"type": "simple",
+		"ranged": false,
+		"range": 20,
+		"properties": ["finesse", "light", "thrown"],
+		"damage": { "amount": 1, "sides": 4 },
+		"damageType": "piercing"
+	},
+	{
+		"name": "Greatclub",
+		"type": "simple",
+		"ranged": false,
+		"range": 5,
+		"properties": ["two_handed"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "bludgeoning"
+	},
+	{
+		"name": "Handaxe",
+		"type": "simple",
+		"ranged": false,
+		"range": 20,
+		"properties": ["light", "thrown"],
+		"damage": { "amount": 1, "sides": 6 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Javelin",
+		"type": "simple",
+		"ranged": false,
+		"range": 30,
+		"properties": ["thrown"],
+		"damage": { "amount": 1, "sides": 6 },
+		"damageType": "piercing"
+	},
+	{
+		"name": "Light hammer",
+		"type": "simple",
+		"ranged": false,
+		"range": 20,
+		"properties": ["light", "thrown"],
+		"damage": { "amount": 1, "sides": 4 },
+		"damageType": "bludgeoning"
+	},
+	{
+		"name": "Mace",
+		"type": "simple",
+		"ranged": false,
+		"range": 5,
+		"properties": [],
+		"damage": { "amount": 1, "sides": 6 },
+		"damageType": "bludgeoning"
+	},
+	{
+		"name": "Shortbow",
+		"type": "simple",
+		"ranged": true,
+		"range": 80,
+		"properties": ["two_handed"],
+		"damage": { "amount": 1, "sides": 6 },
+		"damageType": "piercing"
+	},
+	{
+		"name": "Longbow",
+		"type": "martial",
+		"ranged": true,
+		"range": 150,
+		"properties": ["two_handed", "heavy"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "piercing"
+	},
+	{
+		"name": "Battleaxe",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": [],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Battleaxe (two-handed)",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["two_handed"],
+		"damage": { "amount": 1, "sides": 10 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Flail",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": [],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "bludgeoning"
+	},
+	{
+		"name": "Glaive",
+		"type": "martial",
+		"ranged": false,
+		"range": 10,
+		"properties": ["heavy", "reach", "two_handed"],
+		"damage": { "amount": 1, "sides": 10 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Greataxe",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["heavy", "two_handed"],
+		"damage": { "amount": 1, "sides": 12 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Greatsword",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["heavy", "two_handed"],
+		"damage": { "amount": 2, "sides": 6 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Halberd",
+		"type": "martial",
+		"ranged": false,
+		"range": 10,
+		"properties": ["heavy", "reach", "two_handed"],
+		"damage": { "amount": 1, "sides": 10 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Lance",
+		"type": "martial",
+		"ranged": false,
+		"range": 10,
+		"properties": ["reach", "special"],
+		"damage": { "amount": 1, "sides": 12 },
+		"damageType": "piercing"
+	},
+	{
+		"name": "Longsword",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": [],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Longsword (two-handed)",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["two_handed"],
+		"damage": { "amount": 1, "sides": 10 },
+		"damageType": "slashing"
+	},
+	{
+		"name": "Rapier",
+		"type": "martial",
+		"ranged": false,
+		"range": 5,
+		"properties": ["finesse"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "piercing"
+	},
+	{
+		"name": "Light crossbow",
+		"type": "simple",
+		"ranged": true,
+		"range": 80,
+		"properties": ["loading", "two_handed"],
+		"damage": { "amount": 1, "sides": 8 },
+		"damageType": "piercing"
+	}
+]

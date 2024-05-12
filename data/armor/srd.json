@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Leather Armor",
+		"type": "light",
+		"baseArmorClass": 11,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 10 }
+		],
+		"description": "Nice and light armor"
+	},
+	{
+		"name": "Chain Shirt",
+		"type": "medium",
+		"baseArmorClass": 13,
+		"strengthRequirement": 0,
+		"stealthDisadvantage": false,
+		"bonuses": [
+			{ "ability": "dexterity", "max": 2 }
+		],
+		"description": "Average armor"
+	},
+	{
+		"name": "Chain Mail",
+		"type": "heavy",
+		"baseArmorClass": 16,
+		"strengthRequirement": 13,
+		"stealthDisadvantage": true,
+		"bonuses": [],
+		"description": "Heavy and noisy armor"
+	},
+	{
+		"name": "Plate Armor",
+		"type": "heavy",
+		"baseArmorClass": 18,
+		"strengthRequirement": 15,
+		"stealthDisadvantage": true,
+		"bonuses": [],
+		"description": "Very heavy and very noisy armor"
+	}
+]

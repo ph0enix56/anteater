@@ -1,0 +1,1181 @@
+[
+	{
+		"name": "character",
+		"type": "collection",
+		"options": {
+			"validator": {
+				"$jsonSchema": {
+					"type": "object",
+					"properties": {
+						"_id": {
+							"bsonType": "objectId"
+						},
+						"characterName": {
+							"type": "string"
+						},
+						"playerName": {
+							"type": "string"
+						},
+						"cardPhotoUrl": {
+							"type": "string"
+						},
+						"sheetPhotoUrl": {
+							"type": "string"
+						},
+						"sources": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"_id": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"classId": {
+							"type": "object",
+							"properties": {
+								"description": {
+									"type": "string"
+								},
+								"hitDice": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"sides": {
+											"bsonType": "int"
+										}
+									}
+								},
+								"features": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"title": {
+												"type": "string"
+											},
+											"text": {
+												"type": "string"
+											},
+											"levelMinimum": {
+												"bsonType": "int"
+											}
+										}
+									}
+								},
+								"subclasses": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"skills": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"acrobatics",
+													"animal_handling",
+													"arcana",
+													"athletics",
+													"deception",
+													"history",
+													"insight",
+													"intimidation",
+													"investigation",
+													"medicine",
+													"nature",
+													"perception",
+													"performance",
+													"persuasion",
+													"religion",
+													"sleight_of_hand",
+													"stealth",
+													"survival"
+												]
+											}
+										}
+									}
+								},
+								"saves": {
+									"type": "array",
+									"items": {
+										"type": "string",
+										"enum": [
+											"strength",
+											"dexterity",
+											"constitution",
+											"intelligence",
+											"wisdom",
+											"charisma"
+										]
+									}
+								},
+								"tools": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"enum": [
+															"artisan",
+															"instrument",
+															"gaming",
+															"vehicle",
+															"other"
+														]
+													},
+													"_id": {
+														"bsonType": "objectId"
+													},
+													"name": {
+														"type": "string"
+													},
+													"source": {
+														"type": "object",
+														"properties": {
+															"_id": {
+																"type": "string"
+															},
+															"name": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								"armorTypes": {
+									"type": "array",
+									"items": {
+										"type": "string",
+										"enum": [
+											"unarmored",
+											"light",
+											"medium",
+											"heavy",
+											"shield"
+										]
+									}
+								},
+								"armor": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"enum": [
+													"unarmored",
+													"light",
+													"medium",
+													"heavy",
+													"shield"
+												]
+											},
+											"baseArmorClass": {
+												"bsonType": "int"
+											},
+											"strengthRequirement": {
+												"bsonType": "int"
+											},
+											"stealthDisadvantage": {
+												"type": "boolean"
+											},
+											"bonuses": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"ability": {
+															"type": "string",
+															"enum": [
+																"strength",
+																"dexterity",
+																"constitution",
+																"intelligence",
+																"wisdom",
+																"charisma"
+															]
+														},
+														"max": {
+															"bsonType": "int"
+														}
+													}
+												}
+											},
+											"description": {
+												"type": "string"
+											},
+											"_id": {
+												"bsonType": "objectId"
+											},
+											"name": {
+												"type": "string"
+											},
+											"source": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								},
+								"defaultArmor": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string",
+											"enum": [
+												"unarmored",
+												"light",
+												"medium",
+												"heavy",
+												"shield"
+											]
+										},
+										"baseArmorClass": {
+											"bsonType": "int"
+										},
+										"strengthRequirement": {
+											"bsonType": "int"
+										},
+										"stealthDisadvantage": {
+											"type": "boolean"
+										},
+										"bonuses": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"ability": {
+														"type": "string",
+														"enum": [
+															"strength",
+															"dexterity",
+															"constitution",
+															"intelligence",
+															"wisdom",
+															"charisma"
+														]
+													},
+													"max": {
+														"bsonType": "int"
+													}
+												}
+											}
+										},
+										"description": {
+											"type": "string"
+										},
+										"_id": {
+											"bsonType": "objectId"
+										},
+										"name": {
+											"type": "string"
+										},
+										"source": {
+											"type": "object",
+											"properties": {
+												"_id": {
+													"type": "string"
+												},
+												"name": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"weaponTypes": {
+									"type": "array",
+									"items": {
+										"type": "string",
+										"enum": [
+											"martial",
+											"simple"
+										]
+									}
+								},
+								"weapons": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"enum": [
+													"martial",
+													"simple"
+												]
+											},
+											"ranged": {
+												"type": "boolean"
+											},
+											"range": {
+												"bsonType": "int"
+											},
+											"properties": {
+												"type": "array",
+												"items": {
+													"type": "string",
+													"enum": [
+														"ammunition",
+														"finesse",
+														"heavy",
+														"light",
+														"loading",
+														"range",
+														"reach",
+														"special",
+														"thrown",
+														"two_handed",
+														"versatile"
+													]
+												}
+											},
+											"damage": {
+												"type": "object",
+												"properties": {
+													"amount": {
+														"bsonType": "int"
+													},
+													"sides": {
+														"bsonType": "int"
+													}
+												}
+											},
+											"damageType": {
+												"type": "string",
+												"enum": [
+													"acid",
+													"bludgeoning",
+													"cold",
+													"fire",
+													"force",
+													"lightning",
+													"necrotic",
+													"piercing",
+													"poison",
+													"psychic",
+													"radiant",
+													"slashing",
+													"thunder"
+												]
+											},
+											"_id": {
+												"bsonType": "objectId"
+											},
+											"name": {
+												"type": "string"
+											},
+											"source": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								},
+								"spellcasting": {
+									"type": "object",
+									"properties": {
+										"ability": {
+											"type": "string",
+											"enum": [
+												"strength",
+												"dexterity",
+												"constitution",
+												"intelligence",
+												"wisdom",
+												"charisma"
+											]
+										},
+										"slots": {
+											"type": "array"
+										}
+									}
+								},
+								"_id": {
+									"bsonType": "objectId"
+								},
+								"name": {
+									"type": "string"
+								},
+								"source": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"subclass": {
+							"type": "string"
+						},
+						"raceId": {
+							"type": "object",
+							"properties": {
+								"description": {
+									"type": "string"
+								},
+								"features": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"title": {
+												"type": "string"
+											},
+											"text": {
+												"type": "string"
+											},
+											"levelMinimum": {
+												"bsonType": "int"
+											}
+										}
+									}
+								},
+								"speed": {
+									"bsonType": "int"
+								},
+								"sizes": {
+									"type": "array",
+									"items": {
+										"type": "string",
+										"enum": [
+											"tiny",
+											"small",
+											"medium",
+											"large",
+											"huge",
+											"gargantuan"
+										]
+									}
+								},
+								"abilities_plus_2": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"strength",
+													"dexterity",
+													"constitution",
+													"intelligence",
+													"wisdom",
+													"charisma"
+												]
+											}
+										}
+									}
+								},
+								"abilities_plus_1": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"strength",
+													"dexterity",
+													"constitution",
+													"intelligence",
+													"wisdom",
+													"charisma"
+												]
+											}
+										}
+									}
+								},
+								"skills": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"acrobatics",
+													"animal_handling",
+													"arcana",
+													"athletics",
+													"deception",
+													"history",
+													"insight",
+													"intimidation",
+													"investigation",
+													"medicine",
+													"nature",
+													"perception",
+													"performance",
+													"persuasion",
+													"religion",
+													"sleight_of_hand",
+													"stealth",
+													"survival"
+												]
+											}
+										}
+									}
+								},
+								"languages": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"exotic": {
+														"type": "boolean"
+													},
+													"_id": {
+														"bsonType": "objectId"
+													},
+													"name": {
+														"type": "string"
+													},
+													"source": {
+														"type": "object",
+														"properties": {
+															"_id": {
+																"type": "string"
+															},
+															"name": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								"_id": {
+									"bsonType": "objectId"
+								},
+								"name": {
+									"type": "string"
+								},
+								"source": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"size": {
+							"type": "string",
+							"enum": [
+								"tiny",
+								"small",
+								"medium",
+								"large",
+								"huge",
+								"gargantuan"
+							]
+						},
+						"backgroundId": {
+							"type": "object",
+							"properties": {
+								"description": {
+									"type": "string"
+								},
+								"features": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"title": {
+												"type": "string"
+											},
+											"text": {
+												"type": "string"
+											},
+											"levelMinimum": {
+												"bsonType": "int"
+											}
+										}
+									}
+								},
+								"skills": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"acrobatics",
+													"animal_handling",
+													"arcana",
+													"athletics",
+													"deception",
+													"history",
+													"insight",
+													"intimidation",
+													"investigation",
+													"medicine",
+													"nature",
+													"perception",
+													"performance",
+													"persuasion",
+													"religion",
+													"sleight_of_hand",
+													"stealth",
+													"survival"
+												]
+											}
+										}
+									}
+								},
+								"languages": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"exotic": {
+														"type": "boolean"
+													},
+													"_id": {
+														"bsonType": "objectId"
+													},
+													"name": {
+														"type": "string"
+													},
+													"source": {
+														"type": "object",
+														"properties": {
+															"_id": {
+																"type": "string"
+															},
+															"name": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								"tools": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"bsonType": "int"
+										},
+										"defaults": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"enum": [
+															"artisan",
+															"instrument",
+															"gaming",
+															"vehicle",
+															"other"
+														]
+													},
+													"_id": {
+														"bsonType": "objectId"
+													},
+													"name": {
+														"type": "string"
+													},
+													"source": {
+														"type": "object",
+														"properties": {
+															"_id": {
+																"type": "string"
+															},
+															"name": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								"_id": {
+									"bsonType": "objectId"
+								},
+								"name": {
+									"type": "string"
+								},
+								"source": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"level": {
+							"bsonType": "int"
+						},
+						"abilities": {
+							"type": "object",
+							"properties": {
+								"label": {
+									"type": "string",
+									"enum": [
+										"strength",
+										"dexterity",
+										"constitution",
+										"intelligence",
+										"wisdom",
+										"charisma"
+									]
+								},
+								"score": {
+									"bsonType": "int"
+								},
+								"upByOne": {
+									"type": "boolean"
+								},
+								"upByTwo": {
+									"type": "boolean"
+								}
+							}
+						},
+						"skills": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"acrobatics",
+									"animal_handling",
+									"arcana",
+									"athletics",
+									"deception",
+									"history",
+									"insight",
+									"intimidation",
+									"investigation",
+									"medicine",
+									"nature",
+									"perception",
+									"performance",
+									"persuasion",
+									"religion",
+									"sleight_of_hand",
+									"stealth",
+									"survival"
+								]
+							}
+						},
+						"tools": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"item": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"enum": [
+													"artisan",
+													"instrument",
+													"gaming",
+													"vehicle",
+													"other"
+												]
+											},
+											"_id": {
+												"bsonType": "objectId"
+											},
+											"name": {
+												"type": "string"
+											},
+											"source": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									},
+									"from": {
+										"type": "string",
+										"enum": [
+											"dndClass",
+											"race",
+											"background"
+										]
+									}
+								}
+							}
+						},
+						"languages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"item": {
+										"type": "object",
+										"properties": {
+											"exotic": {
+												"type": "boolean"
+											},
+											"_id": {
+												"bsonType": "objectId"
+											},
+											"name": {
+												"type": "string"
+											},
+											"source": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									},
+									"from": {
+										"type": "string",
+										"enum": [
+											"dndClass",
+											"race",
+											"background"
+										]
+									}
+								}
+							}
+						},
+						"armor": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"enum": [
+										"unarmored",
+										"light",
+										"medium",
+										"heavy",
+										"shield"
+									]
+								},
+								"baseArmorClass": {
+									"bsonType": "int"
+								},
+								"strengthRequirement": {
+									"bsonType": "int"
+								},
+								"stealthDisadvantage": {
+									"type": "boolean"
+								},
+								"bonuses": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"ability": {
+												"type": "string",
+												"enum": [
+													"strength",
+													"dexterity",
+													"constitution",
+													"intelligence",
+													"wisdom",
+													"charisma"
+												]
+											},
+											"max": {
+												"bsonType": "int"
+											}
+										}
+									}
+								},
+								"description": {
+									"type": "string"
+								},
+								"_id": {
+									"bsonType": "objectId"
+								},
+								"name": {
+									"type": "string"
+								},
+								"source": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"weapons": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"enum": [
+											"martial",
+											"simple"
+										]
+									},
+									"ranged": {
+										"type": "boolean"
+									},
+									"range": {
+										"bsonType": "int"
+									},
+									"properties": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"enum": [
+												"ammunition",
+												"finesse",
+												"heavy",
+												"light",
+												"loading",
+												"range",
+												"reach",
+												"special",
+												"thrown",
+												"two_handed",
+												"versatile"
+											]
+										}
+									},
+									"damage": {
+										"type": "object",
+										"properties": {
+											"amount": {
+												"bsonType": "int"
+											},
+											"sides": {
+												"bsonType": "int"
+											}
+										}
+									},
+									"damageType": {
+										"type": "string",
+										"enum": [
+											"acid",
+											"bludgeoning",
+											"cold",
+											"fire",
+											"force",
+											"lightning",
+											"necrotic",
+											"piercing",
+											"poison",
+											"psychic",
+											"radiant",
+											"slashing",
+											"thunder"
+										]
+									},
+									"_id": {
+										"bsonType": "objectId"
+									},
+									"name": {
+										"type": "string"
+									},
+									"source": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string"
+											},
+											"name": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						},
+						"spells": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"level": {
+										"bsonType": "int"
+									},
+									"school": {
+										"type": "string",
+										"enum": [
+											"abjuration",
+											"conjuration",
+											"divination",
+											"enchantment",
+											"evocation",
+											"illusion",
+											"necromancy",
+											"transmutation"
+										]
+									},
+									"components": {
+										"type": "object",
+										"properties": {
+											"verbal": {
+												"type": "boolean"
+											},
+											"somatic": {
+												"type": "boolean"
+											},
+											"material": {
+												"type": "string"
+											}
+										}
+									},
+									"castingTime": {
+										"type": "string"
+									},
+									"range": {
+										"type": "string"
+									},
+									"duration": {
+										"type": "string"
+									},
+									"dndClassIds": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									"description": {
+										"type": "string"
+									},
+									"atHigherLevels": {
+										"type": "string"
+									},
+									"_id": {
+										"bsonType": "objectId"
+									},
+									"name": {
+										"type": "string"
+									},
+									"source": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string"
+											},
+											"name": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"info": {
+			"readOnly": false,
+			"uuid": "eabc4f8d-85b2-4c78-8537-9410b52907a2"
+		},
+		"idIndex": {
+			"v": 2,
+			"key": {
+				"_id": 1
+			},
+			"name": "_id_"
+		}
+	}
+]

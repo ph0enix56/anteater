@@ -1,0 +1,2164 @@
+{
+	"info": {
+		"_postman_id": "737d4a5c-1b3e-45ab-9536-4cc9e93a0484",
+		"name": "Anteater API tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24149201"
+	},
+	"item": [
+		{
+			"name": "Get classes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"have at least one class\", () => {",
+							"    const content = pm.response.json().content;",
+							"    const size = pm.response.json().size;",
+							"    pm.expect(size).to.be.greaterThan(0);",
+							"    pm.collectionVariables.set('classes', content);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/classes",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"classes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get class",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const classes = pm.collectionVariables.get(\"classes\").map(x => x.id);",
+							"pm.collectionVariables.set(\"randomClass\", classes[Math.floor(Math.random()*classes.length)]);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{env}}/classes/{{randomClass}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"classes",
+						"{{randomClass}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get races",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"have at least one race\", () => {",
+							"    const content = pm.response.json().content;",
+							"    const size = pm.response.json().size;",
+							"    pm.expect(size).to.be.greaterThan(0);",
+							"    const race = content[Math.floor(Math.random()*100) % size];",
+							"    pm.collectionVariables.set('raceId', race.id);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/races",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"races"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get race",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{env}}/races/{{raceId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"races",
+						"{{raceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get backgrounds",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"have at least one background\", () => {",
+							"    const content = pm.response.json().content;",
+							"    const size = pm.response.json().size;",
+							"    pm.expect(size).to.be.greaterThan(0);",
+							"    const background = content[Math.floor(Math.random()*100) % size];",
+							"    pm.collectionVariables.set('backgroundId', background.id);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/backgrounds",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"backgrounds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get background",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{env}}/backgrounds/{{backgroundId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"backgrounds",
+						"{{backgroundId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"check the response of post\", () => {",
+							"    const response = pm.response.json();",
+							"    pm.expect(response).to.have.property('id');",
+							"    pm.collectionVariables.set(\"characterId\", response.id);",
+							"    pm.collectionVariables.set(\"characterBodyResponse\", response);",
+							"    console.log(response.skills);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const shuffledArray = pm.collectionVariables.get(\"classes\").sort((a, b) => 0.5 - Math.random());",
+							"const classId = shuffledArray.filter(x => x.spellcasting != null)[0].id;",
+							"const obj = {",
+							"    \"info\": {",
+							"        \"sourceIds\": []",
+							"    },",
+							"    \"race\": {",
+							"        \"id\": pm.collectionVariables.get(\"raceId\"),",
+							"        \"size\": \"medium\",",
+							"        \"languageIds\": []        ",
+							"    },",
+							"    \"class\": {",
+							"        \"id\": classId,",
+							"        \"subclass\": null,",
+							"        \"toolIds\": []",
+							"    },",
+							"    \"background\": {",
+							"        \"id\": pm.collectionVariables.get(\"backgroundId\"),",
+							"        \"toolIds\": [],",
+							"        \"languageIds\": []",
+							"    },",
+							"    \"abilityScores\": [",
+							"        {",
+							"            \"label\": \"strength\",",
+							"            \"score\": 15,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": true",
+							"        },",
+							"        {",
+							"            \"label\": \"dexterity\",",
+							"            \"score\": 11,",
+							"            \"upByOne\": true,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"constitution\",",
+							"            \"score\": 14,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"intelligence\",",
+							"            \"score\": 8,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"wisdom\",",
+							"            \"score\": 11,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"charisma\",",
+							"            \"score\": 9,",
+							"            \"upByOne\": true,",
+							"            \"upByTwo\": false",
+							"        }",
+							"    ]",
+							"}",
+							"var body_str = JSON.stringify(obj);",
+							"pm.collectionVariables.set(\"characterBodyRequest\", body_str);",
+							"console.log(pm.collectionVariables.get(\"characterBodyRequest\"));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{characterBodyRequest}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"info\": {\n        \"sourceIds\": []\n    },\n    \"race\": {\n        \"id\": \"aaaa\",\n        \"size\": \"medium\",\n        \"languageIds\": []        \n    },\n    \"class\": {\n        \"id\": \"{{classId}}\",\n        \"sublcass\": \"\",\n        \"toolIds\": []\n    },\n    \"background\": {\n        \"id\": \"{{backgroundId}}\",\n        \"toolIds\": [],\n        \"languageIds\": []\n    },\n    \"abilityScores\": [\n        {\n            \"label\": \"strength\",\n            \"score\": 15,\n            \"upByOne\": false,\n            \"upByTwo\": true\n        },\n        {\n            \"label\": \"dexterity\",\n            \"score\": 11,\n            \"upByOne\": true,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"constitution\",\n            \"score\": 14,\n            \"upByOne\": false,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"intelligence\",\n            \"score\": 8,\n            \"upByOne\": false,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"wisdom\",\n            \"score\": 11,\n            \"upByOne\": false,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"charisma\",\n            \"score\": 9,\n            \"upByOne\": true,\n            \"upByTwo\": false\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"info\": {\n        \"sourceIds\": []\n    },\n    \"race\": {\n        \"id\": \"{{raceId}}\",\n        \"size\": \"medium\",\n        \"languageIds\": []        \n    },\n    \"class\": {\n        \"id\": \"{{classId}}\",\n        \"subclass\": \"\",\n        \"toolIds\": []\n    },\n    \"background\": {\n        \"id\": \"{{backgroundId}}\",\n        \"toolIds\": [],\n        \"languageIds\": []\n    },\n    \"abilityScores\": [\n        {\n            \"label\": \"sfsdf\",\n            \"score\": 15,\n            \"upByOne\": false,\n            \"upByTwo\": true\n        },\n        {\n            \"label\": \"dexterity\",\n            \"score\": 11,\n            \"upByOne\": true,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"constitution\",\n            \"score\": 14,\n            \"upByOne\": false,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"intelligence\",\n            \"score\": 8,\n            \"upByOne\": false,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"wisdom\",\n            \"score\": 11,\n            \"upByOne\": false,\n            \"upByTwo\": false\n        },\n        {\n            \"label\": \"charisma\",\n            \"score\": 9,\n            \"upByOne\": true,\n            \"upByTwo\": false\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"check the body of character\", () => {",
+							"    pm.expect(pm.response.json()).eql(pm.collectionVariables.get(\"characterBodyResponse\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a non existing character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/99999",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"99999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Spelly",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"Check spells\", () => {",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.totalElements).be.greaterThan(0);",
+							"    const spells = response.content.map(x => x.id).slice(0, 5);",
+							"    pm.collectionVariables.set(\"spellIds\", JSON.stringify(spells));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/spells",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"spells"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get random spell",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ids = JSON.parse(pm.collectionVariables.get(\"spellIds\"));",
+							"pm.collectionVariables.set(\"spellId\", ids[Math.floor(Math.random()*ids.length)]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "{{spellId}}",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{env}}/spells/{{spellId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"spells",
+						"{{spellId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update character spells",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"Check spells\", () => {",
+							"    const response = pm.response.json();",
+							"    const ids = JSON.parse(pm.collectionVariables.get(\"spellIds\"));",
+							"    pm.expect(response.length).to.equal(ids.length);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{spellIds}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}/spells",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}",
+						"spells"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update character class",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const shuffledArray = pm.collectionVariables.get(\"classes\").sort((a, b) => 0.5 - Math.random());",
+							"const classId = shuffledArray.filter(x => x.spellcasting == null)[0].id;",
+							"const obj = {",
+							"    \"id\": pm.collectionVariables.get(\"characterId\"),",
+							"    \"info\": {",
+							"        \"sourceIds\": []",
+							"    },",
+							"    \"race\": {",
+							"        \"id\": pm.collectionVariables.get(\"raceId\"),",
+							"        \"size\": \"medium\",",
+							"        \"languageIds\": []        ",
+							"    },",
+							"    \"class\": {",
+							"        \"id\": classId,",
+							"        \"subclass\": null,",
+							"        \"toolIds\": []",
+							"    },",
+							"    \"background\": {",
+							"        \"id\": pm.collectionVariables.get(\"backgroundId\"),",
+							"        \"toolIds\": [],",
+							"        \"languageIds\": []",
+							"    },",
+							"    \"abilityScores\": [",
+							"        {",
+							"            \"label\": \"strength\",",
+							"            \"score\": 15,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": true",
+							"        },",
+							"        {",
+							"            \"label\": \"dexterity\",",
+							"            \"score\": 11,",
+							"            \"upByOne\": true,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"constitution\",",
+							"            \"score\": 14,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"intelligence\",",
+							"            \"score\": 8,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"wisdom\",",
+							"            \"score\": 11,",
+							"            \"upByOne\": false,",
+							"            \"upByTwo\": false",
+							"        },",
+							"        {",
+							"            \"label\": \"charisma\",",
+							"            \"score\": 9,",
+							"            \"upByOne\": true,",
+							"            \"upByTwo\": false",
+							"        }",
+							"    ]",
+							"}",
+							"var body_str = JSON.stringify(obj);",
+							"pm.collectionVariables.set(\"characterBodyRequest\", body_str);",
+							"console.log(pm.collectionVariables.get(\"characterBodyRequest\"));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{characterBodyRequest}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update spells for non spellcasting character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{idSpells}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}/spells",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}",
+						"spells"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get characters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check characters\", () => {",
+							"    const response = pm.response.json();",
+							"    const id = pm.collectionVariables.get(\"characterId\");",
+							"    const res = response.filter(x => x.id === id);",
+							"    pm.expect(res.length).equal(1);    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{idSpells}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Level up character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check level\", () => {",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.info.level).equal(2);    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}/levelup",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}",
+						"levelup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get armor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check armor that has a contents\", () => {",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.totalElements).to.be.greaterThan(0);",
+							"    const armor = response.content.map(x => x.id)[0];",
+							"    const obj = {",
+							"        id: armor",
+							"    }",
+							"    pm.collectionVariables.set(\"armorIds\", JSON.stringify(obj));",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/armor",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"armor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one armor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const id = JSON.parse(pm.collectionVariables.get(\"armorIds\")).id;",
+							"pm.collectionVariables.set(\"armorId\", id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{env}}/armor/{{armorId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"armor",
+						"{{armorId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put armor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{armorIds}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}/armor",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}",
+						"armor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get weapons",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check weapons that has a contents\", () => {",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.totalElements).to.be.greaterThan(0);",
+							"    const weapons = response.content.map(x => x.id).slice(0, 5);",
+							"    pm.collectionVariables.set(\"weaponIds\", JSON.stringify(weapons));",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/weapons",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"weapons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one weapon",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const weapons = JSON.parse(pm.collectionVariables.get(\"weaponIds\"));",
+							"pm.collectionVariables.set(\"weaponId\", weapons[Math.floor(Math.random()*weapons.length)]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "{{weaponId}}",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{env}}/weapons/{{weaponId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"weapons",
+						"{{weaponId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put weapons",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Put weapons check\", () => {",
+							"    const response = pm.response.json();",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{weaponIds}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}/weapons",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}",
+						"weapons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put skills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Put armor check\", () => {",
+							"    const response = pm.response.json();",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n        {\n            \"name\": \"acrobatics\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"animal_handling\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"arcana\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"athletics\",\n            \"proficient\": true\n        },\n        {\n            \"name\": \"deception\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"history\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"insight\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"intimidation\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"investigation\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"medicine\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"nature\",\n            \"proficient\": true\n        },\n        {\n            \"name\": \"perception\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"performance\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"persuasion\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"religion\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"sleight_of_hand\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"stealth\",\n            \"proficient\": false\n        },\n        {\n            \"name\": \"survival\",\n            \"proficient\": false\n        }\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}/skills",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}",
+						"skills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pdf",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}/pdf",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}",
+						"pdf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get sources",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const schema = {",
+							"    type: 'array',",
+							"    items: [{",
+							"    type: 'object',    ",
+							"    properties: {",
+							"        id: {type: 'string'},",
+							"        name: {type: 'string'}",
+							"    },",
+							"    }]",
+							"}",
+							"pm.test(\"test schema validation\", () => {",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"    const ids = pm.response.json().map(x => x.id);",
+							"",
+							"    pm.collectionVariables.set(\"sourceIds\", ids);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/sources",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"sources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get random source",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const schema = {",
+							"    type: 'object',    ",
+							"    properties: {",
+							"        id: {type: 'string'},",
+							"        name: {type: 'string'}",
+							"    },",
+							"}",
+							"pm.test(\"test schema validation\", () => {",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"});",
+							"",
+							"pm.test(\"contain only object\", () => {",
+							"    const content = pm.response.json();",
+							"    pm.expect(content).to.be.an('object');",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ids = pm.collectionVariables.get(\"sourceIds\");",
+							"pm.collectionVariables.set(\"sourceId\", ids[Math.floor(Math.random()*ids.length)]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{env}}/sources/{{sourceId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"sources",
+						"{{sourceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get tools",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    const array = pm.response.json().content;",
+							"    const ids = array.map(x => x.id);",
+							"    pm.collectionVariables.set(\"toolIds\", ids);",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/tools",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"tools"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get random tool",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ids = pm.collectionVariables.get(\"toolIds\");",
+							"pm.collectionVariables.set(\"toolId\", ids[Math.floor(Math.random()*ids.length)]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{env}}/tools/{{toolId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"tools",
+						"{{toolId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get languages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    const array = pm.response.json().content;",
+							"    const ids = array.map(x => x.id);",
+							"    pm.collectionVariables.set(\"languageIds\", ids);",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/languages",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"languages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get random language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const ids = pm.collectionVariables.get(\"languageIds\");",
+							"pm.collectionVariables.set(\"languageId\", ids[Math.floor(Math.random()*ids.length)]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{env}}/languages/{{languageId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"languages",
+						"{{languageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.have.body(\"Character deleted\");",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters/{{characterId}}",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters",
+						"{{characterId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get characters and check character deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check characters\", () => {",
+							"    const response = pm.response.json();",
+							"    const id = pm.collectionVariables.get(\"characterId\");",
+							"    const res = response.filter(x => x.id === id);",
+							"    pm.expect(res.length).equal(0);    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{idSpells}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{env}}/characters",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"characters"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "env",
+			"value": "http://localhost:8080/api"
+		},
+		{
+			"key": "classId",
+			"value": ""
+		},
+		{
+			"key": "raceId",
+			"value": ""
+		},
+		{
+			"key": "backgroundId",
+			"value": ""
+		},
+		{
+			"key": "characterId",
+			"value": ""
+		},
+		{
+			"key": "characterBody",
+			"value": ""
+		},
+		{
+			"key": "classes",
+			"value": ""
+		},
+		{
+			"key": "characterBodyResponse",
+			"value": ""
+		},
+		{
+			"key": "characterBodyRequest",
+			"value": ""
+		},
+		{
+			"key": "idSpells",
+			"value": ""
+		},
+		{
+			"key": "armor",
+			"value": ""
+		},
+		{
+			"key": "weapons",
+			"value": ""
+		},
+		{
+			"key": "spellIds",
+			"value": ""
+		},
+		{
+			"key": "armorIds",
+			"value": ""
+		},
+		{
+			"key": "weaponIds",
+			"value": ""
+		},
+		{
+			"key": "randomClass",
+			"value": ""
+		},
+		{
+			"key": "armorId",
+			"value": ""
+		},
+		{
+			"key": "weaponId",
+			"value": ""
+		},
+		{
+			"key": "spellId",
+			"value": ""
+		},
+		{
+			"key": "sourceIds",
+			"value": ""
+		},
+		{
+			"key": "sourceId",
+			"value": ""
+		},
+		{
+			"key": "toolIds",
+			"value": ""
+		},
+		{
+			"key": "toolId",
+			"value": ""
+		},
+		{
+			"key": "languageIds",
+			"value": ""
+		},
+		{
+			"key": "languageId",
+			"value": ""
+		}
+	]
+}

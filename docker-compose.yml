@@ -1,25 +1,38 @@
 version: '3.8'
 services:
     mongodb:
-        build:
-            context: .
-            dockerfile: Dockerfile_mongodb
+        image: mongo
         ports:
             - 27017:27017
         volumes:
             - mongodb_data:/data/db
-            - ./db:/scripts
+    import:
+        build:
+            context: .
+            dockerfile: Dockerfile_import
+        env_file:
+            - .env
+        volumes:
+            - import_data:/data
+        depends_on:
+            - mongodb
     app:
         build:
             context: .
             dockerfile: Dockerfile_app
-        # TODO: Spring Boot can't read the env variable, it needs to be set in application.properties
-        # TODO: all attempts to fix this here or in Dockfile failed :(
-        environment:
-            - MONGODB_URI=mongodb://mongodb:27017/dnd
+            args:
+                MONGODB_URI: ${MONGODB_URI}
+        env_file:
+            - .env
         ports:
             - 8080:8080
         depends_on:
             - mongodb
 volumes:
     mongodb_data:
+    import_data:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: ${DATA_PATH}

@@ -1,0 +1,12 @@
+[
+	{ "name": "English", "exotic": false },
+	{ "name": "Spanish", "exotic": false },
+	{ "name": "French", "exotic": false },
+	{ "name": "German", "exotic": false },
+	{ "name": "Italian", "exotic": false },
+	{ "name": "Portuguese", "exotic": false },
+	{ "name": "Dutch", "exotic": false },
+	{ "name": "Russian", "exotic": true },
+	{ "name": "Japanese", "exotic": true },
+	{ "name": "Chinese", "exotic": true }
+]

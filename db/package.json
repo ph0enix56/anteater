@@ -1,0 +1,8 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "main": "insert.js",
+  "dependencies": {
+    "mongodb": "6.5"
+  }
+}

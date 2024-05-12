@@ -1,0 +1,67 @@
+[
+	{
+		"name": "Artist",
+		"description": "You are a master of your craft. You have spent years honing your skills and perfecting your technique. You are a true artisan, and your work is highly sought after by collectors and connoisseurs alike.",
+		"features": [
+			{"title": "Artisan's Eye", "levelMinimum": 1, "text": "As an artist, you have an eye for detail and a steady hand. You can create works of art that are truly masterpieces. You can sell your work for a high price, and you can expect to receive commissions from wealthy patrons."}
+		],
+		"skills": {
+			"amount": 2,
+			"defaults": [
+				"performance"
+			]
+		},
+		"tools": {
+			"amount": 1,
+			"defaults": [{ "ref": "tool", "name": "Handy instrument" }]
+		},
+		"languages": {
+			"amount": 1,
+			"defaults": []
+		}
+	},
+	{
+		"name": "Miner",
+		"description": "You have spent your life working in the mines. You are a skilled miner, and you know how to extract valuable minerals from the earth. You are also an expert at navigating the dark and dangerous tunnels that lie beneath the surface.",
+		"features": [
+			{"title": "Hard Worker", "levelMinimum": 1, "text": "As a miner, you are used to hard work and long hours. You have advantage on Strength checks made to move heavy objects, and you can work for up to 12 hours a day without suffering from exhaustion."}
+		],
+		"skills": {
+			"amount": 2,
+			"defaults": [
+				"athletics",
+				"survival"
+			]
+		},
+		"tools": {
+			"amount": 2,
+			"defaults": []
+		},
+		"languages": {
+			"amount": 1,
+			"defaults": [{ "ref": "language", "name": "Language 2" }]
+		}
+	},
+	{
+		"name": "Space Pirate",
+		"description": "This is a background that is not the same as the others. It is different and unique.",
+		"features": [
+			{"title": "Pirate's Code", "levelMinimum": 1, "text": "As a space pirate, you live by a strict code of honor. You never harm the innocent, and you always keep your word. You can expect to receive aid from other pirates, and you can call on them for help when you need it."}
+		],
+		"skills": {
+			"amount": 2,
+			"defaults": [
+				"acrobatics",
+				"athletics"
+			]
+		},
+		"tools": {
+			"amount": 3,
+			"defaults": []
+		},
+		"languages": {
+			"amount": 3,
+			"defaults": []
+		}
+	}
+]

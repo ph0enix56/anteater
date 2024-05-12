@@ -1,0 +1,25 @@
+[
+	{
+		"name": "Experimental race",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, vitae aliquam ni.",
+		"features": [],
+		"speed": 99,
+		"sizes": ["small", "medium"],
+		"languages": {
+			"amount": 3,
+			"defaults": [ { "ref": "language", "name": "English" } ]
+		},
+		"abilities_plus_2": {
+			"amount": 0,
+			"defaults": []
+		},
+		"abilities_plus_1": {
+			"amount": 6,
+			"defaults": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+		},
+		"skills": {
+			"amount": 1,
+			"defaults": ["persuasion"]
+		}
+	}
+]

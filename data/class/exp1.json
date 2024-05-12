@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Test Class",
+		"description": "Copy of the Barbarian class",
+		"hitDice": { "amount": 1, "sides": 12 },
+		"subclasses": ["A", "B", "C"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": ["strength", "constitution"],
+		"tools": {
+			"amount": 3,
+			"defaults": [
+				{ "ref": "tool", "name": "Screwdriver" },
+				{ "ref": "tool", "name": "Drill" }
+			]
+		},
+		"armorTypes": ["unarmored", "light", "medium", "shield"],
+		"armor": [],
+		"weaponTypes": ["simple", "martial"],
+		"weapons": [],
+		"features": [
+			{"title": "First Feature", "levelMinimum": 1, "text": "This is the first feature."},
+			{"title": "Second Feature", "levelMinimum": 2, "text": "This is the second feature."},
+			{"title": "Third Feature", "levelMinimum": 3, "text": "This is the third feature."},
+			{"title": "Fourth Feature", "levelMinimum": 4, "text": "This is the fourth feature."},
+			{"title": "Fifth Feature", "levelMinimum": 5, "text": "This is the fifth feature."},
+			{"title": "Sixth Feature", "levelMinimum": 6, "text": "This is the sixth feature."},
+			{"title": "Seventh Feature", "levelMinimum": 7, "text": "This is the seventh feature."},
+			{"title": "Eighth Feature", "levelMinimum": 8, "text": "This is the eighth feature."},
+			{"title": "Ninth Feature", "levelMinimum": 9, "text": "This is the ninth feature."},
+			{"title": "Tenth Feature", "levelMinimum": 10, "text": "This is the tenth feature."},
+			{"title": "Eleventh Feature", "levelMinimum": 11, "text": "This is the eleventh feature."},
+			{"title": "Twelfth Feature", "levelMinimum": 12, "text": "This is the twelfth feature."},
+			{"title": "Thirteenth Feature", "levelMinimum": 13, "text": "This is the thirteenth feature."},
+			{"title": "Fourteenth Feature", "levelMinimum": 14, "text": "This is the fourteenth feature."},
+			{"title": "Fifteenth Feature", "levelMinimum": 15, "text": "This is the fifteenth feature."},
+			{"title": "Sixteenth Feature", "levelMinimum": 16, "text": "This is the sixteenth feature."},
+			{"title": "Seventeenth Feature", "levelMinimum": 17, "text": "This is the seventeenth feature."},
+			{"title": "Eighteenth Feature", "levelMinimum": 18, "text": "This is the eighteenth feature."},
+			{"title": "Nineteenth Feature", "levelMinimum": 19, "text": "This is the nineteenth feature."},
+			{"title": "Twentieth Feature", "levelMinimum": 20, "text": "This is the twentieth feature."}
+		]
+	}
+]

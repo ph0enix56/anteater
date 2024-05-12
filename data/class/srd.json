@@ -1,0 +1,190 @@
+[
+	{
+		"name": "Barbarian",
+		"description": "A warrior able to enter a rage and fight aggresively.",
+		"hitDice": { "amount": 1, "sides": 12 },
+		"subclasses": ["Berserker"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": ["strength", "constitution"],
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"armorTypes": ["unarmored", "light", "medium", "shield"],
+		"armor": [],
+		"defaultArmor": {
+			"name": "Unarmored Defense",
+			"type": "unarmored",
+			"baseArmorClass": 10,
+			"strengthRequirement": 0,
+			"stealthDisadvantage": false,
+			"bonuses": [
+				{ "ability": "dexterity", "max": 10 },
+				{ "ability": "constitution", "max": 10 }
+			],
+			"description": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+		},
+		"weaponTypes": ["simple", "martial"],
+		"weapons": [],
+		"features": [
+			{
+				"title": "Rage",
+				"levelMinimum": 1,
+				"text": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action. While raging, you gain advantage on Strength checks and Strength saving throws, and you have resistance to bludgeoning, piercing, and slashing damage. When you make a melee weapon attack using Strength, you gain a +2 bonus to the damage roll (that increases as you gain levels as a barbarian)."
+			},
+			{
+				"title": "Unarmored Defense",
+				"levelMinimum": 1,
+				"text": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+			},
+			{
+				"title": "Reckless Attack",
+				"levelMinimum": 2,
+				"text": "Starting at 2nd level, you can throw aside all concern for defense to attack with fierce desperation. When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn."
+			},
+			{
+				"title": "Extra Attack",
+				"levelMinimum": 5,
+				"text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn."
+			},
+			{
+				"title": "Feral Instinct",
+				"levelMinimum": 7,
+				"text": "By 7th level, your instincts are so honed that you have advantage on initiative rolls. Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn."
+			},
+			{
+				"title": "Primal Champion",
+				"levelMinimum": 20,
+				"text": "At 20th level, you embody the power of the wilds. Your Strength and Constitution scores increase by 4. Your maximum for those scores is now 24."
+			}
+		]
+	},
+	{
+		"name": "Wizard",
+		"description": "A spellcaster who learns magic through study and practice.",
+		"hitDice": { "amount": 1, "sides": 6 },
+		"subclasses": ["Evocation"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": ["intelligence", "wisdom"],
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"armorTypes": ["unarmored"],
+		"armor": [],
+		"weaponTypes": [],
+		"weapons": [
+			{ "ref": "weapon", "name": "Dagger" },
+			{ "ref": "weapon", "name": "Light crossbow" }
+		],
+		"features": [
+			{
+				"title": "Spellcasting",
+				"levelMinimum": 1,
+				"text": "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power."
+			},
+			{
+				"title": "Arcane Recovery",
+				"levelMinimum": 1,
+				"text": "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your wizard level (rounded up), and none of the slots can be 6th level or higher."
+			},
+			{
+				"title": "Spell Mastery",
+				"levelMinimum": 18,
+				"text": "At 18th level, you have achieved such mastery over certain spells that you can cast them at will. Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal. By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels."
+			}
+		],
+		"spellcasting": {
+			"ability": "intelligence",
+			"slots": [
+				[2, 0, 0, 0, 0, 0, 0, 0, 0],
+				[3, 0, 0, 0, 0, 0, 0, 0, 0],
+				[4, 2, 0, 0, 0, 0, 0, 0, 0],
+				[4, 3, 0, 0, 0, 0, 0, 0, 0],
+				[4, 3, 2, 0, 0, 0, 0, 0, 0],
+				[4, 3, 3, 0, 0, 0, 0, 0, 0],
+				[4, 3, 3, 1, 0, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 0, 0, 0, 0],
+				[4, 3, 3, 2, 1, 1, 0, 0, 0],
+				[4, 3, 3, 2, 1, 1, 1, 0, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 0],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1],
+				[4, 3, 3, 2, 1, 1, 1, 1, 1]
+			]
+		}
+	},
+	{
+		"name": "Warlock",
+		"description": "A spellcaster who makes a pact with a powerful being.",
+		"hitDice": { "amount": 1, "sides": 8 },
+		"subclasses": ["Fiend"],
+		"skills": {
+			"amount": 2,
+			"defaults": []
+		},
+		"saves": ["wisdom", "charisma"],
+		"tools": {
+			"amount": 0,
+			"defaults": []
+		},
+		"armorTypes": ["unarmored", "light"],
+		"armor": [],
+		"weaponTypes": ["simple"],
+		"weapons": [],
+		"features": [
+			{
+				"title": "Pact Magic",
+				"levelMinimum": 1,
+				"text": "Your arcane research and the magic bestowed on you by your patron have given you facility with spells."
+			},
+			{
+				"title": "Pact Boon",
+				"levelMinimum": 3,
+				"text": "At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service. You gain one of the following features of your choice."
+			},
+			{
+				"title": "Mystic Arcanum",
+				"levelMinimum": 11,
+				"text": "At 11th level, your patron bestows upon you a magical secret called an arcanum. Choose one 6th-level spell from the warlock spell list as this arcanum. You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again."
+			}
+		],
+		"spellcasting": {
+			"ability": "charisma",
+			"slots": [
+				[1, 0, 0, 0, 0, 0, 0, 0, 0],
+				[1, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 2, 0, 0, 0, 0, 0, 0, 0],
+				[0, 2, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 2, 0, 0, 0, 0, 0, 0],
+				[0, 0, 2, 0, 0, 0, 0, 0, 0],
+				[0, 0, 3, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 3, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 4, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0],
+				[0, 0, 0, 0, 4, 0, 0, 0, 0]
+			]
+		}
+	}
+]

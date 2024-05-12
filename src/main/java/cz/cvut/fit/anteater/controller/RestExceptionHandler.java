@@ -7,21 +7,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Handler for translating exceptions thrown from REST controllers into
+ * appropriate HTTP responses.
+ */
 @ControllerAdvice
 public class RestExceptionHandler {
-	@ExceptionHandler(IllegalArgumentException.class)
-	protected ResponseEntity<?> handleIllegalArgument(IllegalArgumentException ex) {
-		return ResponseEntity.badRequest().body(ex.getMessage());
-	}
 
 	@ExceptionHandler(NoSuchElementException.class)
-	protected ResponseEntity<?> handleNoSuchElement(NoSuchElementException ex) {
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	protected ResponseEntity<String> handleNoSuchElement(NoSuchElementException ex) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	}
 
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	protected ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	protected ResponseEntity<?> handleFailedBeanValidation(MethodArgumentNotValidException ex) {
-		return ResponseEntity.badRequest().body(ex.getMessage());
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	protected ResponseEntity<String> handleFailedBeanValidation(MethodArgumentNotValidException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 	}
 }

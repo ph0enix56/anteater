@@ -1,0 +1,24 @@
+[
+	{
+		"name": "Testing Background",
+		"description": "Lorem ipsum.",
+		"features": [
+			{"title": "Sample BG feature", "levelMinimum": 1, "text": "Some description."}
+		],
+		"skills": {
+			"amount": 2,
+			"defaults": [
+				"animal_handling",
+				"sleight_of_hand"
+			]
+		},
+		"tools": {
+			"amount": 1,
+			"defaults": [{ "ref": "tool", "name": "Drill" }]
+		},
+		"languages": {
+			"amount": 2,
+			"defaults": [{ "ref": "language", "name": "English" }]
+		}
+	}
+]

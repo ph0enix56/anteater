@@ -1,0 +1,14 @@
+[
+	{
+		"_id": "srd",
+		"name": "System Reference Document"
+	},
+	{
+		"_id": "exp1",
+		"name": "Experimental Source 1"
+	},
+	{
+		"_id": "exp2",
+		"name": "Experimental Source 2"
+	}
+]
