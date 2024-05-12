@@ -77,10 +77,10 @@ public class DndCharacter {
 	}
 
 	public Integer getAbilityScore(Ability ability) {
-		AbilityInput val = abilities.get(ability);
-		Integer bonus = (val.getUpByOne() ? 1 : 0) + (val.getUpByTwo() ? 2 : 0);
-		return val.getScore() + bonus;
-	}
+        AbilityInput val = abilities.get(ability);
+        Integer bonus = (val.getUpByOne() ? 1 : 0) + (val.getUpByTwo() ? 2 : 0);
+        return Math.min(val.getScore() + bonus, 20);
+    }
 
 	public Integer getAbilityModifier(Ability ability) {
 		return (getAbilityScore(ability) - 10) / 2;
