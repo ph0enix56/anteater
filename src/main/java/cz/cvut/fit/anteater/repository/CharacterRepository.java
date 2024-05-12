@@ -3,7 +3,7 @@ package cz.cvut.fit.anteater.repository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import cz.cvut.fit.anteater.model.entity.Character;
+import cz.cvut.fit.anteater.model.entity.DndCharacter;
 
 @Repository
-public interface CharacterRepository extends MongoRepository<Character, String> {}
+public interface CharacterRepository extends MongoRepository<DndCharacter, String> {}
