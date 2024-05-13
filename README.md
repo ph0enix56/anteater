@@ -11,14 +11,14 @@ Anteater is the backend server for a Dungeons & Dragons character creation app, 
 
 1. Install Docker including Docker Compose (for example using [Docker Desktop](https://www.docker.com/products/docker-desktop/)).
 2. Download or clone the repository and navigate to the project root.
-3. Run `docker-compose up` to download all the required images (including an embedded database), build the app and start it (this may take a while the first time).
+3. Run `docker compose up` to download all the required images (including an embedded database), build the app and start it (this may take a while the first time).
 4. Verify that the server is running on port 8080 (for example by visiting `http://localhost:8080/api/sources` in a browser and checking that JSON data is returned).
-5. To stop the app, run `docker-compose down`.
+5. To stop the app, run `docker compose down`.
 
 ### Using the app
 
-- The server can be restarted with `docker-compose up app` (or `docker-compose up app -d` to be able to close the terminal) and stopped with `docker-compose down`.
-- If you want to update the content of the app, put your JSON files in the `data` directory (see [Adding content](#adding-content)) and run `docker-compose up import` to import the data into the app (expect brief app downtime as the data store is reloaded).
+- The server can be restarted with `docker compose up app` (or `docker compose up app -d` to be able to close the terminal) and stopped with `docker compose down`.
+- If you want to update the content of the app, put your JSON files in the `data` directory (see [Adding content](#adding-content)) and run `docker compose up import` to import the data into the app (expect brief app downtime as the data store is reloaded).
 - The `data` directory can be moved or renamed as needed as long as you update the path in the `.env` file in the project root.
 
 </details>
