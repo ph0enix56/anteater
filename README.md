@@ -11,9 +11,10 @@ Anteater is the backend server for a Dungeons & Dragons character creation app, 
 
 1. Install Docker including Docker Compose (for example using [Docker Desktop](https://www.docker.com/products/docker-desktop/)).
 2. Download or clone the repository and navigate to the project root.
-3. Run `docker compose up` to download all the required images (including an embedded database), build the app and start it (this may take a while the first time).
-4. Verify that the server is running on port 8080 (for example by visiting `http://localhost:8080/api/sources` in a browser and checking that JSON data is returned).
-5. To stop the app, run `docker compose down`.
+3. When running the app from the downloaded attachment on a Linux system, you may need to run `chmod +x gradlew` to make the Gradle wrapper executable.
+4. Run `docker compose up` to download all the required images (including an embedded database), build the app and start it (this may take a while the first time).
+5. Verify that the server is running on port 8080 (for example by visiting `http://localhost:8080/api/sources` in a browser and checking that JSON data is returned).
+6. To stop the app, run `docker compose down`.
 
 ### Using the app
 
